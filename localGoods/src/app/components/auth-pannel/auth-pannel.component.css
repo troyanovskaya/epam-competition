@@ -1,0 +1,45 @@
+.menu{
+  background-color: #162e50;
+  width:100%;
+  color: white;
+  min-height:80px;
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo{
+  border: 2px solid white;
+  font-size: 1.3em;
+  padding: 5px;
+  margin: 20px;
+}
+
+.logo-container{
+  margin-top: 5px;
+}
+
+.auth-container{
+  display:flex;
+  flex-direction: row;
+  padding: 20px;
+
+}
+
+.menu > div{
+  font-size: 1.2em;
+}
+.auth-container a, .auth-container div{
+  margin: 5px;
+  color: white;
+}
+
+.log-in, .sign-up, .logo-container{
+  transition: transform .5s;
+}
+
+.log-in:hover, .sign-up:hover, .logo-container:hover{
+  transform: scale(1.2);
+}
+

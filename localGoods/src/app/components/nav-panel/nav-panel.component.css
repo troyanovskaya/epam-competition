@@ -1,0 +1,10 @@
+.option-container{
+  min-height: 40px;
+  display:flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap:10px;
+  background-color: #7382a1;
+  align-items: center;
+  padding-top: 40px;
+}

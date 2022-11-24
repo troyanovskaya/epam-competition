@@ -1,0 +1,12 @@
+<div (mouseover)="isVisible=true"  (mouseleave)="isVisible=false" class="flex-container">
+  <h4  >{{option.name | uppercase}}
+    <hr  [ngClass]="{'visible': isVisible, 'hidden': !isVisible }">
+  </h4>
+
+
+  <ul *ngIf="isVisible">
+    <li *ngFor="let category of option.categories">{{category |titlecase}}</li>
+  </ul>
+
+</div>
+

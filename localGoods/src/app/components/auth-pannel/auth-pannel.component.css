@@ -35,11 +35,11 @@
   color: white;
 }
 
-.log-in, .sign-up, .logo-container{
+.log-in, .sign-up{
   transition: transform .5s;
 }
 
-.log-in:hover, .sign-up:hover, .logo-container:hover{
+.log-in:hover, .sign-up:hover{
   transform: scale(1.2);
 }
 

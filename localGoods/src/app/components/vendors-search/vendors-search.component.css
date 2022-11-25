@@ -44,3 +44,7 @@ input, select{
   flex-direction: column;
   padding: 20px;
 }
+
+label{
+  margin-bottom: 20px;
+}

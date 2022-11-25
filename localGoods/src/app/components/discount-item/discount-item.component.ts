@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-discount-item',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./discount-item.component.css']
 })
 export class DiscountItemComponent implements OnInit {
+  @Input() item:{name: string, curPrice:number, pastPrice:number, id:number} = {name: '', curPrice:0, pastPrice:0, id:0}
 
   constructor() { }
 

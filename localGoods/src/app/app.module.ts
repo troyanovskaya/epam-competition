@@ -12,25 +12,30 @@ import { VendorsSearchComponent } from './components/vendors-search/vendors-sear
 import { VendorsAdverbComponent } from './components/vendors-adverb/vendors-adverb.component';
 import { RowOfDiscountsComponent } from './components/row-of-discounts/row-of-discounts.component';
 import { DiscountItemComponent } from './components/discount-item/discount-item.component';
+import { FooterComponent } from "./components/footer/footer.component";
+import { AboutUsContainerComponent } from './components/about-us-container/about-us-container.component'
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AuthPannelComponent,
-    NavPanelComponent,
-    NavOptionComponent,
-    LocalVendorsSearchAdverbComponent,
-    VendorsSearchComponent,
-    VendorsAdverbComponent,
-    RowOfDiscountsComponent,
-    DiscountItemComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ReactiveFormsModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        AuthPannelComponent,
+        NavPanelComponent,
+        NavOptionComponent,
+        LocalVendorsSearchAdverbComponent,
+        VendorsSearchComponent,
+        VendorsAdverbComponent,
+        RowOfDiscountsComponent,
+        DiscountItemComponent,
+        FooterComponent,
+        AboutUsContainerComponent
+
+    ],
+    providers: [],
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        ReactiveFormsModule
+    ]
 })
 export class AppModule { }

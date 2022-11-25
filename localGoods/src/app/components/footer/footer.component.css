@@ -1,0 +1,37 @@
+#main-footer {
+    background-color: white;
+    padding: 5% 8%;
+}
+
+h2 {
+    color: #162e50;
+}
+
+table {
+    width: 40%
+}
+
+td {
+    text-align: left;
+    width: 80%;
+}
+
+th {
+    text-align: left;
+    width: 20%;
+}
+
+.social-media-links {
+    margin-top: 2%;
+    margin-bottom: 2%;
+    display: flex;
+    width: 20%;
+    justify-content: space-between;
+}
+
+.social-media-links a {
+    background-color: cadetblue;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+}

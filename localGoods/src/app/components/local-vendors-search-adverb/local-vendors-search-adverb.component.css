@@ -1,0 +1,15 @@
+.flex-container{
+  margin-top: 25px;
+  display:flex;
+  flex-direction: row;
+
+  min-height: 350px;
+  justify-content: center;
+  gap:50px;
+}
+.flex-container > *{
+  width:45%;
+  border-radius: 10px;
+  background-color: #ba6735;
+  background-image: url('/assets/wood.jpg');
+}

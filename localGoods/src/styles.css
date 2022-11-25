@@ -1,7 +1,11 @@
 body{
   margin:0px;
   padding:0px;
+  background-color: #f7e5d0;
 }
 a{
   text-decoration: none;
+}
+ul{
+  list-style-type:none;
 }

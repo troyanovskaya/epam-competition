@@ -1,0 +1,23 @@
+.flex-container{
+  display:flex;
+  flex-direction: column;
+  color: white;
+  padding: 50px;
+}
+h2{
+  margin:0px;
+  font-size: 2.5em;
+}
+ul{
+  padding-left:30px;
+}
+li{
+  padding:10px;
+  font-size: 1.3em;
+}
+
+.li-flex-container{
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+}

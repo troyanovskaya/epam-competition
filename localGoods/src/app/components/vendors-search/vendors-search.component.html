@@ -1,1 +1,15 @@
-<p>vendors-search works!</p>
+
+  <form class="flex-container">
+    <label for="countries">Choose a country:</label>
+    <select name="country" id="countries" [formControl]="country">
+      <option value="ukraine" >Ukraine</option>
+      <option value="armenia">Armenia</option>
+      <option value="uk">the UK</option>
+    </select>
+    <p class="del-q">Where the products can be delivered?</p>
+    <input [formControl]="city" type="text" placeholder="London">
+    <div class="vendors-flex-container">
+      <div class="vendor-item" *ngFor="let vendor of vendors"><p>{{vendor}}</p> </div>
+    </div>
+  </form>
+

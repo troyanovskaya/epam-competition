@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,6 +10,8 @@ import { NavOptionComponent } from './nav-option/nav-option.component';
 import { LocalVendorsSearchAdverbComponent } from './components/local-vendors-search-adverb/local-vendors-search-adverb.component';
 import { VendorsSearchComponent } from './components/vendors-search/vendors-search.component';
 import { VendorsAdverbComponent } from './components/vendors-adverb/vendors-adverb.component';
+import { RowOfDiscountsComponent } from './components/row-of-discounts/row-of-discounts.component';
+import { DiscountItemComponent } from './components/discount-item/discount-item.component';
 
 @NgModule({
   declarations: [
@@ -18,11 +21,14 @@ import { VendorsAdverbComponent } from './components/vendors-adverb/vendors-adve
     NavOptionComponent,
     LocalVendorsSearchAdverbComponent,
     VendorsSearchComponent,
-    VendorsAdverbComponent
+    VendorsAdverbComponent,
+    RowOfDiscountsComponent,
+    DiscountItemComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

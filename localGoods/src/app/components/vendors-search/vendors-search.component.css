@@ -1,0 +1,46 @@
+label, .vendors-flex-container, .vendor-item, p{
+  color:white;
+}
+
+.vendors-flex-container{
+  display:flex;
+  flex-direction:row;
+  flex-wrap: wrap;
+  min-height: 200px;
+
+  gap:20px;
+  padding: 20px;
+  border-radius: 10px;
+  width:80%;
+  margin:50px auto;
+  justify-content: center;
+}
+.vendor-item{
+  background-color:  #ba6735;
+  min-height: 50px;
+  min-width: 100px;
+  text-align: center;
+  transition: transform .5s;
+}
+
+
+.vendor-item:hover{
+  transform: scale(1.2);
+}
+
+
+
+
+label, .del-q{
+  font-size:1.3em;
+}
+
+input, select{
+  padding: 5px;
+  width:200px;
+}
+.flex-container{
+  display:flex;
+  flex-direction: column;
+  padding: 20px;
+}

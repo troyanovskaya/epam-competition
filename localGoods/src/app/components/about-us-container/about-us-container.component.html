@@ -4,48 +4,15 @@
     <h2>Why us?</h2>
 
     <div id="info-section">
-        <div class="info-block">
-            <img style="width: 100px; height: 100px;">
-            <span class="number">01</span>
-            <h4>Prices are the same as in the store</h4>
-            <span class="info-description">
-                We offer the same price as the retailer.
-                Moreover, we collect promotional products in one place
-                so that your purchases are profitable.
-            </span>
+        <div class="info-block" *ngFor="let header of headers; index as i">
+            <img src="assets/brown-basket.png" style="width: 100px; height: 100px;">
+            <span class="number">{{i+1}}</span>
+            <h4>{{header}}</h4>
+            <p class="info-description">
+              {{paragraphs[i]}}
+            </p>
         </div>
 
-        <div class="info-block">
-            <img style="width: 100px; height: 100px;">
-            <span class="number">02</span>
-            <h4>Wide range of products</h4>
-            <span class="info-description">
-                The entire range of products on the site is the same as in the market.
-                Of the advantages: no need to wander department store - just press a button,
-                because we have all the products are sorted in categories.
-            </span>
-        </div>
-
-        <div class="info-block">
-            <img style="width: 100px; height: 100px;">
-            <span class="number">03</span>
-            <h4>Careful ordering</h4>
-            <span class="info-description">
-                Our shoppers (people who collect an order for you) choose only the best products
-                from those offered in the store and follow the rules of the commodity neighborhood.
-                We form an order as for ourselves.
-            </span>
-        </div>
-
-        <div class="info-block">
-            <img style="width: 100px; height: 100px;">
-            <span class="number">04</span>
-            <h4>Prompt home delivery</h4>
-            <span class="info-description">
-                Our logistics department thinks out in detail the courier's route to your home
-                so that you receive your order on time and without delays.
-            </span>
-        </div>
 
     </div>
 </div>

@@ -1,3 +1,4 @@
+using LocalGoods.PL.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +19,9 @@ namespace LocalGoods.PL
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.ConfigureDbContext(Configuration);
+            services.ConfigureIdentity();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

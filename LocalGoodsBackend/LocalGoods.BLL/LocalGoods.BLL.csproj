@@ -10,4 +10,8 @@
     <Folder Include="Services\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LocalGoods.DAL\LocalGoods.DAL.csproj" />
+  </ItemGroup>
+
 </Project>

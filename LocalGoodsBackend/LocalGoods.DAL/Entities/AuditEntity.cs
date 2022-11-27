@@ -2,7 +2,7 @@
 
 namespace LocalGoods.DAL.Entities
 {
-    public abstract class AuditEntity: EntityBase
+    public abstract class AuditEntity<TId>: EntityBase<TId>
     {
         public DateTime? CreatedAt { get; set; }
         public Guid? CreatedBy { get; set; }

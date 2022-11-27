@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace LocalGoods.DAL.Entities
 {
-    public class Product: AuditEntity
+    public class Product: AuditEntity<Guid>
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -16,5 +16,6 @@ namespace LocalGoods.DAL.Entities
         
         public ICollection<Category> Categories { get; set; }
         public ICollection<Image> Images { get; set; }
+        public ICollection<OrderDetails> OrderDetails { get; set; }
     }
 }

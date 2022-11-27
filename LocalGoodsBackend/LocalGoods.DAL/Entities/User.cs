@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
 namespace LocalGoods.DAL.Entities
 {
-    // TODO - Inherit from IdentityUser instead of EntityBase
     public class User: IdentityUser<Guid>
     {
-        public Vendor Vendor { get; set; }
-        public Guid VendorId { get; set; }
+        public ContactInformation ContactInformation { get; set; }
+        public City City { get; set; }
+        public ICollection<Order> Orders { get; set; }
     }
 }

@@ -2,8 +2,8 @@
 
 namespace LocalGoods.DAL.Entities
 {
-    public abstract class EntityBase: ISqlEntity
+    public abstract class EntityBase<TId>: ISqlEntity
     {
-        public Guid Id { get; set; }
+        public TId Id { get; set; }
     }
 }

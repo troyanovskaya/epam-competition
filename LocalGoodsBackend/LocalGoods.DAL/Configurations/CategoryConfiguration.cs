@@ -4,17 +4,17 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace LocalGoods.DAL.Configurations
 {
-    public class CountryConfiguration: IEntityTypeConfiguration<Country>
+    public class CategoryConfiguration: IEntityTypeConfiguration<Category>
     {
-        public void Configure(EntityTypeBuilder<Country> builder)
+        public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder.Property(c => c.Name)
                 .HasMaxLength(400)
                 .IsRequired();
 
             builder
-                .HasMany(country => country.Cities)
-                .WithOne(city => city.Country);
+                .HasMany(c => c.Products)
+                .WithMany(p => p.Categories);
         }
     }
 }

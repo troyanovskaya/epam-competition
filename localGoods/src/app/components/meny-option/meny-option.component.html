@@ -1,0 +1,8 @@
+<div class="option">
+  <div class="container" (click)="isActive=!isActive">
+    <img [ngClass]="{'hidden': !isActive}" width="15px" height="15px" src="assets/check.png" alt="check">
+    <p [ngClass]="{'bolder': isActive}">{{option | titlecase}}</p>
+  </div>
+  <hr>
+</div>
+

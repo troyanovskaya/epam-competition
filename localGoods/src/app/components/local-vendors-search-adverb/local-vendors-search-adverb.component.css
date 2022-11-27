@@ -2,10 +2,10 @@
   margin-top: 25px;
   display:flex;
   flex-direction: row;
-
+  width:100%;
+  gap: 40px;
   min-height: 350px;
   justify-content: center;
-  gap:50px;
 }
 .flex-container > *{
   width:45%;

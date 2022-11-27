@@ -1,0 +1,18 @@
+.panel{
+  display:flex;
+  flex-direction: column;
+  background-color: #7382a1;
+  gap:10px;
+  width:90%;
+  text-align: center;
+  padding:10px;
+  justify-content: center;
+  border-bottom-right-radius: 10px;
+}
+
+p{
+  color:white;
+  font-size:1.3em;
+  border:1px solid white;
+  padding:10px;
+}

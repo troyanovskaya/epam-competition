@@ -22,4 +22,11 @@ hr{
 .bolder{
   font-weight: bolder;
 }
+p{
+  transition: .5s;
+}
+
+p:hover{
+  transform: scale(1.2);
+}
 

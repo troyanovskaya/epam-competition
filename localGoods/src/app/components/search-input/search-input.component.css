@@ -1,0 +1,32 @@
+.flex-container{
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #7382a1;
+  min-height: 50px;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+p{
+  color:white;
+  font-size:1.3em;
+  border:1px solid white;
+  padding:10px;
+}
+
+.search{
+  display:flex;
+  flex-direction: row;
+  align-self: center;
+  gap:10px;
+}
+
+input{
+  width:200px;
+  border-radius: 5px;
+  border:0px;
+  padding: 10px;
+}
+

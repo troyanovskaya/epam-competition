@@ -13,7 +13,8 @@ import { DiscountItemComponent } from './components/discount-item/discount-item.
 import { FooterComponent } from "./components/footer/footer.component";
 import { AboutUsContainerComponent } from './components/about-us-container/about-us-container.component';
 import { MenyLeftPanelComponent } from './components/meny-left-panel/meny-left-panel.component';
-import { MenyOptionComponent } from './components/meny-option/meny-option.component'
+import { MenyOptionComponent } from './components/meny-option/meny-option.component';
+import { SearchInputComponent } from './components/search-input/search-input.component'
 
 @NgModule({
     declarations: [
@@ -27,7 +28,8 @@ import { MenyOptionComponent } from './components/meny-option/meny-option.compon
         FooterComponent,
         AboutUsContainerComponent,
         MenyLeftPanelComponent,
-        MenyOptionComponent
+        MenyOptionComponent,
+        SearchInputComponent
 
     ],
     providers: [],

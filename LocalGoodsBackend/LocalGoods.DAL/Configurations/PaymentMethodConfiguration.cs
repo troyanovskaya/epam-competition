@@ -13,8 +13,8 @@ namespace LocalGoods.DAL.Configurations
                 .IsRequired();
 
             builder
-                .HasMany(p => p.Vendors)
-                .WithMany(v => v.PaymentMethods);
+                .HasMany(p => p.VendorPaymentMethods)
+                .WithOne(v => v.PaymentMethod);
         }
     }
 }

@@ -13,8 +13,8 @@ namespace LocalGoods.DAL.Configurations
                 .IsRequired();
 
             builder
-                .HasMany(d => d.Vendors)
-                .WithMany(v => v.DeliveryMethods);
+                .HasMany(d => d.VendorDeliveryMethods)
+                .WithOne(v => v.DeliveryMethod);
         }
     }
 }

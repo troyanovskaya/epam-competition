@@ -16,12 +16,12 @@ namespace LocalGoods.DAL.Configurations
                 .HasOne(v => v.User);
 
             builder
-                .HasMany(v => v.PaymentMethods)
-                .WithMany(p => p.Vendors);
+                .HasMany(v => v.VendorPaymentMethods)
+                .WithOne(p => p.Vendor);
 
             builder
-                .HasMany(v => v.DeliveryMethods)
-                .WithMany(d => d.Vendors);
+                .HasMany(v => v.VendorDeliveryMethods)
+                .WithOne(d => d.Vendor);
 
             builder
                 .HasMany(v => v.Products)

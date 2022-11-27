@@ -4,14 +4,16 @@ using LocalGoods.DAL.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LocalGoods.DAL.Migrations
 {
     [DbContext(typeof(LocalGoodsDbContext))]
-    partial class LocalGoodsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221127222030_Remove ContactInformation table")]
+    partial class RemoveContactInformationtable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,6 +34,21 @@ namespace LocalGoods.DAL.Migrations
                     b.HasIndex("ProductsId");
 
                     b.ToTable("CategoryProduct");
+                });
+
+            modelBuilder.Entity("DeliveryMethodVendor", b =>
+                {
+                    b.Property<Guid>("DeliveryMethodsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("VendorsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("DeliveryMethodsId", "VendorsId");
+
+                    b.HasIndex("VendorsId");
+
+                    b.ToTable("DeliveryMethodVendor");
                 });
 
             modelBuilder.Entity("LocalGoods.DAL.Entities.Category", b =>
@@ -158,9 +175,6 @@ namespace LocalGoods.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
-
                     b.Property<double>("Discount")
                         .HasColumnType("float");
 
@@ -174,16 +188,11 @@ namespace LocalGoods.DAL.Migrations
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UnitTypeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
 
                     b.HasIndex("ProductId");
-
-                    b.HasIndex("UnitTypeId");
 
                     b.ToTable("OrderDetails");
                 });
@@ -252,30 +261,6 @@ namespace LocalGoods.DAL.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("LocalGoods.DAL.Entities.ProductStorage", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UnitTypeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UnitTypeId");
-
-                    b.ToTable("ProductStorage");
-                });
-
             modelBuilder.Entity("LocalGoods.DAL.Entities.Role", b =>
                 {
                     b.Property<Guid>("Id")
@@ -303,22 +288,6 @@ namespace LocalGoods.DAL.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
-                });
-
-            modelBuilder.Entity("LocalGoods.DAL.Entities.UnitType", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UnitType");
                 });
 
             modelBuilder.Entity("LocalGoods.DAL.Entities.User", b =>
@@ -405,9 +374,6 @@ namespace LocalGoods.DAL.Migrations
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("InstagramName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
 
@@ -419,68 +385,14 @@ namespace LocalGoods.DAL.Migrations
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)");
 
-                    b.Property<string>("TelegramName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ViberNumber")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Vendors");
-                });
-
-            modelBuilder.Entity("LocalGoods.DAL.Entities.VendorDeliveryMethod", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("DeliveryMethodId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Information")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("VendorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DeliveryMethodId");
-
-                    b.HasIndex("VendorId");
-
-                    b.ToTable("VendorDeliveryMethod");
-                });
-
-            modelBuilder.Entity("LocalGoods.DAL.Entities.VendorPaymentMethod", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Information")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("PaymentMethodId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("VendorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PaymentMethodId");
-
-                    b.HasIndex("VendorId");
-
-                    b.ToTable("VendorPaymentMethod");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -584,6 +496,21 @@ namespace LocalGoods.DAL.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("PaymentMethodVendor", b =>
+                {
+                    b.Property<Guid>("PaymentMethodsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("VendorsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("PaymentMethodsId", "VendorsId");
+
+                    b.HasIndex("VendorsId");
+
+                    b.ToTable("PaymentMethodVendor");
+                });
+
             modelBuilder.Entity("CategoryProduct", b =>
                 {
                     b.HasOne("LocalGoods.DAL.Entities.Category", null)
@@ -595,6 +522,21 @@ namespace LocalGoods.DAL.Migrations
                     b.HasOne("LocalGoods.DAL.Entities.Product", null)
                         .WithMany()
                         .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DeliveryMethodVendor", b =>
+                {
+                    b.HasOne("LocalGoods.DAL.Entities.DeliveryMethod", null)
+                        .WithMany()
+                        .HasForeignKey("DeliveryMethodsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LocalGoods.DAL.Entities.Vendor", null)
+                        .WithMany()
+                        .HasForeignKey("VendorsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -644,17 +586,9 @@ namespace LocalGoods.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LocalGoods.DAL.Entities.UnitType", "UnitType")
-                        .WithMany()
-                        .HasForeignKey("UnitTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Order");
 
                     b.Navigation("Product");
-
-                    b.Navigation("UnitType");
                 });
 
             modelBuilder.Entity("LocalGoods.DAL.Entities.Product", b =>
@@ -666,25 +600,6 @@ namespace LocalGoods.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Vendor");
-                });
-
-            modelBuilder.Entity("LocalGoods.DAL.Entities.ProductStorage", b =>
-                {
-                    b.HasOne("LocalGoods.DAL.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LocalGoods.DAL.Entities.UnitType", "UnitType")
-                        .WithMany()
-                        .HasForeignKey("UnitTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("UnitType");
                 });
 
             modelBuilder.Entity("LocalGoods.DAL.Entities.User", b =>
@@ -705,44 +620,6 @@ namespace LocalGoods.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("LocalGoods.DAL.Entities.VendorDeliveryMethod", b =>
-                {
-                    b.HasOne("LocalGoods.DAL.Entities.DeliveryMethod", "DeliveryMethod")
-                        .WithMany("VendorDeliveryMethods")
-                        .HasForeignKey("DeliveryMethodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LocalGoods.DAL.Entities.Vendor", "Vendor")
-                        .WithMany("VendorDeliveryMethods")
-                        .HasForeignKey("VendorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("DeliveryMethod");
-
-                    b.Navigation("Vendor");
-                });
-
-            modelBuilder.Entity("LocalGoods.DAL.Entities.VendorPaymentMethod", b =>
-                {
-                    b.HasOne("LocalGoods.DAL.Entities.PaymentMethod", "PaymentMethod")
-                        .WithMany("VendorPaymentMethods")
-                        .HasForeignKey("PaymentMethodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LocalGoods.DAL.Entities.Vendor", "Vendor")
-                        .WithMany("VendorPaymentMethods")
-                        .HasForeignKey("VendorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PaymentMethod");
-
-                    b.Navigation("Vendor");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -796,6 +673,21 @@ namespace LocalGoods.DAL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("PaymentMethodVendor", b =>
+                {
+                    b.HasOne("LocalGoods.DAL.Entities.PaymentMethod", null)
+                        .WithMany()
+                        .HasForeignKey("PaymentMethodsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LocalGoods.DAL.Entities.Vendor", null)
+                        .WithMany()
+                        .HasForeignKey("VendorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("LocalGoods.DAL.Entities.City", b =>
                 {
                     b.Navigation("Users");
@@ -806,19 +698,9 @@ namespace LocalGoods.DAL.Migrations
                     b.Navigation("Cities");
                 });
 
-            modelBuilder.Entity("LocalGoods.DAL.Entities.DeliveryMethod", b =>
-                {
-                    b.Navigation("VendorDeliveryMethods");
-                });
-
             modelBuilder.Entity("LocalGoods.DAL.Entities.Order", b =>
                 {
                     b.Navigation("OrderDetails");
-                });
-
-            modelBuilder.Entity("LocalGoods.DAL.Entities.PaymentMethod", b =>
-                {
-                    b.Navigation("VendorPaymentMethods");
                 });
 
             modelBuilder.Entity("LocalGoods.DAL.Entities.Product", b =>
@@ -836,10 +718,6 @@ namespace LocalGoods.DAL.Migrations
             modelBuilder.Entity("LocalGoods.DAL.Entities.Vendor", b =>
                 {
                     b.Navigation("Products");
-
-                    b.Navigation("VendorDeliveryMethods");
-
-                    b.Navigation("VendorPaymentMethods");
                 });
 #pragma warning restore 612, 618
         }

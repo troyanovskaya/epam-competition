@@ -24,9 +24,10 @@ namespace LocalGoods.DAL.Contexts
             builder.ApplyConfiguration(new PaymentMethodConfiguration());
             builder.ApplyConfiguration(new DeliveryMethodConfiguration());
             builder.ApplyConfiguration(new OrderDetailsConfiguration());
-            builder.ApplyConfiguration(new ContactInformationConfiguration());
             builder.ApplyConfiguration(new ImageConfiguration());
             builder.ApplyConfiguration(new ProductConfiguration());
+            builder.ApplyConfiguration(new ProductStorageConfiguration());
+            builder.ApplyConfiguration(new UnitTypeConfiguration());
         }
 
         public DbSet<Vendor> Vendors { get; set; }
@@ -37,7 +38,6 @@ namespace LocalGoods.DAL.Contexts
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
         public DbSet<OrderDetails> OrderDetails { get; set; }
-        public DbSet<ContactInformation> ContactInformations { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Product> Products { get; set; }
     }

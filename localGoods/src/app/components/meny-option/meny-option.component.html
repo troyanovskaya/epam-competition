@@ -1,7 +1,10 @@
 <div class="option">
   <div class="container" (click)="isActive=!isActive">
+    <!-- <input type="checkbox" id={{option}} name={{option} value={{option}}>
+    <label for={{option}}> {{option | titlecase}} </label><br> -->
+    <div *ngIf="!isActive" class="square"></div>
     <img [ngClass]="{'hidden': !isActive}" width="15px" height="15px" src="assets/check.png" alt="check">
-    <p [ngClass]="{'bolder': isActive}">{{option | titlecase}}</p>
+    <p >{{option | titlecase}}</p>
   </div>
   <hr>
 </div>

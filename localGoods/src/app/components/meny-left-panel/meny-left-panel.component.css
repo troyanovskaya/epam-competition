@@ -8,4 +8,13 @@
   padding:10px;
   justify-content: center;
   border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
+  margin-top: 28px;
+}
+
+p{
+  color:white;
+  font-size:1.3em;
+  border:1px solid white;
+  padding:10px;
 }

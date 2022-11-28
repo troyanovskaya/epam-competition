@@ -28,6 +28,8 @@ namespace LocalGoods.DAL.Contexts
             builder.ApplyConfiguration(new ProductConfiguration());
             builder.ApplyConfiguration(new ProductStorageConfiguration());
             builder.ApplyConfiguration(new UnitTypeConfiguration());
+            builder.ApplyConfiguration(new VendorPaymentMethodConfiguration());
+            builder.ApplyConfiguration(new VendorDeliveryMethodConfiguration());
         }
 
         public DbSet<Vendor> Vendors { get; set; }

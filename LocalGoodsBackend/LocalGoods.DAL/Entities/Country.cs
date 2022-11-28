@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace LocalGoods.DAL.Entities
 {
-    public class Country: EntityBase
+    public class Country: EntityBase<Guid>
     {
         public string Name { get; set; }
         

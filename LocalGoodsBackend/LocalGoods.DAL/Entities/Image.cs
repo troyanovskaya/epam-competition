@@ -2,7 +2,7 @@
 
 namespace LocalGoods.DAL.Entities
 {
-    public class Image: EntityBase
+    public class Image: EntityBase<Guid>
     {
         public string Link { get; set; }
 

@@ -1,0 +1,43 @@
+.option{
+  color:white;
+  font-size:1.2em;
+  padding-bottom: 20px;
+}
+
+hr{
+  color: white;
+  background-color: white;
+  height:1.6px;
+  border: 0px;
+}
+
+.container{
+  display:flex;
+  flex-direction:row;
+  gap:15px;
+  align-items: center;
+  padding-left: 10px;
+
+}
+.hidden{
+  display:none;
+}
+
+p{
+  transition: .5s;
+}
+
+
+
+p:hover{
+  transform: scale(1.1);
+}
+
+.square{
+  width:15px;
+  height:15px;
+  background-color: white;
+}
+
+
+

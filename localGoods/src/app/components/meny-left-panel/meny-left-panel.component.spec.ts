@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NavOptionComponent } from './nav-option.component';
+import { MenyLeftPanelComponent } from './meny-left-panel.component';
 
-describe('NavOptionComponent', () => {
-  let component: NavOptionComponent;
-  let fixture: ComponentFixture<NavOptionComponent>;
+describe('MenyLeftPanelComponent', () => {
+  let component: MenyLeftPanelComponent;
+  let fixture: ComponentFixture<MenyLeftPanelComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NavOptionComponent ]
+      declarations: [ MenyLeftPanelComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(NavOptionComponent);
+    fixture = TestBed.createComponent(MenyLeftPanelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

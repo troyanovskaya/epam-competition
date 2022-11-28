@@ -14,6 +14,10 @@ namespace LocalGoods.DAL.Configurations
             builder
                 .HasMany(u => u.Orders)
                 .WithOne(o => o.User);
+
+            builder
+                .HasOne(u => u.City)
+                .WithMany(c => c.Users);
         }
     }
 }

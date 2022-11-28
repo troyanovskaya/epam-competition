@@ -10,11 +10,11 @@ namespace LocalGoods.DAL.Configurations
         {
             builder
                 .HasOne(ps => ps.Product)
-                .WithMany();
+                .WithMany(p => p.ProductStorages);
 
             builder
                 .HasOne(ps => ps.UnitType)
-                .WithMany();
+                .WithMany(ut => ut.ProductStorages);
         }
     }
 }

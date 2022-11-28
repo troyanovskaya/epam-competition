@@ -8,6 +8,10 @@ namespace LocalGoods.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<PaymentMethod> builder)
         {
+            builder
+                .HasIndex(p => p.Name)
+                .IsUnique();
+
             builder.Property(p => p.Name)
                 .HasMaxLength(400)
                 .IsRequired();

@@ -8,9 +8,21 @@ namespace LocalGoods.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<UnitType> builder)
         {
+            builder
+                .HasIndex(ut => ut.Name)
+                .IsUnique();
+            
             builder.Property(ut => ut.Name)
                 .HasMaxLength(400)
                 .IsRequired();
+
+            builder
+                .HasMany(ut => ut.ProductStorages)
+                .WithOne(ps => ps.UnitType);
+
+            builder
+                .HasMany(ut => ut.OrderDetails)
+                .WithOne(od => od.UnitType);
         }
     }
 }

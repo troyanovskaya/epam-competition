@@ -17,7 +17,7 @@ namespace LocalGoods.DAL.Configurations
                 .IsRequired();
 
             builder.Property(p => p.Price)
-                .HasPrecision(12, 10);
+                .HasPrecision(19, 4);
 
             builder
                 .HasOne(p => p.Vendor)
@@ -34,6 +34,10 @@ namespace LocalGoods.DAL.Configurations
             builder
                 .HasMany(p => p.OrderDetails)
                 .WithOne(od => od.Product);
+
+            builder
+                .HasMany(p => p.ProductStorages)
+                .WithOne(ps => ps.Product);
         }
     }
 }

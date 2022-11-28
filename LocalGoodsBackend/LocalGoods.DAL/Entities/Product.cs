@@ -17,5 +17,6 @@ namespace LocalGoods.DAL.Entities
         public ICollection<Category> Categories { get; set; }
         public ICollection<Image> Images { get; set; }
         public ICollection<OrderDetails> OrderDetails { get; set; }
+        public ICollection<ProductStorage> ProductStorages { get; set; }
     }
 }

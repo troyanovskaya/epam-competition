@@ -9,7 +9,7 @@ namespace LocalGoods.DAL.Configurations
         public void Configure(EntityTypeBuilder<OrderDetails> builder)
         {
             builder.Property(od => od.Price)
-                .HasPrecision(12, 10)
+                .HasPrecision(19, 4)
                 .IsRequired();
 
             builder
@@ -18,7 +18,7 @@ namespace LocalGoods.DAL.Configurations
 
             builder
                 .HasOne(od => od.UnitType)
-                .WithMany();
+                .WithMany(ut => ut.OrderDetails);
 
             builder
                 .HasOne(od => od.Order)

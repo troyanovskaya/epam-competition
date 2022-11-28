@@ -8,6 +8,10 @@ namespace LocalGoods.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
+            builder
+                .HasIndex(c => c.Name)
+                .IsUnique();
+            
             builder.Property(c => c.Name)
                 .HasMaxLength(400)
                 .IsRequired();

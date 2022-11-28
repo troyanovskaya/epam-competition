@@ -40,5 +40,9 @@ namespace LocalGoods.DAL.Contexts
         public DbSet<OrderDetails> OrderDetails { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<UnitType> UnitTypes { get; set; }
+        public DbSet<ProductStorage> ProductStorages { get; set; }
+        public DbSet<VendorPaymentMethod> VendorPaymentMethods { get; set; }
+        public DbSet<VendorDeliveryMethod> VendorDeliveryMethods { get; set; }
     }
 }

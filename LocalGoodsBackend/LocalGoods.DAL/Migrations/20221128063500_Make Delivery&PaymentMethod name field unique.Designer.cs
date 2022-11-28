@@ -4,14 +4,16 @@ using LocalGoods.DAL.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LocalGoods.DAL.Migrations
 {
     [DbContext(typeof(LocalGoodsDbContext))]
-    partial class LocalGoodsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221128063500_Make Delivery&PaymentMethod name field unique")]
+    partial class MakeDeliveryPaymentMethodnamefieldunique
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,9 +48,6 @@ namespace LocalGoods.DAL.Migrations
                         .HasColumnType("nvarchar(400)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
 
                     b.ToTable("Categories");
                 });
@@ -86,9 +85,6 @@ namespace LocalGoods.DAL.Migrations
                         .HasColumnType("nvarchar(400)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
 
                     b.ToTable("Countries");
                 });
@@ -285,7 +281,7 @@ namespace LocalGoods.DAL.Migrations
 
                     b.HasIndex("UnitTypeId");
 
-                    b.ToTable("ProductStorages");
+                    b.ToTable("ProductStorage");
                 });
 
             modelBuilder.Entity("LocalGoods.DAL.Entities.Role", b =>
@@ -330,10 +326,7 @@ namespace LocalGoods.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("UnitTypes");
+                    b.ToTable("UnitType");
                 });
 
             modelBuilder.Entity("LocalGoods.DAL.Entities.User", b =>
@@ -471,7 +464,7 @@ namespace LocalGoods.DAL.Migrations
 
                     b.HasIndex("VendorId");
 
-                    b.ToTable("VendorDeliveryMethods");
+                    b.ToTable("VendorDeliveryMethod");
                 });
 
             modelBuilder.Entity("LocalGoods.DAL.Entities.VendorPaymentMethod", b =>
@@ -495,7 +488,7 @@ namespace LocalGoods.DAL.Migrations
 
                     b.HasIndex("VendorId");
 
-                    b.ToTable("VendorPaymentMethods");
+                    b.ToTable("VendorPaymentMethod");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -660,7 +653,7 @@ namespace LocalGoods.DAL.Migrations
                         .IsRequired();
 
                     b.HasOne("LocalGoods.DAL.Entities.UnitType", "UnitType")
-                        .WithMany("OrderDetails")
+                        .WithMany()
                         .HasForeignKey("UnitTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -686,13 +679,13 @@ namespace LocalGoods.DAL.Migrations
             modelBuilder.Entity("LocalGoods.DAL.Entities.ProductStorage", b =>
                 {
                     b.HasOne("LocalGoods.DAL.Entities.Product", "Product")
-                        .WithMany("ProductStorages")
+                        .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("LocalGoods.DAL.Entities.UnitType", "UnitType")
-                        .WithMany("ProductStorages")
+                        .WithMany()
                         .HasForeignKey("UnitTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -841,15 +834,6 @@ namespace LocalGoods.DAL.Migrations
                     b.Navigation("Images");
 
                     b.Navigation("OrderDetails");
-
-                    b.Navigation("ProductStorages");
-                });
-
-            modelBuilder.Entity("LocalGoods.DAL.Entities.UnitType", b =>
-                {
-                    b.Navigation("OrderDetails");
-
-                    b.Navigation("ProductStorages");
                 });
 
             modelBuilder.Entity("LocalGoods.DAL.Entities.User", b =>

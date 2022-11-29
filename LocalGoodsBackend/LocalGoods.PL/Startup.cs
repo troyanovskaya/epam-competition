@@ -22,6 +22,8 @@ namespace LocalGoods.PL
 
             services.ConfigureDbContext(Configuration);
             services.ConfigureIdentity();
+
+            services.AddRepositories();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

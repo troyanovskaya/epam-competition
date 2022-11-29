@@ -1,3 +1,4 @@
+using LocalGoods.BLL.Extensions;
 using LocalGoods.PL.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -19,8 +20,12 @@ namespace LocalGoods.PL
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSwaggerGen();
 
+            services.AddBllServices(Configuration);
             services.ConfigureDbContext(Configuration);
+            services.ConfigureOptions(Configuration);
+            services.ConfigureAutoMapper();
             services.ConfigureIdentity();
         }
 
@@ -29,12 +34,15 @@ namespace LocalGoods.PL
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

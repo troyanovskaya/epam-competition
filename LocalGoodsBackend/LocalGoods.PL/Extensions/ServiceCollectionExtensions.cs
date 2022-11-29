@@ -28,7 +28,15 @@ namespace LocalGoods.PL.Extensions
         public static IServiceCollection ConfigureIdentity(
             this IServiceCollection services)
         {
-            services.AddIdentity<User, Role>()
+            services.AddIdentity<User, Role>(opt =>
+                {
+                    opt.Password.RequiredLength = 8;
+                    opt.Password.RequireLowercase = false;
+                    opt.Password.RequireNonAlphanumeric = false;
+                    opt.User.RequireUniqueEmail = true;
+                    // TODO - Set to false when we have email confirmation functionality
+                    opt.SignIn.RequireConfirmedEmail = false;
+                })
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<LocalGoodsDbContext>()
                 .AddUserStore<UserStore<User, Role, LocalGoodsDbContext, Guid>>()

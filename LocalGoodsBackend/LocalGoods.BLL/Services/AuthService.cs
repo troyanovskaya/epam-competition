@@ -7,7 +7,6 @@ using LocalGoods.BLL.Interfaces;
 using LocalGoods.BLL.Models.Auth;
 using LocalGoods.BLL.Models.Auth.JWT;
 using LocalGoods.DAL.Entities;
-using LocalGoods.DAL.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace LocalGoods.BLL.Services
@@ -18,30 +17,24 @@ namespace LocalGoods.BLL.Services
         private readonly SignInManager<User> _signInManager;
         private readonly IMapper _mapper;
         private readonly IJwtHandler _jwtHandler;
-        //private readonly ICityRepository _cityRepository;
 
         public AuthService(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             IMapper mapper, 
-            IJwtHandler jwtHandler) 
-            //ICityRepository cityRepository)
+            IJwtHandler jwtHandler)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
             _jwtHandler = jwtHandler;
-            //_cityRepository = cityRepository;
         }
 
         public async Task SignupAsync(SignupModel model)
         {
-            // TODO - Uncomment when we have some cities added
-            /*if (!await _cityRepository.CheckIfEntityExistsById(model.CityId))
-            {
-                throw new Exception($"City with id {model.CityId} was not found");
-            }*/
-            
+            // TODO - Check if city exists by its id
+            // TODO - Add custom auth exceptions
+
             var user = _mapper.Map<User>(model);
 
             var result = await _userManager.CreateAsync(user, model.Password);
@@ -52,7 +45,6 @@ namespace LocalGoods.BLL.Services
             }
 
             // TODO - Seed Roles and add user to a default one
-            //await _userManager.AddToRoleAsync(user, "Visitor");
         }
 
         public async Task<JwtResponse> LoginAsync(LoginModel model)

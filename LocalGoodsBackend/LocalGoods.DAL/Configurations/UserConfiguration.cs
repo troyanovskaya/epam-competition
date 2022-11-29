@@ -11,6 +11,17 @@ namespace LocalGoods.DAL.Configurations
             builder.Property(u => u.Id)
                 .HasDefaultValueSql("newsequentialid()");
 
+            builder.Property(u => u.FirstName)
+                .HasMaxLength(400)
+                .IsRequired();
+
+            builder.Property(u => u.LastName)
+                .HasMaxLength(400)
+                .IsRequired();
+
+            builder.Property(u => u.BirthDate)
+                .IsRequired();
+
             builder
                 .HasMany(u => u.Orders)
                 .WithOne(o => o.User);

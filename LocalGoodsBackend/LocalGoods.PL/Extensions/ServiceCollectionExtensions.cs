@@ -1,4 +1,6 @@
 ﻿using System;
+using LocalGoods.BLL.MappingProfiles;
+using LocalGoods.BLL.Models.Auth.JWT;
 using LocalGoods.DAL.Contexts;
 using LocalGoods.DAL.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -31,6 +33,23 @@ namespace LocalGoods.PL.Extensions
                 .AddEntityFrameworkStores<LocalGoodsDbContext>()
                 .AddUserStore<UserStore<User, Role, LocalGoodsDbContext, Guid>>()
                 .AddRoleStore<RoleStore<Role, LocalGoodsDbContext, Guid>>();
+
+            return services;
+        }
+
+        public static IServiceCollection ConfigureOptions(
+            this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            services.Configure<JwtSettings>(configuration.GetSection(nameof(JwtSettings)));
+
+            return services;
+        }
+        
+        public static IServiceCollection ConfigureAutoMapper(
+            this IServiceCollection services)
+        {
+            services.AddAutoMapper(typeof(AuthProfile), typeof(Startup));
 
             return services;
         }

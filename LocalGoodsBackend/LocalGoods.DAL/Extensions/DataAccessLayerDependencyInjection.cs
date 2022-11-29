@@ -1,44 +1,45 @@
-﻿using System;
-using LocalGoods.DAL.Contexts;
-using LocalGoods.DAL.Entities;
-using LocalGoods.DAL.Repositories;
+﻿using LocalGoods.DAL.Contexts;
 using LocalGoods.DAL.Repositories.Interfaces;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using LocalGoods.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using LocalGoods.DAL.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System;
 
-namespace LocalGoods.PL.Extensions
+namespace LocalGoods.DAL.Extensions
 {
-    public static class ServiceCollectionExtensions
+    public static class DataAccessLayerDependencyInjection
     {
-        public static IServiceCollection ConfigureDbContext(
-            this IServiceCollection services,
-            IConfiguration configuration)
+        public static IServiceCollection AddDataAccessLayerServices(this IServiceCollection services, IConfiguration configuration)
+        {
+            AddMyDbContext(services, configuration);
+            AddIdentity(services);
+            AddRepositories(services);
+
+            return services;
+        }
+
+        private static void AddMyDbContext(IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<LocalGoodsDbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
-
-            return services;
         }
 
-        public static IServiceCollection ConfigureIdentity(
-            this IServiceCollection services)
+        private static void AddIdentity(IServiceCollection services) 
         {
-            services.AddIdentity<User, Role>()
+             services.AddIdentity<User, Role>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<LocalGoodsDbContext>()
                 .AddUserStore<UserStore<User, Role, LocalGoodsDbContext, Guid>>()
                 .AddRoleStore<RoleStore<Role, LocalGoodsDbContext, Guid>>();
-
-            return services;
         }
 
-        public static IServiceCollection AddRepositories(
-    this IServiceCollection services)
+        private static void AddRepositories(IServiceCollection services)
         {
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
@@ -53,8 +54,6 @@ namespace LocalGoods.PL.Extensions
             services.AddScoped<IVendorDeliveryMethodRepository, VendorDeliveryMethodRepository>();
             services.AddScoped<IVendorPaymentMethodRepository, VendorPaymentMethodRepository>();
             services.AddScoped<IVendorRepository, VendorRepository>();
-
-            return services;
         }
     }
 }

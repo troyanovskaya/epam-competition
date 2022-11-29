@@ -1,4 +1,4 @@
-using LocalGoods.PL.Extensions;
+using LocalGoods.DAL.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,10 +20,7 @@ namespace LocalGoods.PL
         {
             services.AddControllers();
 
-            services.ConfigureDbContext(Configuration);
-            services.ConfigureIdentity();
-
-            services.AddRepositories();
+            services.AddDataAccessLayerServices(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

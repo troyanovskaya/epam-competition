@@ -23,8 +23,9 @@
 .auth-container{
   display:flex;
   flex-direction: row;
+  align-items: center;
   padding: 20px;
-
+  gap:10px;
 }
 
 .menu > div{
@@ -42,4 +43,13 @@
 .log-in:hover, .sign-up:hover{
   transform: scale(1.2);
 }
+
+.basket{
+  transition: .5s;
+}
+.basket:hover{
+  transform: scale(1.1);
+}
+
+
 

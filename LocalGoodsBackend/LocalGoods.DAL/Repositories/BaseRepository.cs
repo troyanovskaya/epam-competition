@@ -21,22 +21,6 @@ namespace LocalGoods.DAL.Repositories
             _dbSet = _context.Set<TEntity>();
         }
 
-        public async virtual Task AddAsync(TEntity entity)
-        {
-            await _dbSet.AddAsync(entity);
-        }
-
-        public async virtual Task DeleteAsync(TEntity entity)
-        {
-            _dbSet.Remove(entity);
-        }
-
-        public async virtual Task DeleteByIdAsync(TId id)
-        {
-            TEntity entity = await _dbSet.FindAsync(id);
-            _dbSet.Remove(entity);
-        }
-
         public async virtual Task<IEnumerable<TEntity>> GetAllAsync()
         {
             return await _dbSet.ToListAsync();
@@ -54,9 +38,25 @@ namespace LocalGoods.DAL.Repositories
             return entity;
         }
 
+        public async virtual Task AddAsync(TEntity entity)
+        {
+            await _dbSet.AddAsync(entity);
+        }
+
         public async virtual Task UpdateAsync(TEntity entity)
         {
             _dbSet.Update(entity);
+        }
+
+        public async virtual Task DeleteAsync(TEntity entity)
+        {
+            _dbSet.Remove(entity);
+        }
+
+        public async virtual Task DeleteByIdAsync(TId id)
+        {
+            TEntity entity = await _dbSet.FindAsync(id);
+            _dbSet.Remove(entity);
         }
 
         public async Task<bool> CheckIfEntityExistsByIdAsync(TId id)

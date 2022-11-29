@@ -59,6 +59,11 @@ namespace LocalGoods.DAL.Repositories
             _dbSet.Remove(entity);
         }
 
+        public async virtual Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<bool> CheckIfEntityExistsByIdAsync(TId id)
         {
             var entity = await _dbSet.FindAsync(id);

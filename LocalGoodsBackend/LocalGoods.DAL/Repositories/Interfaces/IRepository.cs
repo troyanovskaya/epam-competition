@@ -14,6 +14,7 @@ namespace LocalGoods.DAL.Repositories.Interfaces
         Task UpdateAsync(TEntity entity);
         Task DeleteAsync(TEntity entity);
         Task DeleteByIdAsync(TId id);
+        Task SaveChangesAsync();
         Task<bool> CheckIfEntityExistsByIdAsync(TId id);
     }
 }

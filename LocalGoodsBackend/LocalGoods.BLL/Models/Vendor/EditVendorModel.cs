@@ -5,6 +5,7 @@ namespace LocalGoods.BLL.Models.Vendor
 {
     public class EditVendorModel
     {
+        public Guid Id { get; set; }
         public string ViberNumber { get; set; }
         public string TelegramName { get; set; }
         public string InstagramName { get; set; }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using LocalGoods.BLL.Models.Category;
 using LocalGoods.BLL.Models.Image;
+using LocalGoods.BLL.Models.UnitType;
 
 namespace LocalGoods.BLL.Models.Product
 {
@@ -15,7 +16,7 @@ namespace LocalGoods.BLL.Models.Product
         public double Discount { get; set; }
         public Guid VendorId { get; set; }
         public double Amount { get; set; }
-        public Guid UnitTypeId { get; set; }
+        public UnitTypeModel UnitType { get; set; }
 
         public IEnumerable<CategoryModel> Categories { get; set; }
         public IEnumerable<ImageModel> Images { get; set; }

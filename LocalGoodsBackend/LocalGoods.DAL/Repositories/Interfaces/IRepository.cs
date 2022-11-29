@@ -11,9 +11,10 @@ namespace LocalGoods.DAL.Repositories.Interfaces
         Task<IEnumerable<TEntity>> GetByFilterAsync(Expression<Func<TEntity, bool>> filter);
         Task<TEntity> GetByIdAsync(TId id);
         Task AddAsync(TEntity entity);
+        Task UpdateAsync(TEntity entity);
         Task DeleteAsync(TEntity entity);
         Task DeleteByIdAsync(TId id);
-        Task UpdateAsync(TEntity entity);
-        Task<bool> CheckIfEntityExistsById(TId id);
+        Task SaveChangesAsync();
+        Task<bool> CheckIfEntityExistsByIdAsync(TId id);
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using LocalGoods.BLL.Interfaces;
-using LocalGoods.BLL.MappingProfiles;
 using LocalGoods.BLL.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
@@ -9,19 +8,19 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace LocalGoods.BLL.Extensions
 {
-    public static class ServiceCollectionExtensions
+    public static class BusinessLogicLayerDependencyInjection
     {
-        public static IServiceCollection AddBllServices(
+        public static IServiceCollection AddBusinessLogicLayerServices(
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.ConfigureAuthentication(configuration);
-            services.ConfigureServices();
+            services.AddAuthentication(configuration);
+            services.AddServices();
 
             return services;
         }
         
-        private static IServiceCollection ConfigureAuthentication(
+        private static IServiceCollection AddAuthentication(
             this IServiceCollection services,
             IConfiguration configuration)
         {
@@ -44,7 +43,7 @@ namespace LocalGoods.BLL.Extensions
             return services;
         }
 
-        private static IServiceCollection ConfigureServices(
+        private static IServiceCollection AddServices(
             this IServiceCollection services)
         {
             services.AddScoped<IJwtHandler, JwtHandler>();

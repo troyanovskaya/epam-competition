@@ -1,5 +1,6 @@
 using LocalGoods.BLL.Extensions;
 using LocalGoods.PL.Extensions;
+using LocalGoods.DAL.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,11 +23,10 @@ namespace LocalGoods.PL
             services.AddControllers();
             services.AddSwaggerGen();
 
-            services.AddBllServices(Configuration);
-            services.ConfigureDbContext(Configuration);
+            services.AddBusinessLogicLayerServices(Configuration);
+            services.AddDataAccessLayerServices(Configuration);
             services.ConfigureOptions(Configuration);
             services.ConfigureAutoMapper();
-            services.ConfigureIdentity();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

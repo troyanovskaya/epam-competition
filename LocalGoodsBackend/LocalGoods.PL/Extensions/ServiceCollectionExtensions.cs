@@ -1,10 +1,6 @@
-﻿using System;
-using LocalGoods.BLL.MappingProfiles;
+﻿using LocalGoods.BLL.MappingProfiles;
 using LocalGoods.BLL.Models.Auth.JWT;
 using LocalGoods.DAL.Contexts;
-using LocalGoods.DAL.Entities;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,26 +17,6 @@ namespace LocalGoods.PL.Extensions
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
-
-            return services;
-        }
-
-        public static IServiceCollection ConfigureIdentity(
-            this IServiceCollection services)
-        {
-            services.AddIdentity<User, Role>(opt =>
-                {
-                    opt.Password.RequiredLength = 8;
-                    opt.Password.RequireLowercase = false;
-                    opt.Password.RequireNonAlphanumeric = false;
-                    opt.User.RequireUniqueEmail = true;
-                    // TODO - Set to false when we have email confirmation functionality
-                    opt.SignIn.RequireConfirmedEmail = false;
-                })
-                .AddDefaultTokenProviders()
-                .AddEntityFrameworkStores<LocalGoodsDbContext>()
-                .AddUserStore<UserStore<User, Role, LocalGoodsDbContext, Guid>>()
-                .AddRoleStore<RoleStore<Role, LocalGoodsDbContext, Guid>>();
 
             return services;
         }

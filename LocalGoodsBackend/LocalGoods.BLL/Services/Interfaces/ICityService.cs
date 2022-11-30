@@ -7,6 +7,6 @@ namespace LocalGoods.BLL.Services.Interfaces
 {
     public interface ICityService
     {
-        public Task<IEnumerable<CityModel>> GetByCountryId(Guid id);
+        Task<IEnumerable<CityModel>> GetByCountryId(Guid id);
     }
 }

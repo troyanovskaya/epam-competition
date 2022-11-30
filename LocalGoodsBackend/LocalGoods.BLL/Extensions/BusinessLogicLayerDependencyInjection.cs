@@ -1,6 +1,6 @@
 ﻿using System.Text;
-using LocalGoods.BLL.Interfaces;
 using LocalGoods.BLL.Services;
+using LocalGoods.BLL.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

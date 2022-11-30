@@ -3,9 +3,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Authentication;
 using System.Threading.Tasks;
 using AutoMapper;
-using LocalGoods.BLL.Interfaces;
 using LocalGoods.BLL.Models.Auth;
 using LocalGoods.BLL.Models.Auth.JWT;
+using LocalGoods.BLL.Services.Interfaces;
 using LocalGoods.DAL.Entities;
 using Microsoft.AspNetCore.Identity;
 

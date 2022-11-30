@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
-using LocalGoods.BLL.Interfaces;
 using LocalGoods.BLL.Models.Auth;
+using LocalGoods.BLL.Services.Interfaces;
 using LocalGoods.PL.Models.Auth;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,7 +1,5 @@
 ﻿using LocalGoods.BLL.MappingProfiles;
 using LocalGoods.BLL.Models.Auth.JWT;
-using LocalGoods.DAL.Contexts;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

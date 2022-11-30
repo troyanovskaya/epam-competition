@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using LocalGoods.DAL.Entities;
 using Microsoft.IdentityModel.Tokens;
 
-namespace LocalGoods.BLL.Interfaces
+namespace LocalGoods.BLL.Services.Interfaces
 {
     public interface IJwtHandler
     {

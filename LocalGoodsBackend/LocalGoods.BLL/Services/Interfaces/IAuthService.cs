@@ -2,7 +2,7 @@
 using LocalGoods.BLL.Models.Auth;
 using LocalGoods.BLL.Models.Auth.JWT;
 
-namespace LocalGoods.BLL.Interfaces
+namespace LocalGoods.BLL.Services.Interfaces
 {
     public interface IAuthService
     {

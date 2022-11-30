@@ -7,15 +7,12 @@ import { LogInPageComponent } from '../log-in-page/log-in-page.component';
   templateUrl: './auth-pannel.component.html',
   styleUrls: ['./auth-pannel.component.css']
 })
-export class AuthPannelComponent implements OnInit {
+export class AuthPannelComponent {
   logoName: string = 'local.goods'
 
   constructor(private dialogRef: MatDialog) { }
 
-  ngOnInit(): void {
-  }
-
-  openLogInPage(){
+  openLogInPage() {
     this.dialogRef.open(LogInPageComponent, {
       height: '50%',
       width: '40%',

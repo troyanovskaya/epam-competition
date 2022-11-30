@@ -52,12 +52,13 @@ button:hover {
     align-items: center;
 }
 
-a {
+.sign-up {
     color: #162e50;
     margin-left: 3%;
     transition: transform .5s;
+    cursor: pointer;
 }
 
-a:hover {
+.sign-up:hover {
     transform: scale(1.2);
 }

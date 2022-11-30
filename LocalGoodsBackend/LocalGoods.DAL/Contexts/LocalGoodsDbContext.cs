@@ -4,14 +4,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using LocalGoods.DAL.Configurations;
 using LocalGoods.DAL.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace LocalGoods.DAL.Contexts
 {
     public class LocalGoodsDbContext: IdentityDbContext<User, Role, Guid>
     {
-        public LocalGoodsDbContext(DbContextOptions<LocalGoodsDbContext> options): base(options){}
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public LocalGoodsDbContext(
+            DbContextOptions<LocalGoodsDbContext> options,
+            IHttpContextAccessor httpContextAccessor): base(options)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -22,24 +30,38 @@ namespace LocalGoods.DAL.Contexts
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
+            AddAuditEntityProperties();
+            
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void AddAuditEntityProperties()
+        {
             var entries = ChangeTracker
                 .Entries()
                 .Where(e => e.Entity is AuditEntity<Guid> &&
                             (e.State == EntityState.Added ||
                              e.State == EntityState.Modified));
 
+            var currentUser =
+                _httpContextAccessor.HttpContext.User.Claims
+                    .Where(c => c.ValueType == JwtRegisteredClaimNames.Sub)
+                    .Select(c => c.Value)
+                    .FirstOrDefault()
+                ?? Guid.Empty.ToString();
+
             foreach (var entityEntry in entries)
             {
                 var auditEntity = (AuditEntity<Guid>)entityEntry.Entity;
                 auditEntity.ModifiedAt = DateTime.UtcNow;
+                auditEntity.ModifiedBy = new Guid(currentUser);
 
                 if (entityEntry.State == EntityState.Added)
                 {
                     auditEntity.CreatedAt = DateTime.UtcNow;
+                    auditEntity.CreatedBy = new Guid(currentUser);
                 }
             }
-            
-            return base.SaveChangesAsync(cancellationToken);
         }
 
         public DbSet<Vendor> Vendors { get; set; }

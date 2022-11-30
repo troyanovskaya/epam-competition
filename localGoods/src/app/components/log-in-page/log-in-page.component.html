@@ -1,0 +1,24 @@
+<div class="header-div">
+    <div class="header">Welcome to our shop!</div>
+    <span class="cross" (click)="closeWindow()">&#10060;</span>
+</div>
+
+<form (submit)="logger()" [formGroup]="validationForm">
+
+    <div class="label-input-pare">
+        <label class="input-option" for="email">log In</label>
+        <input type="email" id="email" formControlName="email" placeholder="enter your email" required />
+    </div>
+
+    <div class="label-input-pare">
+        <label class="input-option" for="password">password</label>
+        <input type="password" id="password" formControlName="password" placeholder="password" required minlength="8" />
+    </div>
+
+    <div class="confirm-part">
+        <button type="submit">Sign in</button>
+        <span>Don't have an account?</span>
+        <a href="#">Create an account</a>
+    </div>
+
+</form>

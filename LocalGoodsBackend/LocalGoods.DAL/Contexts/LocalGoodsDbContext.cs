@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using LocalGoods.DAL.Configurations;
 using LocalGoods.DAL.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -15,6 +18,28 @@ namespace LocalGoods.DAL.Contexts
             base.OnModelCreating(builder);
 
             builder.ApplyConfigurationsFromAssembly(typeof(ProductConfiguration).Assembly);
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var entries = ChangeTracker
+                .Entries()
+                .Where(e => e.Entity is AuditEntity<Guid> &&
+                            (e.State == EntityState.Added ||
+                             e.State == EntityState.Modified));
+
+            foreach (var entityEntry in entries)
+            {
+                var auditEntity = (AuditEntity<Guid>)entityEntry.Entity;
+                auditEntity.ModifiedAt = DateTime.UtcNow;
+
+                if (entityEntry.State == EntityState.Added)
+                {
+                    auditEntity.CreatedAt = DateTime.UtcNow;
+                }
+            }
+            
+            return base.SaveChangesAsync(cancellationToken);
         }
 
         public DbSet<Vendor> Vendors { get; set; }

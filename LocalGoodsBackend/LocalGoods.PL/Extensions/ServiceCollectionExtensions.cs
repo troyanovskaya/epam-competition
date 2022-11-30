@@ -9,18 +9,6 @@ namespace LocalGoods.PL.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection ConfigureDbContext(
-            this IServiceCollection services,
-            IConfiguration configuration)
-        {
-            services.AddDbContext<LocalGoodsDbContext>(options =>
-            {
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-            });
-
-            return services;
-        }
-
         public static IServiceCollection ConfigureOptions(
             this IServiceCollection services,
             IConfiguration configuration)

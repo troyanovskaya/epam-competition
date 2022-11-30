@@ -7,6 +7,6 @@ namespace LocalGoods.DAL.Entities
     {
         public string Name { get; set; }
 
-        public ICollection<VendorPaymentMethod> VendorPaymentMethods { get; set; }
+        public virtual ICollection<VendorPaymentMethod> VendorPaymentMethods { get; set; }
     }
 }

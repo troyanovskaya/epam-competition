@@ -17,7 +17,7 @@ namespace LocalGoods.DAL.Configurations
                 .IsRequired();
 
             builder
-                .HasMany(ut => ut.ProductStorages)
+                .HasMany(ut => ut.Products)
                 .WithOne(ps => ps.UnitType);
 
             builder

@@ -10,11 +10,11 @@ namespace LocalGoods.DAL.Entities
         public string TelegramName { get; set; }
         public string InstagramName { get; set; }
         
-        public User User { get; set; }
+        public virtual User User { get; set; }
         public Guid UserId { get; set; }
 
-        public ICollection<Product> Products { get; set; }
-        public ICollection<VendorPaymentMethod> VendorPaymentMethods { get; set; }
-        public ICollection<VendorDeliveryMethod> VendorDeliveryMethods { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<VendorPaymentMethod> VendorPaymentMethods { get; set; }
+        public virtual ICollection<VendorDeliveryMethod> VendorDeliveryMethods { get; set; }
     }
 }

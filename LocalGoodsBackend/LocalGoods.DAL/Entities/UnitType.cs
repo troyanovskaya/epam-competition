@@ -7,7 +7,7 @@ namespace LocalGoods.DAL.Entities
     {
         public string Name { get; set; }
 
-        public ICollection<ProductStorage> ProductStorages { get; set; }
-        public ICollection<OrderDetails> OrderDetails { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<OrderDetails> OrderDetails { get; set; }
     }
 }

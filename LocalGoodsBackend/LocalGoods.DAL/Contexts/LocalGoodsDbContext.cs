@@ -14,22 +14,7 @@ namespace LocalGoods.DAL.Contexts
         {
             base.OnModelCreating(builder);
 
-            builder.ApplyConfiguration(new UserConfiguration());
-            builder.ApplyConfiguration(new RoleConfiguration());
-            builder.ApplyConfiguration(new VendorConfiguration());
-            builder.ApplyConfiguration(new CountryConfiguration());
-            builder.ApplyConfiguration(new CityConfiguration());
-            builder.ApplyConfiguration(new CategoryConfiguration());
-            builder.ApplyConfiguration(new OrderConfiguration());
-            builder.ApplyConfiguration(new PaymentMethodConfiguration());
-            builder.ApplyConfiguration(new DeliveryMethodConfiguration());
-            builder.ApplyConfiguration(new OrderDetailsConfiguration());
-            builder.ApplyConfiguration(new ImageConfiguration());
-            builder.ApplyConfiguration(new ProductConfiguration());
-            builder.ApplyConfiguration(new ProductStorageConfiguration());
-            builder.ApplyConfiguration(new UnitTypeConfiguration());
-            builder.ApplyConfiguration(new VendorPaymentMethodConfiguration());
-            builder.ApplyConfiguration(new VendorDeliveryMethodConfiguration());
+            builder.ApplyConfigurationsFromAssembly(typeof(ProductConfiguration).Assembly);
         }
 
         public DbSet<Vendor> Vendors { get; set; }
@@ -43,7 +28,6 @@ namespace LocalGoods.DAL.Contexts
         public DbSet<Image> Images { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<UnitType> UnitTypes { get; set; }
-        public DbSet<ProductStorage> ProductStorages { get; set; }
         public DbSet<VendorPaymentMethod> VendorPaymentMethods { get; set; }
         public DbSet<VendorDeliveryMethod> VendorDeliveryMethods { get; set; }
     }

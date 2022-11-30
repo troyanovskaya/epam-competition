@@ -7,9 +7,9 @@ namespace LocalGoods.DAL.Entities
     {
         public string Name { get; set; }
 
-        public Country Country { get; set; }
+        public virtual Country Country { get; set; }
         public Guid CountryId { get; set; }
 
-        public ICollection<User> Users { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

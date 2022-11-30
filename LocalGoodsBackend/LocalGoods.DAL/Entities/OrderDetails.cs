@@ -8,13 +8,13 @@ namespace LocalGoods.DAL.Entities
         public double Discount { get; set; }
         public double Amount { get; set; }
 
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
         public Guid ProductId { get; set; }
 
-        public UnitType UnitType { get; set; }
+        public virtual UnitType UnitType { get; set; }
         public Guid UnitTypeId { get; set; }
         
-        public Order Order { get; set; }
+        public virtual Order Order { get; set; }
         public Guid OrderId { get; set; }
     }
 }

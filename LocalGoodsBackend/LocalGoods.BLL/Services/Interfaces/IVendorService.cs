@@ -8,7 +8,7 @@ namespace LocalGoods.BLL.Services.Interfaces
 {
     public interface IVendorService
     {
-        Task<IEnumerable<VendorModel>> GetByFilterAsync(VendorFilterModel vendorFilterModel);
+        Task<IEnumerable<VendorModel>> GetAllByFilterAsync(VendorFilterModel vendorFilterModel);
         Task<VendorModel> GetByIdAsync(Guid id);
         Task CreateAsync(CreateVendorModel createVendorModel);
     }

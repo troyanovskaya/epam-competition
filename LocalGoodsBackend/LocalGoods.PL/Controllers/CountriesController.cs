@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LocalGoods.PL.Controllers
 {
     [ApiController]
-    [Route("api/countries")]
+    [Route("api/[controller]")]
     public class CountriesController: ControllerBase
     {
         private readonly ICountryService _countryService;
@@ -25,9 +25,8 @@ namespace LocalGoods.PL.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var countries = _mapper.Map<IEnumerable<CountryResponse>>
-                (await _countryService.GetAllAsync());
-            return Ok(countries);
+            var countries = await _countryService.GetAllAsync();
+            return Ok(_mapper.Map<IEnumerable<CountryResponse>>(countries));
         }
     }
 }

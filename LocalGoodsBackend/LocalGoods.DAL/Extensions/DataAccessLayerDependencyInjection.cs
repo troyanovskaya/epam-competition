@@ -27,8 +27,8 @@ namespace LocalGoods.DAL.Extensions
             services.AddDbContext<LocalGoodsDbContext>(options =>
             {
                 options
-                    .UseLazyLoadingProxies()
-                    .UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                    .UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
+                    .UseLazyLoadingProxies();
             });
         }
 

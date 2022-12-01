@@ -43,23 +43,25 @@ namespace LocalGoods.DAL.Contexts
                             (e.State == EntityState.Added ||
                              e.State == EntityState.Modified));
 
-            var currentUser =
+            
+            // TODO - must be checked, not sure if it works
+            /*var currentUser =
                 _httpContextAccessor.HttpContext.User.Claims
                     .Where(c => c.ValueType == JwtRegisteredClaimNames.Sub)
                     .Select(c => c.Value)
                     .FirstOrDefault()
-                ?? Guid.Empty.ToString();
+                ?? Guid.Empty.ToString();*/
 
             foreach (var entityEntry in entries)
             {
                 var auditEntity = (AuditEntity<Guid>)entityEntry.Entity;
                 auditEntity.ModifiedAt = DateTime.UtcNow;
-                auditEntity.ModifiedBy = new Guid(currentUser);
+                //auditEntity.ModifiedBy = new Guid(currentUser);
 
                 if (entityEntry.State == EntityState.Added)
                 {
                     auditEntity.CreatedAt = DateTime.UtcNow;
-                    auditEntity.CreatedBy = new Guid(currentUser);
+                    //auditEntity.CreatedBy = new Guid(currentUser);
                 }
             }
         }

@@ -37,6 +37,7 @@ namespace LocalGoods.PL
                 app.UseSwaggerUI();
             }
 
+            app.UseCors("AllowAll");
             app.UseHttpsRedirection();
 
             app.UseRouting();

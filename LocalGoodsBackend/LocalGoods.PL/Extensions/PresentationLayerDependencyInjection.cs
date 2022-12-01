@@ -15,6 +15,7 @@ namespace LocalGoods.PL.Extensions
             services.AddOptions(configuration);
             services.AddAutomapper();
             services.AddHttpContextAccessor();
+            services.AddCors();
 
             return services;
         }
@@ -41,6 +42,22 @@ namespace LocalGoods.PL.Extensions
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             
+            return services;
+        }
+        
+        private static IServiceCollection AddCors(this IServiceCollection services)
+        {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder.AllowAnyHeader();
+                        builder.AllowAnyMethod();
+                        builder.AllowAnyOrigin();
+                    });
+            });
+
             return services;
         }
     }

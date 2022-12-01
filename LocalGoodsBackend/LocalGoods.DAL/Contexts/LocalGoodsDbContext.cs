@@ -27,7 +27,7 @@ namespace LocalGoods.DAL.Contexts
 
             builder.ApplyConfigurationsFromAssembly(typeof(ProductConfiguration).Assembly);
         }
-
+        
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             AddAuditEntityProperties();

@@ -8,5 +8,6 @@ namespace LocalGoods.DAL.Entities
         public string Name { get; set; }
 
         public virtual ICollection<VendorDeliveryMethod> VendorDeliveryMethods { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

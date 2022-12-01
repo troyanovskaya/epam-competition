@@ -4,9 +4,9 @@ using LocalGoods.PL.Models.Auth;
 
 namespace LocalGoods.PL.MappingProfiles
 {
-    public class AuthProfile: Profile
+    public class AuthProfilePl: Profile
     {
-        public AuthProfile()
+        public AuthProfilePl()
         {
             CreateMap<LoginRequest, LoginModel>();
             CreateMap<SignupRequest, SignupModel>();

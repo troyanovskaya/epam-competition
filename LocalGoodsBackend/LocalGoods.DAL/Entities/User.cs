@@ -6,6 +6,9 @@ namespace LocalGoods.DAL.Entities
 {
     public class User: IdentityUser<Guid>
     {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
         public City City { get; set; }
         public Guid CityId { get; set; }
         

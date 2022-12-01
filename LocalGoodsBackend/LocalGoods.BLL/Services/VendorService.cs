@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using LocalGoods.BLL.Exceptions;
 using LocalGoods.BLL.Models.DeliveryMethod;
-using LocalGoods.BLL.Models.Filters;
 using LocalGoods.BLL.Models.PaymentMethod;
 using LocalGoods.BLL.Models.Vendor;
 using LocalGoods.BLL.Services.Interfaces;
 using LocalGoods.DAL.Entities;
 using LocalGoods.DAL.Repositories.Interfaces;
+using LocalGoods.Shared.FilterModels;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -54,7 +54,7 @@ namespace LocalGoods.BLL.Services
 
         public async Task<IEnumerable<VendorModel>> GetAllByFilterAsync(VendorFilterModel vendorFilterModel)
         {
-            var vendors = await GetVendorsByFilterAsync(vendorFilterModel);
+            var vendors = await _vendorRepository.GetByFilterAsync(vendorFilterModel);
 
             return _mapper.Map<IEnumerable<VendorModel>>(vendors);
         }
@@ -101,18 +101,6 @@ namespace LocalGoods.BLL.Services
 
                 await _vendorPaymentMethodRepository.AddAsync(vendorPaymentMethod);
             }
-        }
-
-        private async Task<IEnumerable<Vendor>> GetVendorsByFilterAsync(VendorFilterModel vendorFilterModel)
-        {
-            var vendors = await _vendorRepository.GetAllAsync();
-
-            if (vendorFilterModel.CityId != null)
-            {
-                vendors = vendors.Where(v => v.User.CityId == vendorFilterModel.CityId);
-            }
-
-            return vendors;
         }
     }
 }

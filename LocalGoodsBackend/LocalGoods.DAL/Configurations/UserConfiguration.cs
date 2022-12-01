@@ -1,4 +1,5 @@
-﻿using LocalGoods.DAL.Entities;
+﻿using System;
+using LocalGoods.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

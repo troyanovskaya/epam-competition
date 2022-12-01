@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using LocalGoods.DAL.Configurations;
 using LocalGoods.DAL.Entities;
+using LocalGoods.DAL.Initializers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,7 @@ namespace LocalGoods.DAL.Contexts
             base.OnModelCreating(builder);
 
             builder.ApplyConfigurationsFromAssembly(typeof(ProductConfiguration).Assembly);
+            IdentityDataInitializer.SeedData(builder);
         }
         
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

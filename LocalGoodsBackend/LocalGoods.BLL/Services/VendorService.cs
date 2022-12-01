@@ -52,7 +52,6 @@ namespace LocalGoods.BLL.Services
             await _vendorRepository.SaveChangesAsync();
         }
 
-        // TODO: Fix incorrect applying filters
         public async Task<IEnumerable<VendorModel>> GetAllByFilterAsync(VendorFilterModel vendorFilterModel)
         {
             var vendors = await GetVendorsByFilterAsync(vendorFilterModel);
@@ -106,22 +105,14 @@ namespace LocalGoods.BLL.Services
 
         private async Task<IEnumerable<Vendor>> GetVendorsByFilterAsync(VendorFilterModel vendorFilterModel)
         {
-            Expression<Func<Vendor, bool>> filterExpression = v => true;
+            var vendors = await _vendorRepository.GetAllAsync();
 
             if (vendorFilterModel.CityId != null)
             {
-                ApplyFilter(filterExpression, v => v.User.CityId == vendorFilterModel.CityId);
+                vendors = vendors.Where(v => v.User.CityId == vendorFilterModel.CityId);
             }
 
-            var vendors = await _vendorRepository.GetByFilterAsync(filterExpression);
-
             return vendors;
-        }
-
-        private void ApplyFilter(Expression<Func<Vendor, bool>> expression, Expression<Func<Vendor, bool>> filter)
-        {
-            var body = Expression.Or(expression.Body, filter.Body);
-            expression = Expression.Lambda<Func<Vendor, bool>>(body, expression.Parameters[0]);
         }
     }
 }

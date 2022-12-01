@@ -10,13 +10,14 @@ namespace LocalGoods.DAL.Entities
         public decimal Price { get; set; }
         public string Poster { get; set; }
         public double Discount { get; set; }
-
-        public Vendor Vendor { get; set; }
+        public double Amount { get; set; }
         public Guid VendorId { get; set; }
+        public Guid UnitTypeId { get; set; }
         
-        public ICollection<Category> Categories { get; set; }
-        public ICollection<Image> Images { get; set; }
-        public ICollection<OrderDetails> OrderDetails { get; set; }
-        public ICollection<ProductStorage> ProductStorages { get; set; }
+        public virtual Vendor Vendor { get; set; }
+        public virtual UnitType UnitType { get; set; }
+        public virtual ICollection<Category> Categories { get; set; }
+        public virtual ICollection<Image> Images { get; set; }
+        public virtual ICollection<OrderDetails> OrderDetails { get; set; }
     }
 }

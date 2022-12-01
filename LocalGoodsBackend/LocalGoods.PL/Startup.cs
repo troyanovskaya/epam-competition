@@ -23,10 +23,9 @@ namespace LocalGoods.PL
             services.AddControllers();
             services.AddSwaggerGen();
 
+            services.AddPresentationLayerServices(Configuration);
             services.AddBusinessLogicLayerServices(Configuration);
             services.AddDataAccessLayerServices(Configuration);
-            services.ConfigureOptions(Configuration);
-            services.ConfigureAutoMapper();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -39,6 +38,7 @@ namespace LocalGoods.PL
             app.UseSwagger();
             app.UseSwaggerUI();
 
+            app.UseCors("AllowAll");
             app.UseHttpsRedirection();
 
             app.UseRouting();

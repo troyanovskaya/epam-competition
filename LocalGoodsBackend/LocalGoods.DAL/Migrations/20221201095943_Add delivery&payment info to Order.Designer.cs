@@ -4,14 +4,16 @@ using LocalGoods.DAL.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LocalGoods.DAL.Migrations
 {
     [DbContext(typeof(LocalGoodsDbContext))]
-    partial class LocalGoodsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221201095943_Add delivery&payment info to Order")]
+    partial class AdddeliverypaymentinfotoOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,26 +74,6 @@ namespace LocalGoods.DAL.Migrations
                     b.HasIndex("CountryId");
 
                     b.ToTable("Cities");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("43809371-4e7d-4616-ac26-d62d202d4767"),
-                            CountryId = new Guid("6123c937-478b-43a3-98f7-4c6b6fa2fa83"),
-                            Name = "Kharkiv"
-                        },
-                        new
-                        {
-                            Id = new Guid("e82aafbd-713b-4e12-a4a1-b38378a5a90f"),
-                            CountryId = new Guid("6123c937-478b-43a3-98f7-4c6b6fa2fa83"),
-                            Name = "Dnipro"
-                        },
-                        new
-                        {
-                            Id = new Guid("a146ee56-265a-4fd7-9732-5393637220bf"),
-                            CountryId = new Guid("b83484f9-092d-4b51-afcb-5dc2450e2593"),
-                            Name = "Yerevan"
-                        });
                 });
 
             modelBuilder.Entity("LocalGoods.DAL.Entities.Country", b =>
@@ -111,18 +93,6 @@ namespace LocalGoods.DAL.Migrations
                         .IsUnique();
 
                     b.ToTable("Countries");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("6123c937-478b-43a3-98f7-4c6b6fa2fa83"),
-                            Name = "Ukraine"
-                        },
-                        new
-                        {
-                            Id = new Guid("b83484f9-092d-4b51-afcb-5dc2450e2593"),
-                            Name = "Armenia"
-                        });
                 });
 
             modelBuilder.Entity("LocalGoods.DAL.Entities.DeliveryMethod", b =>
@@ -351,22 +321,6 @@ namespace LocalGoods.DAL.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("4096c786-5577-4bb2-80c9-9c105b90e16f"),
-                            ConcurrencyStamp = "d9f4bb7d-7411-4706-995f-560c7e5b1972",
-                            Name = "Buyer",
-                            NormalizedName = "BUYER"
-                        },
-                        new
-                        {
-                            Id = new Guid("77f9bef5-e093-4c53-9bbe-99afb43d2229"),
-                            ConcurrencyStamp = "9409fbda-8820-43e1-9bb0-f6c0b2ded749",
-                            Name = "Vendor",
-                            NormalizedName = "VENDOR"
-                        });
                 });
 
             modelBuilder.Entity("LocalGoods.DAL.Entities.UnitType", b =>
@@ -471,29 +425,6 @@ namespace LocalGoods.DAL.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("3470262f-7571-ed11-b214-d41b81b14cb3"),
-                            AccessFailedCount = 0,
-                            BirthDate = new DateTime(1978, 10, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CityId = new Guid("43809371-4e7d-4616-ac26-d62d202d4767"),
-                            ConcurrencyStamp = "8288ed6b-3972-47c1-a4bc-fa4fa26e02f5",
-                            Email = "smith@gmail.com",
-                            EmailConfirmed = false,
-                            FirstName = "John",
-                            LastName = "Smith",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "SMITH@GMAIL.COM",
-                            NormalizedUserName = "JOHNSMITH",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDkYL3RUU/7ScDdxXvD9hB8eYViSrUANyvEFA9M3SPX4HVqrKWaSf8GpATYde6Wibw==",
-                            PhoneNumber = "+38012345678",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "7JBROKPX4RLYJCPXDGP2COQ25X2DFUN5",
-                            TwoFactorEnabled = false,
-                            UserName = "JohnSmith"
-                        });
                 });
 
             modelBuilder.Entity("LocalGoods.DAL.Entities.Vendor", b =>
@@ -668,13 +599,6 @@ namespace LocalGoods.DAL.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = new Guid("3470262f-7571-ed11-b214-d41b81b14cb3"),
-                            RoleId = new Guid("4096c786-5577-4bb2-80c9-9c105b90e16f")
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>

@@ -10,6 +10,8 @@ namespace LocalGoods.DAL.Configurations
         {
             builder.Property(r => r.Id)
                 .HasDefaultValueSql("newsequentialid()");
+            
+            
         }
     }
 }

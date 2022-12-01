@@ -19,6 +19,10 @@ namespace LocalGoods.DAL.Configurations
             builder
                 .HasMany(d => d.VendorDeliveryMethods)
                 .WithOne(v => v.DeliveryMethod);
+
+            builder
+                .HasMany(d => d.Orders)
+                .WithOne(o => o.DeliveryMethod);
         }
     }
 }

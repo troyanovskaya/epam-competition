@@ -20,16 +20,6 @@ namespace LocalGoods.PL.Controllers
             _vendorService = vendorService;
         }
 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> Add([FromBody] CreateVendorModel createVendorModel)
-        {
-            await _vendorService.CreateAsync(createVendorModel);
-
-            return Ok();
-        }
-
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<VendorModel>))]
         public async Task<ActionResult> GetAll([FromQuery] VendorFilterModel vendorFilterModel)
@@ -47,6 +37,16 @@ namespace LocalGoods.PL.Controllers
             var vendor = await _vendorService.GetByIdAsync(id);
 
             return Ok(vendor);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Add([FromBody] CreateVendorModel createVendorModel)
+        {
+            await _vendorService.CreateAsync(createVendorModel);
+
+            return Ok();
         }
     }
 }

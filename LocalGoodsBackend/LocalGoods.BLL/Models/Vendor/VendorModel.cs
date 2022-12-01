@@ -9,6 +9,7 @@ namespace LocalGoods.BLL.Models.Vendor
     public class VendorModel
     {
         public Guid Id { get; set; }
+        public string Name { get; set; }
         public string ViberNumber { get; set; }
         public string TelegramName { get; set; }
         public string InstagramName { get; set; }

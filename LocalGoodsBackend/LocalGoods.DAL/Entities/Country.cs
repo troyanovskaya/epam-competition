@@ -7,6 +7,6 @@ namespace LocalGoods.DAL.Entities
     {
         public string Name { get; set; }
         
-        public ICollection<City> Cities { get; set; }
+        public virtual ICollection<City> Cities { get; set; }
     }
 }

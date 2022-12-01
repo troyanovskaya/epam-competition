@@ -24,6 +24,10 @@ namespace LocalGoods.DAL.Configurations
                 .WithMany(v => v.Products);
 
             builder
+                .HasOne(p => p.UnitType)
+                .WithMany(ut => ut.Products);
+
+            builder
                 .HasMany(p => p.Categories)
                 .WithMany(c => c.Products);
 
@@ -34,10 +38,6 @@ namespace LocalGoods.DAL.Configurations
             builder
                 .HasMany(p => p.OrderDetails)
                 .WithOne(od => od.Product);
-
-            builder
-                .HasMany(p => p.ProductStorages)
-                .WithOne(ps => ps.Product);
         }
     }
 }

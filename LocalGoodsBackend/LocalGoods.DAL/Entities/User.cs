@@ -9,9 +9,9 @@ namespace LocalGoods.DAL.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
-        public City City { get; set; }
         public Guid CityId { get; set; }
         
-        public ICollection<Order> Orders { get; set; }
+        public virtual City City { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

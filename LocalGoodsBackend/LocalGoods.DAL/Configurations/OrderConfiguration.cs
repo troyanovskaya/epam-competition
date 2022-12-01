@@ -8,6 +8,14 @@ namespace LocalGoods.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<Order> builder)
         {
+            builder.Property(o => o.PaymentInformation)
+                .HasMaxLength(1000)
+                .IsRequired();
+
+            builder.Property(o => o.DeliveryInformation)
+                .HasMaxLength(1000)
+                .IsRequired();
+            
             builder
                 .HasMany(o => o.OrderDetails)
                 .WithOne(od => od.Order);
@@ -15,6 +23,14 @@ namespace LocalGoods.DAL.Configurations
             builder
                 .HasOne(o => o.User)
                 .WithMany(u => u.Orders);
+
+            builder
+                .HasOne(o => o.PaymentMethod)
+                .WithMany(pm => pm.Orders);
+
+            builder
+                .HasOne(o => o.DeliveryMethod)
+                .WithMany(dm => dm.Orders);
         }
     }
 }

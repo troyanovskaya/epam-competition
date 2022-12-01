@@ -19,6 +19,10 @@ namespace LocalGoods.DAL.Configurations
             builder
                 .HasMany(p => p.VendorPaymentMethods)
                 .WithOne(v => v.PaymentMethod);
+
+            builder
+                .HasMany(p => p.Orders)
+                .WithOne(o => o.PaymentMethod);
         }
     }
 }

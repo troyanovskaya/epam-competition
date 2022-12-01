@@ -1,35 +1,69 @@
 ﻿using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using LocalGoods.DAL.Configurations;
 using LocalGoods.DAL.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace LocalGoods.DAL.Contexts
 {
     public class LocalGoodsDbContext: IdentityDbContext<User, Role, Guid>
     {
-        public LocalGoodsDbContext(DbContextOptions<LocalGoodsDbContext> options): base(options){}
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public LocalGoodsDbContext(
+            DbContextOptions<LocalGoodsDbContext> options,
+            IHttpContextAccessor httpContextAccessor): base(options)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-            builder.ApplyConfiguration(new UserConfiguration());
-            builder.ApplyConfiguration(new RoleConfiguration());
-            builder.ApplyConfiguration(new VendorConfiguration());
-            builder.ApplyConfiguration(new CountryConfiguration());
-            builder.ApplyConfiguration(new CityConfiguration());
-            builder.ApplyConfiguration(new CategoryConfiguration());
-            builder.ApplyConfiguration(new OrderConfiguration());
-            builder.ApplyConfiguration(new PaymentMethodConfiguration());
-            builder.ApplyConfiguration(new DeliveryMethodConfiguration());
-            builder.ApplyConfiguration(new OrderDetailsConfiguration());
-            builder.ApplyConfiguration(new ImageConfiguration());
-            builder.ApplyConfiguration(new ProductConfiguration());
-            builder.ApplyConfiguration(new ProductStorageConfiguration());
-            builder.ApplyConfiguration(new UnitTypeConfiguration());
-            builder.ApplyConfiguration(new VendorPaymentMethodConfiguration());
-            builder.ApplyConfiguration(new VendorDeliveryMethodConfiguration());
+            builder.ApplyConfigurationsFromAssembly(typeof(ProductConfiguration).Assembly);
+        }
+        
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            AddAuditEntityProperties();
+            
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void AddAuditEntityProperties()
+        {
+            var entries = ChangeTracker
+                .Entries()
+                .Where(e => e.Entity is AuditEntity<Guid> &&
+                            (e.State == EntityState.Added ||
+                             e.State == EntityState.Modified));
+
+            
+            // TODO - must be checked, not sure if it works
+            /*var currentUser =
+                _httpContextAccessor.HttpContext.User.Claims
+                    .Where(c => c.ValueType == JwtRegisteredClaimNames.Sub)
+                    .Select(c => c.Value)
+                    .FirstOrDefault()
+                ?? Guid.Empty.ToString();*/
+
+            foreach (var entityEntry in entries)
+            {
+                var auditEntity = (AuditEntity<Guid>)entityEntry.Entity;
+                auditEntity.ModifiedAt = DateTime.UtcNow;
+                //auditEntity.ModifiedBy = new Guid(currentUser);
+
+                if (entityEntry.State == EntityState.Added)
+                {
+                    auditEntity.CreatedAt = DateTime.UtcNow;
+                    //auditEntity.CreatedBy = new Guid(currentUser);
+                }
+            }
         }
 
         public DbSet<Vendor> Vendors { get; set; }
@@ -43,7 +77,6 @@ namespace LocalGoods.DAL.Contexts
         public DbSet<Image> Images { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<UnitType> UnitTypes { get; set; }
-        public DbSet<ProductStorage> ProductStorages { get; set; }
         public DbSet<VendorPaymentMethod> VendorPaymentMethods { get; set; }
         public DbSet<VendorDeliveryMethod> VendorDeliveryMethods { get; set; }
     }

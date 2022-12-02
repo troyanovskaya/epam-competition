@@ -18,6 +18,8 @@ import { SearchInputComponent } from './components/search-input/search-input.com
 import { BasketComponent } from './components/basket/basket.component'
 import { FormsModule } from '@angular/forms';
 import { BasketItemComponent } from './components/basket-item/basket-item.component';
+import { PayForOrderComponent } from './components/pay-for-order/pay-for-order.component';
+import { UserInfoComponent } from './components/user-info/user-info.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -33,7 +35,9 @@ import { BasketItemComponent } from './components/basket-item/basket-item.compon
         MenyOptionComponent,
         SearchInputComponent,
         BasketComponent,
-        BasketItemComponent
+        BasketItemComponent,
+        PayForOrderComponent,
+        UserInfoComponent
 
     ],
     providers: [],

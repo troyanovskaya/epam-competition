@@ -8,6 +8,8 @@
 .product-img{
   border-radius: 10px;
   margin-top:20px;
+  width:200px;
+  height:150px;
 }
 h3{
   margin:0px;
@@ -25,9 +27,16 @@ input{
 
 .bin{
   transition: .5s;
+  width:30px;
+  height:30px;
 }
 
 .bin:hover{
   transform: scale(1.2);
+}
+
+.delivery img{
+  width:30px;
+  height:30px;
 }
 

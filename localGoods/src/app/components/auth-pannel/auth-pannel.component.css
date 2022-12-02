@@ -46,10 +46,25 @@
 
 .basket{
   transition: .5s;
+  width:30px;
+  height:30px;
 }
 .basket:hover{
   transform: scale(1.1);
 }
 
+.avatar{
+  background-color: cadetblue;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  position:relative;
+}
+
+app-user-info{
+  position:absolute;
+  right:-170px;
+  top:60px;
+}
 
 

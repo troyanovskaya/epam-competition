@@ -11,8 +11,14 @@ export class BasketService {
   ].sort((el1, el2) => el1.vendor.localeCompare(el2.vendor));
 
   total:number = this.basket.reduce((pastVal, currentEl) => pastVal+currentEl.price*currentEl.amount, 0);
+  orderPrice:number = 0;
   onTotalChange(){
     this.total = this.basket.reduce((pastVal, currentEl) => pastVal+currentEl.price*currentEl.amount, 0);
   }
+
+  orderArr:{id:number, name:string, vendor:string, src:string, price:number, delivery:string, amount:number}[] = [];
+  orderVendor: {id:number, companyName:string, deliveryMethods:string[],
+    paymentMethods:string[] } = {id:1, companyName:'Vendor1', deliveryMethods:['Take away', 'Delivery'],
+    paymentMethods:['Card', 'Cash']}
   constructor() { }
 }

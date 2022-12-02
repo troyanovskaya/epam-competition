@@ -9,7 +9,7 @@
   background-color:rgba(0,0,0,.3);
 }
 
-.basket{
+.order{
   max-height: 400px;
   overflow-y: auto;
   overflow-x: auto;
@@ -33,44 +33,36 @@
   padding-left: 20px;
 }
 
-.item{
-  display:flex;
-  flex-direction: row;
-  width:80%;
-  margin:0 auto;
-  align-items: center;
-  background-color: lightblue;
-  gap:50px;
-  padding:20px;
-  color:#162e50;
-  border-radius: 10px;
-  justify-content: space-between;
-}
-
-.vendor-button{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap:40px;
-  align-items: center;
-}
-
-
 .items-container{
-  padding:20px;
   display: flex;
   flex-direction: column;
   gap:20px;
+  padding:0px 50px 20px 50px;
 }
 
-.vendor-name{
-  width: max-content;
-  background-color: #7382a1;
-  color:white;
-  margin:20px;
-  padding:20px;
+.item{
+  display:flex;
+  flex-direction: row;
+  gap:20px;
+  justify-content: center;
+}
+
+.item > *{
+  width:30%;
   font-size: 1.2em;
-  border-radius: 10px;
+}
+
+.text{
+  padding: 20px 40px;
+  font-size: 1.3em;
+}
+
+.card{
+  padding:10px;
+}
+
+.label{
+  font-size: 1.2em;
 }
 
 button{
@@ -80,25 +72,41 @@ button{
   padding:10px;
   width:200px;
   height:50px;
-  margin-left:20px;
+  border-radius: 10px;
+  margin:20px 40px;
+}
+
+form{
+  display:flex;
+  flex-direction: row;
+  padding: 0 40px;
+  gap:20px;
+  align-items: center;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.formQ{
+  width:40%;
+}
+
+input{
   border-radius: 10px;
 }
 
-.no-items{
-  color:gray;
+.textAfterFinish{
+  color:grey;
   font-style: italic;
-  font-size: 1.2em;
+  padding: 0px 50px;
 }
 
-.tray{
-  display: block;
-  margin: 0 auto;
-  width:300px;
-  height:200px;
-
+.total{
+  display:flex;
+  flex-direction: row;
+  gap:20px;
+  justify-content: flex-end;
+  padding: 0px 50px;
 }
 
-.finish-button, .vendor-name{
-  width: 40%;
 
-}
+

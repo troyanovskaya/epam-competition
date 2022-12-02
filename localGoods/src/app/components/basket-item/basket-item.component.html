@@ -1,9 +1,9 @@
 <div class="product">
   <h3>{{item.name | titlecase}}</h3>
-  <img class="product-img" width="200px" height="150px" src="{{item.src}}" alt="{{item.name}}">
+  <img class="product-img" src="{{item.src}}" alt="{{item.name}}">
 
   <div class="delivery">
-    <img height="30px" width="30px" src="assets/delivery.png" alt="delivery">
+    <img src="assets/delivery.png" alt="delivery">
     <p>{{item.delivery | titlecase}}</p>
   </div>
 
@@ -11,7 +11,7 @@
 <div class="icons">
   <div class="price">{{item.price * number | currency:'GBP'}} </div>
   <input (change)="changeTotal()" type="number" min="1" max="100" value="1" [(ngModel)]="number" >
-  <img class="bin" (click)="deleteItem()" height="30px" width="30px" src="assets/bin.png" alt="bin">
+  <img class="bin" (click)="deleteItem()" src="assets/bin.png" alt="bin">
 
 </div>
 

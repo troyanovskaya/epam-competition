@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LocalGoods.BLL.Exceptions
+namespace LocalGoods.BLL.Exceptions.NotFoundException
 {
     public class NotFoundException : Exception
     {

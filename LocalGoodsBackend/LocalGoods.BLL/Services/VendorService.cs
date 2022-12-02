@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using LocalGoods.BLL.Exceptions;
+using LocalGoods.BLL.Exceptions.NotFoundException;
 using LocalGoods.BLL.Models.DeliveryMethod;
 using LocalGoods.BLL.Models.PaymentMethod;
 using LocalGoods.BLL.Models.Vendor;
@@ -10,8 +10,6 @@ using LocalGoods.Shared.FilterModels;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace LocalGoods.BLL.Services
@@ -49,7 +47,7 @@ namespace LocalGoods.BLL.Services
 
             if (vendor is null)
             {
-                throw new NotFoundException("The vendor with the specified id doesn't exist");
+                throw new VendorNotFoundException(id);
             }
 
             return _mapper.Map<VendorModel>(vendor);
@@ -59,7 +57,7 @@ namespace LocalGoods.BLL.Services
         {
             if (await _userManager.FindByIdAsync(createVendorModel.UserId.ToString()) is null)
             {
-                throw new NotFoundException("The user with the specified id doesn't exist");
+                throw new UserNotFoundException(createVendorModel.UserId);
             }
 
             var vendor = _mapper.Map<Vendor>(createVendorModel);
@@ -79,7 +77,7 @@ namespace LocalGoods.BLL.Services
             {
                 if (await _vendorDeliveryMethodRepository.CheckIfEntityExistsByIdAsync(deliveryMethod.DeliveryMethodId))
                 {
-                    throw new NotFoundException("The delivery method with the specified id doesn't exist");
+                    throw new DeliveryMethodNotFoundException(deliveryMethod.DeliveryMethodId);
                 }
 
                 var vendorDeliveryMethod = _mapper.Map<VendorDeliveryMethod>(deliveryMethod);
@@ -95,7 +93,7 @@ namespace LocalGoods.BLL.Services
             {
                 if (await _vendorPaymentMethodRepository.CheckIfEntityExistsByIdAsync(paymentMethod.PaymentMethodId))
                 {
-                    throw new NotFoundException("The delivery method with the specified id doesn't exist");
+                    throw new PaymentMethodNotFoundException(paymentMethod.PaymentMethodId);
                 }
 
                 var vendorPaymentMethod = _mapper.Map<VendorPaymentMethod>(paymentMethod);

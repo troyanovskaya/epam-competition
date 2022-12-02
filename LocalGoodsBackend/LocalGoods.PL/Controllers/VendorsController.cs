@@ -1,5 +1,6 @@
 ﻿using LocalGoods.BLL.Models.Vendor;
 using LocalGoods.BLL.Services.Interfaces;
+using LocalGoods.DAL.Entities;
 using LocalGoods.Shared.FilterModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -40,13 +41,14 @@ namespace LocalGoods.PL.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Add([FromBody] CreateVendorModel createVendorModel)
         {
-            await _vendorService.CreateAsync(createVendorModel);
+            var createdVendor = await _vendorService.CreateAsync(createVendorModel);
 
-            return Ok();
+            var location = Url.Action(nameof(GetById), new { id = createdVendor.Id }) ?? $"/{createdVendor.Id}";
+            return Created(location, createdVendor);
         }
     }
 }

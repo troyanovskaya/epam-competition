@@ -36,22 +36,6 @@ namespace LocalGoods.BLL.Services
             _userManager = userManager;
         }
 
-        public async Task CreateAsync(CreateVendorModel createVendorModel)
-        {
-            if (await _userManager.FindByIdAsync(createVendorModel.UserId.ToString()) is null)
-            {
-                throw new NotFoundException("The user with the specified id doesn't exist");
-            }
-
-            var vendor = _mapper.Map<Vendor>(createVendorModel);
-
-            await _vendorRepository.AddAsync(vendor);
-            await InsertDeliveryMethodsAsync(vendor.Id, createVendorModel.DeliveryMethods);
-            await InsertPaymentMethodsAsync(vendor.Id, createVendorModel.PaymentMethods);
-
-            await _vendorRepository.SaveChangesAsync();
-        }
-
         public async Task<IEnumerable<VendorModel>> GetAllByFilterAsync(VendorFilterModel vendorFilterModel)
         {
             var vendors = await _vendorRepository.GetByFilterAsync(vendorFilterModel);
@@ -67,6 +51,24 @@ namespace LocalGoods.BLL.Services
             {
                 throw new NotFoundException("The vendor with the specified id doesn't exist");
             }
+
+            return _mapper.Map<VendorModel>(vendor);
+        }
+
+        public async Task<VendorModel> CreateAsync(CreateVendorModel createVendorModel)
+        {
+            if (await _userManager.FindByIdAsync(createVendorModel.UserId.ToString()) is null)
+            {
+                throw new NotFoundException("The user with the specified id doesn't exist");
+            }
+
+            var vendor = _mapper.Map<Vendor>(createVendorModel);
+
+            await _vendorRepository.AddAsync(vendor);
+            await InsertDeliveryMethodsAsync(vendor.Id, createVendorModel.DeliveryMethods);
+            await InsertPaymentMethodsAsync(vendor.Id, createVendorModel.PaymentMethods);
+
+            await _vendorRepository.SaveChangesAsync();
 
             return _mapper.Map<VendorModel>(vendor);
         }

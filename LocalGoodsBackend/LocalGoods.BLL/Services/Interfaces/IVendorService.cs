@@ -10,6 +10,6 @@ namespace LocalGoods.BLL.Services.Interfaces
     {
         Task<IEnumerable<VendorModel>> GetAllByFilterAsync(VendorFilterModel vendorFilterModel);
         Task<VendorModel> GetByIdAsync(Guid id);
-        Task CreateAsync(CreateVendorModel createVendorModel);
+        Task<VendorModel> CreateAsync(CreateVendorModel createVendorModel);
     }
 }

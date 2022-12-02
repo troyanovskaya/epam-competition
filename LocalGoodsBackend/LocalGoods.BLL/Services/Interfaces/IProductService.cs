@@ -1,5 +1,5 @@
-﻿using LocalGoods.BLL.Models.Filters;
-using LocalGoods.BLL.Models.Product;
+﻿using LocalGoods.BLL.Models.Product;
+using LocalGoods.Shared.FilterModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

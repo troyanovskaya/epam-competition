@@ -34,9 +34,11 @@ namespace LocalGoods.PL
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             app.UseSwagger();
             app.UseSwaggerUI();
+
+            app.UseExceptionHandlingMiddleware();
 
             app.UseCors("AllowAll");
             app.UseHttpsRedirection();

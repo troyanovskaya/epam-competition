@@ -19,6 +19,7 @@ import { LogInPageComponent } from './components/log-in-page/log-in-page.compone
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
 import { MatDialogModule } from '@angular/material/dialog';
+import { SignUpPageComponent } from './components/sign-up-page/sign-up-page.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { MatDialogModule } from '@angular/material/dialog';
         MenyLeftPanelComponent,
         MenyOptionComponent,
         SearchInputComponent,
-        LogInPageComponent
+        LogInPageComponent,
+        SignUpPageComponent
 
     ],
     providers: [],

@@ -5,12 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Extensions\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\LocalGoods.BLL\LocalGoods.BLL.csproj" />
+    <ProjectReference Include="..\LocalGoods.Shared\LocalGoods.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -49,6 +49,7 @@ namespace LocalGoods.BLL.Extensions
             services.AddScoped<IJwtHandler, JwtHandler>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<IVendorService, VendorService>();
 
             return services;
         }

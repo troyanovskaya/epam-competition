@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LocalGoods.BLL.Models.Filters
+namespace LocalGoods.Shared.FilterModels
 {
     public class VendorFilterModel
     {

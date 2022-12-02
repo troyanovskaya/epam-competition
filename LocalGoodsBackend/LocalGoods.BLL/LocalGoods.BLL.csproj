@@ -5,11 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="MappingProfiles\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\LocalGoods.DAL\LocalGoods.DAL.csproj" />
+    <ProjectReference Include="..\LocalGoods.Shared\LocalGoods.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

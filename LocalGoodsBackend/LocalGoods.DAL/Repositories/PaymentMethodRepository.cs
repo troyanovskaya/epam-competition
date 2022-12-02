@@ -2,6 +2,8 @@
 using LocalGoods.DAL.Entities;
 using LocalGoods.DAL.Repositories.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LocalGoods.DAL.Repositories
 {
@@ -9,6 +11,11 @@ namespace LocalGoods.DAL.Repositories
     {
         public PaymentMethodRepository(LocalGoodsDbContext context) : base(context)
         {
+        }
+
+        public IEnumerable<Guid> GetExceptIdsAsync(IEnumerable<Guid> paymentMethodIds)
+        {
+            return paymentMethodIds.Except(_dbSet.Select(dm => dm.Id));
         }
     }
 }

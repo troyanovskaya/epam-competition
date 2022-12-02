@@ -1,7 +1,12 @@
 ﻿using LocalGoods.DAL.Contexts;
 using LocalGoods.DAL.Entities;
+using LocalGoods.DAL.Extensions;
 using LocalGoods.DAL.Repositories.Interfaces;
+using LocalGoods.Shared.FilterModels;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LocalGoods.DAL.Repositories
 {
@@ -9,6 +14,14 @@ namespace LocalGoods.DAL.Repositories
     {
         public VendorRepository(LocalGoodsDbContext context) : base(context)
         {
+        }
+
+        public async Task<IEnumerable<Vendor>> GetByFilterAsync(VendorFilterModel vendorFilterModel)
+        {
+            return await ((LocalGoodsDbContext)_context).Vendors
+                .AsQueryable()
+                .FilterByCity(vendorFilterModel.CityId)
+                .ToListAsync();
         }
     }
 }

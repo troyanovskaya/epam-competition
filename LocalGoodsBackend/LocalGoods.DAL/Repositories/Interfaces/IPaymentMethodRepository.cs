@@ -6,6 +6,6 @@ namespace LocalGoods.DAL.Repositories.Interfaces
 {
     public interface IPaymentMethodRepository : IRepository<Guid, PaymentMethod>
     {
-        public IEnumerable<Guid> GetExceptIdsAsync(IEnumerable<Guid> paymentMethodIds);
+        IEnumerable<Guid> GetExceptIdsAsync(IEnumerable<Guid> paymentMethodIds);
     }
 }

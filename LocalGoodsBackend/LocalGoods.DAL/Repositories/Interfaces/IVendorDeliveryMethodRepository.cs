@@ -7,6 +7,6 @@ namespace LocalGoods.DAL.Repositories.Interfaces
 {
     public interface IVendorDeliveryMethodRepository : IRepository<Guid, VendorDeliveryMethod>
     {
-        public Task AddRangeAsync(IEnumerable<VendorDeliveryMethod> deliveryMethods);
+        Task AddRangeAsync(IEnumerable<VendorDeliveryMethod> deliveryMethods);
     }
 }

@@ -7,6 +7,6 @@ namespace LocalGoods.DAL.Repositories.Interfaces
 {
     public interface IVendorPaymentMethodRepository : IRepository<Guid, VendorPaymentMethod>
     {
-        public Task AddRangeAsync(IEnumerable<VendorPaymentMethod> paymentMethods);
+        Task AddRangeAsync(IEnumerable<VendorPaymentMethod> paymentMethods);
     }
 }

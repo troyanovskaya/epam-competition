@@ -6,6 +6,6 @@ namespace LocalGoods.DAL.Repositories.Interfaces
 {
     public interface IDeliveryMethodRepository : IRepository<Guid, DeliveryMethod>
     {
-        public IEnumerable<Guid> GetExceptIdsAsync(IEnumerable<Guid> deliveryMethodIds);
+        IEnumerable<Guid> GetExceptIdsAsync(IEnumerable<Guid> deliveryMethodIds);
     }
 }

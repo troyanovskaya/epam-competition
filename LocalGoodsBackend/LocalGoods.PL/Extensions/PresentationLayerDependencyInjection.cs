@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LocalGoods.BLL.MappingProfiles;
 using LocalGoods.BLL.Models.Auth.JWT;
+using LocalGoods.PL.MappingProfiles;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,15 +34,7 @@ namespace LocalGoods.PL.Extensions
         private static IServiceCollection AddAutomapper(
             this IServiceCollection services)
         {
-            var mappingConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new LocalGoods.PL.MappingProfiles.AuthProfile());
-                mc.AddProfile(new AuthProfile());
-                mc.AddProfile(new VendorProfile());
-                mc.AddProfile(new VendorDeliveryMethodProfile());
-                mc.AddProfile(new VendorPaymentMethodProfile());
-            });
-            services.AddSingleton(mappingConfig.CreateMapper());
+            services.AddAutoMapper(typeof(CityProfile), typeof(CityProfilePl));
 
             return services;
         }

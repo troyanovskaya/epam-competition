@@ -35,6 +35,7 @@ namespace LocalGoods.PL.Extensions
         {
             var mappingConfig = new MapperConfiguration(mc =>
             {
+                mc.AddProfile(new LocalGoods.PL.MappingProfiles.AuthProfile());
                 mc.AddProfile(new AuthProfile());
                 mc.AddProfile(new VendorProfile());
                 mc.AddProfile(new VendorDeliveryMethodProfile());

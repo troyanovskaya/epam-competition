@@ -9,26 +9,26 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./user-info.component.css']
 })
 export class UserInfoComponent implements OnInit {
-  profile:boolean = true;
-  status:boolean = false;
-  history:boolean = false;
+  // profile:boolean = true;
+  // status:boolean = false;
+  // history:boolean = false;
 
-  activeProfile(){
-    this.profile = true;
-    this.status = false;
-    this.history = false;
-  }
-  activeStatus(){
-    this.profile = false;
-    this.status = true;
-    this.history = false;
-  }
-  activeHistory(){
-    this.profile = false;
-    this.status = false;
-    this.history = true;
-  }
-  constructor(public userService:UserService, public historyService:OrderHistoryService, public statusService:OrderInProcessService) { }
+  // activeProfile(){
+  //   this.profile = true;
+  //   this.status = false;
+  //   this.history = false;
+  // }
+  // activeStatus(){
+  //   this.profile = false;
+  //   this.status = true;
+  //   this.history = false;
+  // }
+  // activeHistory(){
+  //   this.profile = false;
+  //   this.status = false;
+  //   this.history = true;
+  // }
+  constructor(public userService:UserService) { }
 
   ngOnInit(): void {
   }

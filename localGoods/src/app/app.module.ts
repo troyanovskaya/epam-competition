@@ -20,6 +20,25 @@ import { FormsModule } from '@angular/forms';
 import { BasketItemComponent } from './components/basket-item/basket-item.component';
 import { PayForOrderComponent } from './components/pay-for-order/pay-for-order.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
+import { MainPageComponent } from './components/main-page/main-page.component';
+import { Routes, RouterModule } from '@angular/router';
+import { UserStatusComponent } from './components/user-status/user-status.component';
+import { UserHistoryComponent } from './components/user-history/user-history.component';
+
+const appRoutes:Routes = [{
+  path: '', component: MainPageComponent
+},
+{
+  path: 'user/info', component: UserInfoComponent
+},
+{
+  path: 'user/status', component: UserStatusComponent
+},
+{
+  path: 'user/history', component: UserHistoryComponent
+}
+
+]
 @NgModule({
     declarations: [
         AppComponent,
@@ -37,7 +56,10 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
         BasketComponent,
         BasketItemComponent,
         PayForOrderComponent,
-        UserInfoComponent
+        UserInfoComponent,
+        MainPageComponent,
+        UserStatusComponent,
+        UserHistoryComponent
 
     ],
     providers: [],
@@ -46,7 +68,8 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
         BrowserModule,
         AppRoutingModule,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
+        RouterModule.forRoot(appRoutes),
     ]
 })
 export class AppModule { }

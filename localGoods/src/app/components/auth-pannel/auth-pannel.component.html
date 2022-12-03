@@ -2,7 +2,7 @@
     <div class="logo-container"><span  class="logo">{{logoName | uppercase}}</span></div>
     <div>
       <div class="auth-container">
-        <div class="avatar" (mouseleave)="userInfoHidden=true" (mouseover)="userInfoHidden=false">
+        <div class="avatar" routerLink="/user/info">
           <app-user-info *ngIf="!userInfoHidden"></app-user-info>
         </div>
         <a href="#" class="log-in">Log in </a>

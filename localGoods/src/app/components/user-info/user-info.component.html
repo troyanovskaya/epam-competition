@@ -1,41 +1,23 @@
-<div class="flex-container">
-  <div class="menu">
-    <div [ngClass]="{'active-menu': profile}">
-      <a  (click)="activeProfile()">User profile</a>
-    </div>
-    <div [ngClass]="{'active-menu': status}">
-      <a (click)="activeStatus()">Order status</a>
-    </div>
-    <div [ngClass]="{'active-menu': history}">
-      <a (click)="activeHistory()">Order history</a>
-    </div>
+<div class="profile-menu">
+  <div class="active-menu">
+    <a  href="#">User profile</a>
   </div>
-  <div class="content">
-    <div *ngIf="profile" class="profile">
-      <div class="avatar"></div>
-      <div><p>User login: {{userService.user.name+' '+userService.user.surname}}</p></div>
-      <div><p>Date of birth: {{userService.user.dateOfBirth}}</p></div>
-      <div><p>Adress: {{userService.user.country+', '+userService.user.city+', '+userService.user.adress}}</p></div>
-      <div><p>Phone number: {{userService.user.phoneNumber}}</p></div>
-      <div><p>Email adress: {{userService.user.email}}</p></div>
-    </div>
-    <div *ngIf="status" class="status">
-      <div *ngFor="let order of statusService.currentOrders">
-        <div><p>Order number: {{order.id}}</p></div>
-        <div><p>Adress: {{order.adress}}</p></div>
-        <div><p>Vendor: {{order.vendor}}</p></div>
-        <div><p>Total: {{order.total}}</p></div>
-        <div><p>Order status: {{order.status}}</p></div>
-      </div>
-    </div>
-    <div *ngIf="history"  class="history">
-      <div *ngFor="let order of historyService.pastOrders">
-        <div><p>Order number: {{order.id}}</p></div>
-        <div><p>Order date: {{order.date}}</p></div>
-        <div><p>Adress: {{order.adress}}</p></div>
-        <div><p>Vendor: {{order.vendor}}</p></div>
-        <div><p>Total: {{order.total}}</p></div>
-      </div>
-    </div>
+  <div>
+    <a routerLink="/user/status">Order status</a>
+  </div>
+  <div>
+    <a routerLink="/user/history">Order history</a>
   </div>
 </div>
+
+<div class="content">
+  <div class="profile">
+    <div class="avatar-container">
+      <div class="avatar"></div>
+    </div>
+    <div><p>User login: {{userService.user.name+' '+userService.user.surname}}</p></div>
+    <div><p>Date of birth: {{userService.user.dateOfBirth}}</p></div>
+    <div><p>Adress: {{userService.user.country+', '+userService.user.city+', '+userService.user.adress}}</p></div>
+    <div><p>Phone number: {{userService.user.phoneNumber}}</p></div>
+    <div><p>Email adress: {{userService.user.email}}</p></div>
+  </div>

@@ -32,7 +32,7 @@ namespace LocalGoods.PL.Controllers
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(VendorModel))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> GetById(Guid id)
         {
             var vendor = await _vendorService.GetByIdAsync(id);
@@ -42,7 +42,7 @@ namespace LocalGoods.PL.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> Add([FromBody] CreateVendorModel createVendorModel)
         {
             var createdVendor = await _vendorService.CreateAsync(createVendorModel);

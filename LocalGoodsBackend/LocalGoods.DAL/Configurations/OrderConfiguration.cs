@@ -8,10 +8,6 @@ namespace LocalGoods.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<Order> builder)
         {
-            builder.Property(o => o.PaymentInformation)
-                .HasMaxLength(1000)
-                .IsRequired();
-
             builder.Property(o => o.DeliveryInformation)
                 .HasMaxLength(1000)
                 .IsRequired();

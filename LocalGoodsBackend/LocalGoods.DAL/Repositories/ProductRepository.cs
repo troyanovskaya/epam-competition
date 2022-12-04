@@ -19,7 +19,6 @@ namespace LocalGoods.DAL.Repositories
         public async Task<IEnumerable<Product>> GetByFilterAsync(ProductFilterModel productFilterModel)
         {
             return await ((LocalGoodsDbContext)_context).Products
-                .AsQueryable()
                 .FilterByCity(productFilterModel.CityId)
                 .FilterByCategories(productFilterModel.CategoryIds)
                 .ToListAsync();

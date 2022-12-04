@@ -59,8 +59,7 @@ namespace LocalGoods.PL.Controllers
         {
             var createdVendor = await _vendorService.CreateAsync(createVendorModel);
 
-            var location = Url.Action(nameof(GetById), new { id = createdVendor.Id }) ?? $"/{createdVendor.Id}";
-            return Created(location, createdVendor);
+            return CreatedAtAction(nameof(GetById), new { id = createdVendor.Id }, createdVendor);
         }
     }
 }

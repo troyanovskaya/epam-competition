@@ -46,8 +46,7 @@ namespace LocalGoods.PL.Controllers
         {
             var createdProduct = await _productService.CreateAsync(createProductModel);
 
-            var location = Url.Action(nameof(GetById), new { id = createdProduct.Id }) ?? $"/{createdProduct.Id}";
-            return Created(location, createdProduct);
+            return CreatedAtAction(nameof(GetById), new { id = createdProduct.Id }, createdProduct);
         }
     }
 }

@@ -6,7 +6,6 @@ namespace LocalGoods.DAL.Entities
     {
         public Guid VendorId { get; set; }
         public Guid PaymentMethodId { get; set; }
-        public string Information { get; set; }
         
         public virtual Vendor Vendor { get; set; }
         public virtual PaymentMethod PaymentMethod { get; set; }

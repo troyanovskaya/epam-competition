@@ -19,6 +19,6 @@ namespace LocalGoods.BLL.Models.Product
         public UnitTypeModel UnitType { get; set; }
 
         public IEnumerable<CategoryModel> Categories { get; set; }
-        public IEnumerable<ImageModel> Images { get; set; }
+        public IEnumerable<string> Images { get; set; }
     }
 }

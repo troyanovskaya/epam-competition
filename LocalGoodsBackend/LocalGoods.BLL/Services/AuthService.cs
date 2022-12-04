@@ -3,10 +3,13 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Authentication;
 using System.Threading.Tasks;
 using AutoMapper;
+using LocalGoods.BLL.Exceptions.BadRequestException;
+using LocalGoods.BLL.Exceptions.NotFoundException;
 using LocalGoods.BLL.Models.Auth;
 using LocalGoods.BLL.Models.Auth.JWT;
 using LocalGoods.BLL.Services.Interfaces;
 using LocalGoods.DAL.Entities;
+using LocalGoods.DAL.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace LocalGoods.BLL.Services
@@ -17,23 +20,28 @@ namespace LocalGoods.BLL.Services
         private readonly SignInManager<User> _signInManager;
         private readonly IMapper _mapper;
         private readonly IJwtHandler _jwtHandler;
+        private readonly ICityRepository _cityRepository;
 
         public AuthService(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             IMapper mapper, 
-            IJwtHandler jwtHandler)
+            IJwtHandler jwtHandler,
+            ICityRepository cityRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
             _jwtHandler = jwtHandler;
+            _cityRepository = cityRepository;
         }
 
         public async Task SignupAsync(SignupModel model)
         {
-            // TODO - Check if city exists by its id
-            // TODO - Add custom auth exceptions
+            if (!await _cityRepository.CheckIfEntityExistsByIdAsync(model.CityId))
+            {
+                throw new CityNotFoundException(model.CityId);
+            }
 
             var user = _mapper.Map<User>(model);
 
@@ -41,7 +49,7 @@ namespace LocalGoods.BLL.Services
 
             if (!result.Succeeded)
             {
-                throw new Exception("Duplicate user name or email");
+                throw new AuthException(result.ToString());
             }
 
             // TODO - Seed Roles and add user to a default one

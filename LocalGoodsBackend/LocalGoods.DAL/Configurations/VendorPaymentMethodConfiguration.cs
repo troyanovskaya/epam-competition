@@ -8,9 +8,6 @@ namespace LocalGoods.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<VendorPaymentMethod> builder)
         {
-            builder.Property(vp => vp.Information)
-                .IsRequired();
-
             builder
                 .HasOne(vp => vp.Vendor)
                 .WithMany(v => v.VendorPaymentMethods);

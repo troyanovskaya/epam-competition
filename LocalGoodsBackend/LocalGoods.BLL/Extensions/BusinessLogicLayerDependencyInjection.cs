@@ -50,6 +50,7 @@ namespace LocalGoods.BLL.Extensions
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<IVendorService, VendorService>();
+            services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
 
             return services;

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace LocalGoods.DAL.Extensions
 {
-    public static class VendorsQueryableExtension
+    public static class VendorsQueryableExtensions
     {
         public static IQueryable<Vendor> FilterByCity(this IQueryable<Vendor> vendors, Guid? cityId)
         {

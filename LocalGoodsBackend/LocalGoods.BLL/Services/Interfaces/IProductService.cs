@@ -8,9 +8,9 @@ namespace LocalGoods.BLL.Services.Interfaces
 {
     public interface IProductService
     {
-        Task<IEnumerable<ProductModel>> GetByFilterAsync(ProductFilterModel productFilterModel);
-        Task<IEnumerable<ProductModel>> GetByVendorIdAsync(Guid id);
+        Task<IEnumerable<ProductModel>> GetAllByFilterAsync(ProductFilterModel productFilterModel);
+        Task<IEnumerable<ProductModel>> GetByVendorIdAsync(Guid vendorId);
         Task<ProductModel> GetByIdAsync(Guid id);
-        Task CreateAsync(CreateProductModel createProductModel);
+        Task<ProductModel> CreateAsync(CreateProductModel createProductModel);
     }
 }

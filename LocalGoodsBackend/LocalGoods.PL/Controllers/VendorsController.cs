@@ -1,4 +1,5 @@
-﻿using LocalGoods.BLL.Models.Vendor;
+﻿using LocalGoods.BLL.Models.Product;
+using LocalGoods.BLL.Models.Vendor;
 using LocalGoods.BLL.Services.Interfaces;
 using LocalGoods.DAL.Entities;
 using LocalGoods.Shared.FilterModels;
@@ -15,10 +16,12 @@ namespace LocalGoods.PL.Controllers
     public class VendorsController : ControllerBase
     {
         private readonly IVendorService _vendorService;
+        private readonly IProductService _productService;
 
-        public VendorsController(IVendorService vendorService)
+        public VendorsController(IVendorService vendorService, IProductService productService)
         {
             _vendorService = vendorService;
+            _productService = productService;
         }
 
         [HttpGet]
@@ -28,6 +31,15 @@ namespace LocalGoods.PL.Controllers
             var vendors = await _vendorService.GetAllByFilterAsync(vendorFilterModel);
 
             return Ok(vendors);
+        }
+
+        [HttpGet("{id}/products")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProductModel>))]
+        public async Task<ActionResult> GetProductsByVendorId(Guid id)
+        {
+            var products = await _productService.GetByVendorIdAsync(id);
+
+            return Ok(products);
         }
 
         [HttpGet("{id}")]

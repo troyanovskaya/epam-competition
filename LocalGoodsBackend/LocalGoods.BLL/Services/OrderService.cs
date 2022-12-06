@@ -68,7 +68,7 @@ namespace LocalGoods.BLL.Services
             var currentUserId = await GetCurrentUserId();
 
             await ValidateOrderAsync(createOrderModel);
-            await ValidateOrderDetailsAsync(createOrderModel.OrderDetails);
+            await ValidateOrderDetailsAsync(createOrderModel.OrderDetails, currentUserId);
 
             var orderId = Guid.NewGuid();
             await ActualizeOrderInformation(createOrderModel, orderId);
@@ -108,7 +108,7 @@ namespace LocalGoods.BLL.Services
             }
         }
 
-        private async Task ValidateOrderDetailsAsync(IEnumerable<CreateOrderDetailsModel> orderDetails)
+        private async Task ValidateOrderDetailsAsync(IEnumerable<CreateOrderDetailsModel> orderDetails, Guid currentUserId)
         {
             if (orderDetails is null || !orderDetails.Any())
             {
@@ -117,6 +117,11 @@ namespace LocalGoods.BLL.Services
 
             var firstProductId = orderDetails.FirstOrDefault().ProductId;
             var vendor = await _vendorRepository.GetByProductIdAsync(firstProductId);
+
+            if (vendor.Id == currentUserId)
+            {
+                throw new OrderBadRequestException("Vendor can't buy his own products");
+            }
 
             foreach (var currentOrderDetails in orderDetails)
             {

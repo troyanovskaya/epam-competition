@@ -163,7 +163,7 @@ namespace LocalGoods.BLL.Services
 
             if (vendor.Id == currentUserId)
             {
-                throw new OrderBadRequestException("Vendor can't buy his own products");
+                throw new OrderBadRequestException("Vendor can't buy their own products");
             }
 
             foreach (var currentOrderDetails in orderDetails)

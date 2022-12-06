@@ -5,6 +5,7 @@ namespace LocalGoods.DAL.Entities
 {
     public class Order: AuditEntity<Guid>
     {
+        public Guid UserId { get; set; }
         public virtual User User { get; set; }
         public Guid PaymentMethodId { get; set; }
         public Guid DeliveryMethodId { get; set; }

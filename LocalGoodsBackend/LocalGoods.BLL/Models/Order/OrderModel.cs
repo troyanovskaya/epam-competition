@@ -9,7 +9,9 @@ namespace LocalGoods.BLL.Models.Order
         public Guid Id { get; set; }
         public DateTime CreatedAt { get; set; }
         public Guid UserId { get; set; }
-
+        public Guid PaymentMethodId { get; set; }
+        public Guid DeliveryMethodId { get; set; }
+        public string DeliveryInformation { get; set; }
         public IEnumerable<OrderDetailsModel> OrderDetails { get; set; }
     }
 }

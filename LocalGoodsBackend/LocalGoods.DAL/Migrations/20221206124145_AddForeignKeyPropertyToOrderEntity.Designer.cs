@@ -4,14 +4,16 @@ using LocalGoods.DAL.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LocalGoods.DAL.Migrations
 {
     [DbContext(typeof(LocalGoodsDbContext))]
-    partial class LocalGoodsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221206124145_AddForeignKeyPropertyToOrderEntity")]
+    partial class AddForeignKeyPropertyToOrderEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,53 +53,6 @@ namespace LocalGoods.DAL.Migrations
                         .IsUnique();
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("41f9836e-c0cb-43a6-a842-22e6f5a60f1d"),
-                            Name = "Farm boxes"
-                        },
-                        new
-                        {
-                            Id = new Guid("7cd2e12d-c85d-4d97-9c18-808dff6151f4"),
-                            Name = "Produce"
-                        },
-                        new
-                        {
-                            Id = new Guid("4374b672-d0b1-4f31-b512-408400ce6105"),
-                            Name = "Meat & Seafood"
-                        },
-                        new
-                        {
-                            Id = new Guid("c11d3cf5-6847-4281-9950-52b03f3811fa"),
-                            Name = "Dairy & Eggs"
-                        },
-                        new
-                        {
-                            Id = new Guid("40ff4e36-58e3-408a-b563-aa51c7db51a2"),
-                            Name = "Bakery"
-                        },
-                        new
-                        {
-                            Id = new Guid("2766062f-f160-49aa-bd48-c62ac0b2b0da"),
-                            Name = "Pantry"
-                        },
-                        new
-                        {
-                            Id = new Guid("e9a69e36-98e3-4da2-9c76-f723c4b59178"),
-                            Name = "Drinks"
-                        },
-                        new
-                        {
-                            Id = new Guid("9072ca4f-1c4b-4abe-9535-876e4d50e005"),
-                            Name = "Easy meals"
-                        },
-                        new
-                        {
-                            Id = new Guid("24735f5d-906d-4c41-9f86-89d19d6620c6"),
-                            Name = "New & Seasonal"
-                        });
                 });
 
             modelBuilder.Entity("LocalGoods.DAL.Entities.City", b =>
@@ -135,39 +90,9 @@ namespace LocalGoods.DAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f647d6cc-359d-4d42-aca7-3a6f5a691eae"),
-                            CountryId = new Guid("6123c937-478b-43a3-98f7-4c6b6fa2fa83"),
-                            Name = "Kyiv"
-                        },
-                        new
-                        {
-                            Id = new Guid("7ce5b758-acdc-4bbd-a745-2fbd5a64b598"),
-                            CountryId = new Guid("6123c937-478b-43a3-98f7-4c6b6fa2fa83"),
-                            Name = "Lviv"
-                        },
-                        new
-                        {
                             Id = new Guid("a146ee56-265a-4fd7-9732-5393637220bf"),
                             CountryId = new Guid("b83484f9-092d-4b51-afcb-5dc2450e2593"),
                             Name = "Yerevan"
-                        },
-                        new
-                        {
-                            Id = new Guid("3eff06d7-6e86-4dad-bbb7-b43f3321f83e"),
-                            CountryId = new Guid("b83484f9-092d-4b51-afcb-5dc2450e2593"),
-                            Name = "Gyumri"
-                        },
-                        new
-                        {
-                            Id = new Guid("d0dba58e-9a7f-427b-ad6e-3dba4e2a8af5"),
-                            CountryId = new Guid("575f0725-41bc-49b7-9137-37070087ff4d"),
-                            Name = "London"
-                        },
-                        new
-                        {
-                            Id = new Guid("07d7e41c-b329-4dc0-a9d1-7e0e84b73bba"),
-                            CountryId = new Guid("575f0725-41bc-49b7-9137-37070087ff4d"),
-                            Name = "Liverpool"
                         });
                 });
 
@@ -199,11 +124,6 @@ namespace LocalGoods.DAL.Migrations
                         {
                             Id = new Guid("b83484f9-092d-4b51-afcb-5dc2450e2593"),
                             Name = "Armenia"
-                        },
-                        new
-                        {
-                            Id = new Guid("575f0725-41bc-49b7-9137-37070087ff4d"),
-                            Name = "England"
                         });
                 });
 

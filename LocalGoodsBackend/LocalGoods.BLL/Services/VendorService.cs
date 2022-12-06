@@ -7,10 +7,12 @@ using LocalGoods.BLL.Services.Interfaces;
 using LocalGoods.DAL.Entities;
 using LocalGoods.DAL.Repositories.Interfaces;
 using LocalGoods.Shared.FilterModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace LocalGoods.BLL.Services
@@ -24,13 +26,14 @@ namespace LocalGoods.BLL.Services
         private readonly IDeliveryMethodRepository _deliveryMethodRepository;
         private readonly IPaymentMethodRepository _paymentMethodRepository;
         private readonly UserManager<User> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public VendorService(IMapper mapper, IVendorRepository vendorRepository,
             IVendorDeliveryMethodRepository vendorDeliveryMethodRepository,
             IVendorPaymentMethodRepository vendorPaymentMethodRepository,
             IDeliveryMethodRepository deliveryMethodRepository,
             IPaymentMethodRepository paymentMethodRepository,
-            UserManager<User> userManager)
+            UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _mapper = mapper;
             _vendorRepository = vendorRepository;
@@ -39,6 +42,7 @@ namespace LocalGoods.BLL.Services
             _deliveryMethodRepository = deliveryMethodRepository;
             _paymentMethodRepository = paymentMethodRepository;
             _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<IEnumerable<VendorModel>> GetAllByFilterAsync(VendorFilterModel vendorFilterModel)
@@ -62,17 +66,22 @@ namespace LocalGoods.BLL.Services
 
         public async Task<VendorModel> CreateAsync(CreateVendorModel createVendorModel)
         {
-            if (await _userManager.FindByIdAsync(createVendorModel.UserId.ToString()) is null)
+            var currentUserId = _httpContextAccessor?.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var currentUser = await _userManager.FindByIdAsync(currentUserId);
+
+            if (string.IsNullOrEmpty(currentUserId))
             {
-                throw new UserNotFoundException(createVendorModel.UserId);
+                throw new UserNotFoundException();
             }
 
             var vendor = _mapper.Map<Vendor>(createVendorModel);
+            vendor.UserId = Guid.Parse(currentUserId);
 
             await _vendorRepository.AddAsync(vendor);
             await InsertDeliveryMethodsAsync(vendor.Id, createVendorModel.DeliveryMethods);
             await InsertPaymentMethodsAsync(vendor.Id, createVendorModel.PaymentMethods);
 
+            await _userManager.AddToRoleAsync(currentUser, "Vendor");
             await _vendorRepository.SaveChangesAsync();
 
             return _mapper.Map<VendorModel>(vendor);

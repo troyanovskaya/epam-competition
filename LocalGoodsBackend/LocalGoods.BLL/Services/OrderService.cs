@@ -13,6 +13,8 @@ using LocalGoods.BLL.Models.OrderDetails;
 using LocalGoods.BLL.Exceptions.BadRequestException;
 using LocalGoods.DAL.Repositories;
 using System.Numerics;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace LocalGoods.BLL.Services
 {
@@ -25,11 +27,12 @@ namespace LocalGoods.BLL.Services
         private readonly IDeliveryMethodRepository _deliveryMethodRepository;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public OrderService(IMapper mapper, IOrderRepository orderRepository,
             IProductRepository productRepository, IVendorRepository vendorRepository,
             IPaymentMethodRepository paymentMethodRepository, IDeliveryMethodRepository deliveryMethodRepository,
-            UserManager<User> userManager)
+            UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _orderRepository = orderRepository;
             _productRepository = productRepository;
@@ -38,6 +41,7 @@ namespace LocalGoods.BLL.Services
             _deliveryMethodRepository = deliveryMethodRepository;
             _mapper = mapper;
             _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<IEnumerable<OrderModel>> GetAllAsync()
@@ -61,6 +65,8 @@ namespace LocalGoods.BLL.Services
 
         public async Task<OrderModel> CreateAsync(CreateOrderModel createOrderModel)
         {
+            var currentUserId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
             await ValidateOrderAsync(createOrderModel);
             await ValidateOrderDetailsAsync(createOrderModel.OrderDetails);
 
@@ -68,8 +74,8 @@ namespace LocalGoods.BLL.Services
             await ActualizeOrderInformation(createOrderModel, orderId);
             var order = _mapper.Map<Order>(createOrderModel);
             order.Id = orderId;
+            order.UserId = Guid.Parse(currentUserId);
 
-            
             await _orderRepository.AddAsync(order);
             await _orderRepository.SaveChangesAsync();
 

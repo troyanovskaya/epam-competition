@@ -2,6 +2,7 @@
 using LocalGoods.BLL.Models.PaymentMethod;
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace LocalGoods.BLL.Models.Vendor
 {
@@ -11,6 +12,7 @@ namespace LocalGoods.BLL.Models.Vendor
         public string ViberNumber { get; set; }
         public string TelegramName { get; set; }
         public string InstagramName { get; set; }
+        [JsonIgnore]
         public Guid UserId { get; set; }
         public IEnumerable<PaymentInformationModel> PaymentMethods { get; set; }
         public IEnumerable<DeliveryInformationModel> DeliveryMethods { get; set; }

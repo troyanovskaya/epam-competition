@@ -15,6 +15,8 @@ using LocalGoods.DAL.Repositories;
 using System.Numerics;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using LocalGoods.Shared;
+using LocalGoods.BLL.Models.OrderStatus;
 
 namespace LocalGoods.BLL.Services
 {
@@ -25,6 +27,7 @@ namespace LocalGoods.BLL.Services
         private readonly IVendorRepository _vendorRepository;
         private readonly IPaymentMethodRepository _paymentMethodRepository;
         private readonly IDeliveryMethodRepository _deliveryMethodRepository;
+        private readonly IOrderStatusRepository _orderStatusRepository;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -32,6 +35,7 @@ namespace LocalGoods.BLL.Services
         public OrderService(IMapper mapper, IOrderRepository orderRepository,
             IProductRepository productRepository, IVendorRepository vendorRepository,
             IPaymentMethodRepository paymentMethodRepository, IDeliveryMethodRepository deliveryMethodRepository,
+            IOrderStatusRepository orderStatusRepository,
             UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _orderRepository = orderRepository;
@@ -39,6 +43,7 @@ namespace LocalGoods.BLL.Services
             _vendorRepository = vendorRepository;
             _paymentMethodRepository = paymentMethodRepository;
             _deliveryMethodRepository = deliveryMethodRepository;
+            _orderStatusRepository = orderStatusRepository;
             _mapper = mapper;
             _userManager = userManager;
             _httpContextAccessor = httpContextAccessor;
@@ -63,6 +68,13 @@ namespace LocalGoods.BLL.Services
             return _mapper.Map<OrderModel>(order);
         }
 
+        public async Task<IEnumerable<OrderStatusModel>> GetAllOrderStatusesAsync()
+        {
+            var orderStatuses = await _orderStatusRepository.GetAllAsync();
+
+            return _mapper.Map<IEnumerable<OrderStatusModel>>(orderStatuses);
+        }
+
         public async Task<OrderModel> CreateAsync(CreateOrderModel createOrderModel)
         {
             var currentUserId = await GetCurrentUserId();
@@ -80,6 +92,37 @@ namespace LocalGoods.BLL.Services
             await _orderRepository.SaveChangesAsync();
 
             return _mapper.Map<OrderModel>(order);
+        }
+
+        public async Task ChangeStatusAsync(Guid orderId, Guid orderStatusId)
+        {
+            var order = await _orderRepository.GetByIdAsync(orderId);
+
+            if (order is null)
+            {
+                throw new OrderNotFoundException(orderId);
+            }
+
+            if (orderStatusId == GlobalValues.NewOrderStatusId)
+            {
+                throw new OrderBadRequestException("Order status can't be changed to New");
+            }
+
+            if (order.OrderStatus.Id == GlobalValues.CompletedOrderStatusId)
+            {
+                throw new OrderBadRequestException("Order status can't be changed from Completed");
+            }
+
+            var orderStatus = await _orderStatusRepository.GetByIdAsync(orderStatusId);
+
+            if (orderStatus is null)
+            {
+                throw new OrderStatusNotFoundException(orderStatusId);
+            }
+
+            order.OrderStatus = orderStatus;
+            await _orderRepository.UpdateAsync(order);
+            await _orderRepository.SaveChangesAsync();
         }
 
         private async Task<Guid> GetCurrentUserId()

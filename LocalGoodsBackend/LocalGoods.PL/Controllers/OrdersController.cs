@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using LocalGoods.BLL.Models.Order;
+using LocalGoods.BLL.Models.OrderStatus;
 using LocalGoods.BLL.Services.Interfaces;
+using LocalGoods.PL.Models.Order;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -42,6 +44,15 @@ namespace LocalGoods.PL.Controllers
             return Ok(order);
         }
 
+        [HttpGet("order-statuses")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OrderStatusModel>))]
+        public async Task<ActionResult> GetOrderStatuses()
+        {
+            var orderStatuses = await _orderService.GetAllOrderStatusesAsync();
+
+            return Ok(orderStatuses);
+        }
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -51,6 +62,17 @@ namespace LocalGoods.PL.Controllers
             var createdOrder = await _orderService.CreateAsync(createOrderModel);
 
             return CreatedAtAction(nameof(GetById), new { id = createdOrder.Id }, createdOrder);
+        }
+
+        [HttpPut("{id}/status")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> ChangeOrderStatus(Guid id, [FromBody] ChangeStatusRequest changeStatusRequest)
+        {
+            await _orderService.ChangeStatusAsync(id, changeStatusRequest.OrderStatusId);
+
+            return Ok();
         }
     }
 }

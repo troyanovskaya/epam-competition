@@ -41,7 +41,7 @@ namespace LocalGoods.DAL.Configurations
                 },
                 new OrderStatus
                 {
-                    Id = new Guid("c9cf6ba9-26c9-46cd-a660-6ae4f23a3d96"),
+                    Id = GlobalValues.CompletedOrderStatusId,
                     Name = "Completed"
                 },
                 new OrderStatus

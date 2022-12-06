@@ -3,6 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { SignUpPageComponent } from '../sign-up-page/sign-up-page.component';
 import { HttpRequestService } from '../http-request.service';
+import { catchError, of} from 'rxjs';
 
 @Component({
   selector: 'app-log-in-page',
@@ -22,7 +23,14 @@ export class LogInPageComponent {
   })
 
   checkUser() {
-    console.log(this.http.post("auth/login",this.validationForm.value));
+    this.http.post("/Auth/login",{email: this.validationForm.value.email, password: this.validationForm.value.password})
+    .pipe(
+      catchError(err => {
+        alert(err.error.message)
+        return of('');
+      })
+    )
+    .subscribe()
   }
 
   closeWindow() {

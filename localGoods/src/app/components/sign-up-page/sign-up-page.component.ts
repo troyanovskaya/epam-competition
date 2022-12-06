@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpRequestService } from '../http-request.service';
-import { Observable, pluck } from 'rxjs';
+import { Observable, catchError, of } from 'rxjs';
 import { City, Country } from '../country.model';
+import { User } from 'src/app/user.model';
 
 @Component({
   selector: 'app-sign-up-page',
@@ -48,7 +49,9 @@ export class SignUpPageComponent {
     ]),
   })
 
-  constructor(private dialogRef: MatDialogRef<SignUpPageComponent>, private http: HttpRequestService) { }
+  constructor(
+    private dialogRef: MatDialogRef<SignUpPageComponent>,
+    private http: HttpRequestService) { }
 
   ngOnInit() {
     this.http.getCountries().subscribe((countriesList: Array<Country>) => {
@@ -56,7 +59,6 @@ export class SignUpPageComponent {
         this.cities.push(...country.cities);
       })
     });
-    console.log(this.cities)
   }
 
   closeWindow() {
@@ -72,7 +74,12 @@ export class SignUpPageComponent {
       phoneNumber: this.validationForm.value.phone,
       password: this.validationForm.value.password,
       cityId: this.selectedCityId
-    }).subscribe()
+    }).pipe(
+      catchError(err => {
+        alert(err.error.message)
+        return of('');
+      })
+    ).subscribe()
   }
 
   selectCity() {

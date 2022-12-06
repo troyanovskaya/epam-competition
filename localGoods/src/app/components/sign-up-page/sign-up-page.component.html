@@ -58,7 +58,7 @@
                         contain min 8 characters, min 1 upper case letter and 1 number</span>
                 </label>
 
-                <input type="password" formControlName="password" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+                <input type="password" formControlName="password" pattern="^(?=.*[0-9])(?=.*[A-Z])(?!.* ).{8,}$"
                     id="password" placeholder="password" />
             </div>
 
@@ -69,7 +69,7 @@
                         should match with password
                     </span>
                 </label>
-                <input type="password" formControlName="confirmation" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+                <input type="password" formControlName="confirmation" pattern="^(?=.*[0-9])(?=.*[A-Z])(?!.* ).{8,}$"
                     id="confirmation" placeholder="confirm your password" />
             </div>
         </div>

@@ -2,12 +2,10 @@
 using LocalGoods.BLL.Models.Order;
 using LocalGoods.BLL.Models.OrderStatus;
 using LocalGoods.BLL.Services.Interfaces;
-using LocalGoods.PL.Models.Order;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace LocalGoods.PL.Controllers
@@ -68,9 +66,9 @@ namespace LocalGoods.PL.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> ChangeOrderStatus(Guid id, [FromBody] ChangeStatusRequest changeStatusRequest)
+        public async Task<ActionResult> ChangeOrderStatus(Guid id, [FromQuery] Guid orderStatusId)
         {
-            await _orderService.ChangeStatusAsync(id, changeStatusRequest.OrderStatusId);
+            await _orderService.ChangeStatusAsync(id, orderStatusId);
 
             return Ok();
         }

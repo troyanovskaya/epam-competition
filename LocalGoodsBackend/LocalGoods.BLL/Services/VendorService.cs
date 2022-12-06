@@ -66,16 +66,10 @@ namespace LocalGoods.BLL.Services
 
         public async Task<VendorModel> CreateAsync(CreateVendorModel createVendorModel)
         {
-            var currentUserId = _httpContextAccessor?.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var currentUser = await _userManager.FindByIdAsync(currentUserId);
-
-            if (string.IsNullOrEmpty(currentUserId))
-            {
-                throw new UserNotFoundException();
-            }
+            var currentUser = await GetCurrentUser();
 
             var vendor = _mapper.Map<Vendor>(createVendorModel);
-            vendor.UserId = Guid.Parse(currentUserId);
+            vendor.UserId = currentUser.Id;
 
             await _vendorRepository.AddAsync(vendor);
             await InsertDeliveryMethodsAsync(vendor.Id, createVendorModel.DeliveryMethods);
@@ -85,6 +79,19 @@ namespace LocalGoods.BLL.Services
             await _vendorRepository.SaveChangesAsync();
 
             return _mapper.Map<VendorModel>(vendor);
+        }
+
+        private async Task<User> GetCurrentUser()
+        {
+            var currentUserId = _httpContextAccessor?.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var currentUser = await _userManager.FindByIdAsync(currentUserId);
+
+            if (currentUser is null)
+            {
+                throw new UserNotFoundException();
+            }
+
+            return currentUser;
         }
 
         private async Task InsertDeliveryMethodsAsync(Guid vendorId, IEnumerable<DeliveryInformationModel> deliveryMethods)

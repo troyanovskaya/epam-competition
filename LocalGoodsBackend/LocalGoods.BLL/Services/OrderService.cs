@@ -65,7 +65,7 @@ namespace LocalGoods.BLL.Services
 
         public async Task<OrderModel> CreateAsync(CreateOrderModel createOrderModel)
         {
-            var currentUserId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var currentUserId = await GetCurrentUserId();
 
             await ValidateOrderAsync(createOrderModel);
             await ValidateOrderDetailsAsync(createOrderModel.OrderDetails);
@@ -74,7 +74,7 @@ namespace LocalGoods.BLL.Services
             await ActualizeOrderInformation(createOrderModel, orderId);
             var order = _mapper.Map<Order>(createOrderModel);
             order.Id = orderId;
-            order.UserId = Guid.Parse(currentUserId);
+            order.UserId = currentUserId;
 
             await _orderRepository.AddAsync(order);
             await _orderRepository.SaveChangesAsync();
@@ -82,13 +82,21 @@ namespace LocalGoods.BLL.Services
             return _mapper.Map<OrderModel>(order);
         }
 
-        private async Task ValidateOrderAsync(CreateOrderModel createOrderModel)
+        private async Task<Guid> GetCurrentUserId()
         {
-            if (await _userManager.FindByIdAsync(createOrderModel.UserId.ToString()) is null)
+            var currentUserId = _httpContextAccessor?.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var currentUser = await _userManager.FindByIdAsync(currentUserId);
+
+            if (currentUser is null)
             {
-                throw new UserNotFoundException(createOrderModel.UserId);
+                throw new UserNotFoundException();
             }
 
+            return Guid.Parse(currentUserId);
+        }
+
+        private async Task ValidateOrderAsync(CreateOrderModel createOrderModel)
+        {
             if (await _deliveryMethodRepository.GetByIdAsync(createOrderModel.DeliveryMethodId) is null)
             {
                 throw new DeliveryMethodNotFoundException(createOrderModel.DeliveryMethodId);

@@ -32,6 +32,11 @@ namespace LocalGoods.DAL.Configurations
                 {
                     Id = new Guid("b83484f9-092d-4b51-afcb-5dc2450e2593"),
                     Name = "Armenia"
+                },
+                new Country
+                {
+                    Id = new Guid("575f0725-41bc-49b7-9137-37070087ff4d"),
+                    Name = "England"
                 }
             );
         }

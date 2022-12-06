@@ -8,5 +8,8 @@ namespace LocalGoods.BLL.Services.Interfaces
     {
         Task SignupAsync(SignupModel model);
         Task<JwtResponse> LoginAsync(LoginModel model);
+        Task ConfirmEmailAsync(ConfirmEmailModel model);
+        Task ForgotPasswordAsync(ForgotPasswordModel model);
+        Task ResetPasswordAsync(ResetPasswordModel model);
     }
 }

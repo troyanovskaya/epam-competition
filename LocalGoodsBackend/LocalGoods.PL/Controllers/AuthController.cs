@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using LocalGoods.BLL.Models.Auth;
+using LocalGoods.BLL.Models.Auth.JWT;
 using LocalGoods.BLL.Services.Interfaces;
 using LocalGoods.PL.Models.Auth;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,14 @@ namespace LocalGoods.PL.Controllers
             _authService = authService;
             _mapper = mapper;
         }
+        
+        [HttpGet("confirmEmail")]
+        public async Task<IActionResult> ConfirmEmail([FromQuery]ConfirmEmailRequest request)
+        {
+            var confirmEmailModel = _mapper.Map<ConfirmEmailModel>(request);
+            await _authService.ConfirmEmailAsync(confirmEmailModel);
+            return Ok();
+        }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequest request)
@@ -35,6 +44,22 @@ namespace LocalGoods.PL.Controllers
         {
             var signupModel = _mapper.Map<SignupModel>(request);
             await _authService.SignupAsync(signupModel);
+            return Ok();
+        }
+        
+        [HttpPost("forgotPassword")]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordRequest request)
+        {
+            var forgotPasswordModel = _mapper.Map<ForgotPasswordModel>(request);
+            await _authService.ForgotPasswordAsync(forgotPasswordModel);
+            return Ok();
+        }
+
+        [HttpPost("resetPassword")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
+        {
+            var resetPasswordModel = _mapper.Map<ResetPasswordModel>(request);
+            await _authService.ResetPasswordAsync(resetPasswordModel);
             return Ok();
         }
     }

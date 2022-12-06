@@ -42,7 +42,7 @@ namespace LocalGoods.DAL.Extensions
                     opt.Password.RequireNonAlphanumeric = false;
                     opt.User.RequireUniqueEmail = true;
                     // TODO - Set to false when we have email confirmation functionality
-                    opt.SignIn.RequireConfirmedEmail = false;
+                    opt.SignIn.RequireConfirmedEmail = true;
                 })
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<LocalGoodsDbContext>()

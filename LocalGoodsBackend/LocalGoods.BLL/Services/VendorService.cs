@@ -66,7 +66,7 @@ namespace LocalGoods.BLL.Services
 
         public async Task<VendorModel> CreateAsync(CreateVendorModel createVendorModel)
         {
-            var currentUserId = _httpContextAccessor?.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var currentUserId = _httpContextAccessor?.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var currentUser = await _userManager.FindByIdAsync(currentUserId);
 
             if (string.IsNullOrEmpty(currentUserId))

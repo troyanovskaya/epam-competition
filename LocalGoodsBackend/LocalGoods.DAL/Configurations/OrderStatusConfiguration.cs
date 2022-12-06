@@ -32,7 +32,7 @@ namespace LocalGoods.DAL.Configurations
                 new OrderStatus
                 {
                     Id = new Guid("6f0a355f-c0b1-46a3-a93a-94fad9aa1ed3"),
-                    Name = "In processing"
+                    Name = "Pending"
                 },
                 new OrderStatus
                 {

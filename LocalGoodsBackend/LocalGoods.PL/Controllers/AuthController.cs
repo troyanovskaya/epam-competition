@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using LocalGoods.BLL.Models.Auth;
+using LocalGoods.BLL.Models.Auth.JWT;
 using LocalGoods.BLL.Services.Interfaces;
 using LocalGoods.PL.Models.Auth;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,14 @@ namespace LocalGoods.PL.Controllers
         {
             _authService = authService;
             _mapper = mapper;
+        }
+        
+        [HttpGet("confirmEmail")]
+        public async Task<IActionResult> ConfirmEmail([FromQuery]ConfirmEmailRequest request)
+        {
+            var confirmEmailModel = _mapper.Map<ConfirmEmailModel>(request);
+            await _authService.ConfirmEmailAsync(confirmEmailModel);
+            return Ok();
         }
 
         [HttpPost("login")]

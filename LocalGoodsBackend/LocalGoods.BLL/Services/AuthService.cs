@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Authentication;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using LocalGoods.BLL.Exceptions.BadRequestException;
@@ -10,7 +11,9 @@ using LocalGoods.BLL.Models.Auth.JWT;
 using LocalGoods.BLL.Services.Interfaces;
 using LocalGoods.DAL.Entities;
 using LocalGoods.DAL.Repositories.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace LocalGoods.BLL.Services
 {
@@ -21,19 +24,25 @@ namespace LocalGoods.BLL.Services
         private readonly IMapper _mapper;
         private readonly IJwtHandler _jwtHandler;
         private readonly ICityRepository _cityRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IEmailService _emailService;
 
         public AuthService(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             IMapper mapper, 
             IJwtHandler jwtHandler,
-            ICityRepository cityRepository)
+            ICityRepository cityRepository,
+            IHttpContextAccessor httpContextAccessor,
+            IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
             _jwtHandler = jwtHandler;
             _cityRepository = cityRepository;
+            _httpContextAccessor = httpContextAccessor;
+            _emailService = emailService;
         }
 
         public async Task SignupAsync(SignupModel model)
@@ -52,7 +61,15 @@ namespace LocalGoods.BLL.Services
                 throw new AuthException(result.ToString());
             }
 
-            // TODO - Seed Roles and add user to a default one
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var tokenBytes = Encoding.UTF8.GetBytes(token);
+            var tokenEncoded = WebEncoders.Base64UrlEncode(tokenBytes);
+            
+            var confirmationLink = "https://" + _httpContextAccessor.HttpContext.Request.Host
+                                   + $"/api/auth/confirmEmail?token={tokenEncoded}&email={user.Email}";
+
+            await _emailService.SendEmailConfirmationLinkAsync(user.Email, confirmationLink);
+            await _userManager.AddToRoleAsync(user, "Buyer");
         }
 
         public async Task<JwtResponse> LoginAsync(LoginModel model)
@@ -81,6 +98,26 @@ namespace LocalGoods.BLL.Services
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 ValidTo = token.ValidTo
             };
+        }
+
+        public async Task ConfirmEmailAsync(ConfirmEmailModel model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            if (user == null)
+            {
+                throw new AuthException($"User with email {model.Email} was not found");
+            }
+
+            var tokenBytes = WebEncoders.Base64UrlDecode(model.Token);
+            var tokenDecoded = Encoding.UTF8.GetString(tokenBytes);
+            
+            var result = await _userManager.ConfirmEmailAsync(user, tokenDecoded);
+
+            if (!result.Succeeded)
+            {
+                throw new AuthException($"Failed to confirm email {model.Email}");
+            }
         }
     }
 }

@@ -161,7 +161,7 @@ namespace LocalGoods.BLL.Services
             var firstProductId = orderDetails.FirstOrDefault().ProductId;
             var vendor = await _vendorRepository.GetByProductIdAsync(firstProductId);
 
-            if (vendor.Id == currentUserId)
+            if (vendor.Products.Any(p => orderDetails.Select(codm => codm.ProductId).Contains(p.Id)))
             {
                 throw new OrderBadRequestException("Vendor can't buy their own products");
             }

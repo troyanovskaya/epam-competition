@@ -119,5 +119,44 @@ namespace LocalGoods.BLL.Services
                 throw new AuthException($"Failed to confirm email {model.Email}");
             }
         }
+
+        public async Task ForgotPasswordAsync(ForgotPasswordModel model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            if (user == null)
+            {
+                throw new AuthException($"User with email {model.Email} was not found");
+            }
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var tokenBytes = Encoding.UTF8.GetBytes(token);
+            var tokenEncoded = WebEncoders.Base64UrlEncode(tokenBytes);
+            
+            var callBack = "https://" + _httpContextAccessor.HttpContext.Request.Host
+                                      + $"/api/auth/resetPassword?token={tokenEncoded}&email={user.Email}";
+
+            await _emailService.SendResetPasswordLinkAsync(user.Email, callBack);
+        }
+
+        public async Task ResetPasswordAsync(ResetPasswordModel model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            
+            if (user == null)
+            {
+                throw new AuthException($"User with email {model.Email} was not found");
+            }
+
+            var tokenBytes = WebEncoders.Base64UrlDecode(model.Token);
+            var tokenDecoded = Encoding.UTF8.GetString(tokenBytes);
+            
+            var result = await _userManager.ResetPasswordAsync(user, tokenDecoded, model.Password);
+
+            if (!result.Succeeded)
+            {
+                throw new AuthException("Failed to reset password");
+            }
+        }
     }
 }

@@ -46,5 +46,21 @@ namespace LocalGoods.PL.Controllers
             await _authService.SignupAsync(signupModel);
             return Ok();
         }
+        
+        [HttpPost("forgotPassword")]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordRequest request)
+        {
+            var forgotPasswordModel = _mapper.Map<ForgotPasswordModel>(request);
+            await _authService.ForgotPasswordAsync(forgotPasswordModel);
+            return Ok();
+        }
+
+        [HttpPost("resetPassword")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
+        {
+            var resetPasswordModel = _mapper.Map<ResetPasswordModel>(request);
+            await _authService.ResetPasswordAsync(resetPasswordModel);
+            return Ok();
+        }
     }
 }

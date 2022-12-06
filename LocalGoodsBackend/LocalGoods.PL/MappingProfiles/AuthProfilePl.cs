@@ -12,6 +12,8 @@ namespace LocalGoods.PL.MappingProfiles
             CreateMap<LoginRequest, LoginModel>();
             CreateMap<SignupRequest, SignupModel>();
             CreateMap<ConfirmEmailRequest, ConfirmEmailModel>();
+            CreateMap<ForgotPasswordRequest, ForgotPasswordModel>();
+            CreateMap<ResetPasswordRequest, ResetPasswordModel>();
         }
     }
 }

@@ -35,12 +35,24 @@ namespace LocalGoods.BLL.Services
                 .PostJsonAsync(emailModel);
         }
 
-        public async Task SendPasswordRecoveryLinkAsync(string to)
+        public async Task SendResetPasswordLinkAsync(string to, string callback)
         {
-            const string subject = "Password Recovery on LocalGoods website";
-            const string body =
-                "Hello! Click this link to reset your password on LocalGoods website: (link to Angular page). " +
+            var subject = "Password Recovery on LocalGoods website";
+            var body =
+                $"Hello! Click this link to reset your password on LocalGoods website: {callback} (link to Angular page). " +
                 "Please ignore this email if it wasn't you.";
+            
+            var url = _configuration.GetConnectionString("LOGICAL_APP_URL");
+
+            var emailModel = new SendEmailModel
+            {
+                To = to,
+                Subject = subject,
+                Body = body
+            };
+            
+            _ = await url
+                .PostJsonAsync(emailModel);
         }
     }
 }

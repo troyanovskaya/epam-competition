@@ -22,8 +22,8 @@ export class AuthPannelComponent {
   }
   openSignUpPage(){
     this.dialogRef.open(SignUpPageComponent, {
-      height: '50%',
-      width: '40%',
+      height: '60%',
+      width: '50%',
     },
     );
   }

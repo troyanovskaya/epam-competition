@@ -20,6 +20,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { SignUpPageComponent } from './components/sign-up-page/sign-up-page.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { SignUpPageComponent } from './components/sign-up-page/sign-up-page.comp
         AppRoutingModule,
         ReactiveFormsModule,
         NoopAnimationsModule,
-        MatDialogModule
+        MatDialogModule,
+        HttpClientModule
     ]
 })
 export class AppModule { }

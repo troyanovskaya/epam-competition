@@ -28,31 +28,41 @@ label{
 }
 
 .side-sections-part{
-    width :40%;
+    width:50%;
+    height: inherit;
     display: flex;
     flex-direction: column;
-    align-content: flex-end;
+    justify-content: space-between;
+}
+
+.side-sections-part:first-child{
+    width: 35%;
 }
 
 .label-input-pair {
     display: flex;
     flex-direction: column;
-    margin-top: 3%;
+    margin-top: 10px;
 }
 
 .input-option {
     cursor: pointer;
 }
 
+.button-line{
+    width: 100%;
+    margin-top: 4%;
+    display: flex;
+    justify-content: center
+}
+
 button {
-    height: 20px;
-    width: 70%;
+    width: 50%;
+    padding: 0.8%;
     border: none;
     border-radius: 10px;
     transition: 1s;
     cursor: pointer;
-    margin-top: 4%;
-    align-self: flex-end;
 }
 
 button:valid{
@@ -65,8 +75,18 @@ button:valid:hover {
 }
 
 input, select{
-    padding: 2%;
+    padding: 5px;
     border-radius: 5px;
     border: 0.5px solid gray;
-    margin-top: 2%;
+    margin-top: 5px;
+}
+
+.requirementsError{
+    font-size: 7px;
+    color: red;
+}
+
+.passwordRequirements{
+    font-size: 7px;
+    color: green;
 }

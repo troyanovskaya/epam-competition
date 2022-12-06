@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using LocalGoods.BLL.Models.OrderDetails;
+using LocalGoods.BLL.Models.OrderStatus;
 
 namespace LocalGoods.BLL.Models.Order
 {
@@ -12,6 +13,7 @@ namespace LocalGoods.BLL.Models.Order
         public Guid PaymentMethodId { get; set; }
         public Guid DeliveryMethodId { get; set; }
         public string DeliveryInformation { get; set; }
+        public OrderStatusModel OrderStatus { get; set; }
         public IEnumerable<OrderDetailsModel> OrderDetails { get; set; }
     }
 }

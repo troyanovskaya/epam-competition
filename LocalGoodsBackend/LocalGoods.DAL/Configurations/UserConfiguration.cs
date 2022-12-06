@@ -25,7 +25,9 @@ namespace LocalGoods.DAL.Configurations
 
             builder
                 .HasMany(u => u.Orders)
-                .WithOne(o => o.User);
+                .WithOne(o => o.User)
+                .HasForeignKey(o => o.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder
                 .HasOne(u => u.City)

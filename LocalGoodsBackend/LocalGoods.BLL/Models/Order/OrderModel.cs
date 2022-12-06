@@ -13,7 +13,7 @@ namespace LocalGoods.BLL.Models.Order
         public Guid PaymentMethodId { get; set; }
         public Guid DeliveryMethodId { get; set; }
         public string DeliveryInformation { get; set; }
-        public OrderStatusModel OrderStatus { get; set; }
+        public Guid OrderStatusId { get; set; }
         public IEnumerable<OrderDetailsModel> OrderDetails { get; set; }
     }
 }

@@ -4,7 +4,7 @@ namespace LocalGoods.BLL.Exceptions.BadRequestException
 {
     public class BadRequestException : Exception
     {
-        public BadRequestException() { }
+        public BadRequestException() : base() { }
 
         public BadRequestException(string message) : base(message) { }
     }

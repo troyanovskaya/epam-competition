@@ -2,7 +2,7 @@
 {
     public class OrderBadRequestException : BadRequestException
     {
-        public OrderBadRequestException() { }
+        public OrderBadRequestException() : base() { }
 
         public OrderBadRequestException(string message) : base(message) { }
     }

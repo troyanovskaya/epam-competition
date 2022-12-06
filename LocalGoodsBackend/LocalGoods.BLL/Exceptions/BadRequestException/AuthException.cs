@@ -2,7 +2,7 @@
 {
     public class AuthException : BadRequestException
     {
-        public AuthException() { }
+        public AuthException() : base() { }
 
         public AuthException(string message) : base(message) { }
     }

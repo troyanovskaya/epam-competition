@@ -1,14 +1,4 @@
-<div class="profile-menu">
-  <div >
-    <a  routerLink="/user/info">User profile</a>
-  </div>
-  <div>
-    <a routerLink="/user/status">Order status</a>
-  </div>
-  <div class="active-menu">
-    <a href="#">Order history</a>
-  </div>
-</div>
+<app-user-navigation></app-user-navigation>
 
 <div class="history">
   <div class="history-item" *ngFor="let order of historyService.pastOrders">

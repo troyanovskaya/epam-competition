@@ -2,7 +2,7 @@
   <div class="container" (click)="isActive=!isActive">
     <div *ngIf="!isActive" class="square"></div>
     <img class="check" [ngClass]="{'hidden': !isActive}" src="assets/check.png" alt="check">
-    <p >{{option | titlecase}}</p>
+    <p >{{option.name | titlecase}}</p>
   </div>
   <hr>
 </div>

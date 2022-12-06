@@ -1,4 +1,4 @@
-<div *ngIf="visibility.isOrderFinishVisible" class="black-container" (click)="visibility.isOrderFinishVisible = false">
+<div *ngIf="visibility.isOrderFinishVisible" class="black-container" (click)="orderFinished=false; visibility.isOrderFinishVisible = false">
   <div class="order" (click)="$event.stopPropagation()">
     <div class="header"> Pay for your goods now!</div>
     <p class="text">Verify your order from {{basketService.orderArr[0].vendor}}</p>

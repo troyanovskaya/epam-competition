@@ -24,6 +24,7 @@ import { MainPageComponent } from './components/main-page/main-page.component';
 import { Routes, RouterModule } from '@angular/router';
 import { UserStatusComponent } from './components/user-status/user-status.component';
 import { UserHistoryComponent } from './components/user-history/user-history.component';
+import { UserNavigationComponent } from './components/user-navigation/user-navigation.component';
 
 const appRoutes:Routes = [{
   path: '', component: MainPageComponent
@@ -59,7 +60,8 @@ const appRoutes:Routes = [{
         UserInfoComponent,
         MainPageComponent,
         UserStatusComponent,
-        UserHistoryComponent
+        UserHistoryComponent,
+        UserNavigationComponent
 
     ],
     providers: [],

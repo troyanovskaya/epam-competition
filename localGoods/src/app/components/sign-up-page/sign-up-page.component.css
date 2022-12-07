@@ -1,0 +1,92 @@
+.header-div {
+    display: flex;
+}
+
+.header {
+    text-align: center;
+    margin: auto;
+    margin-bottom: 0;
+    font-size: larger;
+}
+
+.cross {
+    cursor: pointer;
+}
+
+form {
+    font-size: smaller;
+}
+
+label{
+    font-size: smaller;
+}
+
+.side-sections{
+    display: flex;
+    justify-content: space-around;
+    margin: auto;
+}
+
+.side-sections-part{
+    width:50%;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.side-sections-part:first-child{
+    width: 35%;
+}
+
+.label-input-pair {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.input-option {
+    cursor: pointer;
+}
+
+.button-line{
+    width: 100%;
+    margin-top: 4%;
+    display: flex;
+    justify-content: center
+}
+
+button {
+    width: 50%;
+    padding: 0.8%;
+    border: none;
+    border-radius: 10px;
+    transition: 1s;
+    cursor: pointer;
+}
+
+button:valid{
+    background-color: #d9e6f6;;
+}
+
+button:valid:hover {
+    color: white;
+    background-color: #162e50;
+}
+
+input, select{
+    padding: 5px;
+    border-radius: 5px;
+    border: 0.5px solid gray;
+    margin-top: 5px;
+}
+
+.requirementsError{
+    font-size: 7px;
+    color: red;
+}
+
+.passwordRequirements{
+    font-size: 7px;
+    color: green;
+}

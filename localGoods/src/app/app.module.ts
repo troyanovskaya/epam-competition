@@ -14,7 +14,14 @@ import { FooterComponent } from "./components/footer/footer.component";
 import { AboutUsContainerComponent } from './components/about-us-container/about-us-container.component';
 import { MenyLeftPanelComponent } from './components/meny-left-panel/meny-left-panel.component';
 import { MenyOptionComponent } from './components/meny-option/meny-option.component';
-import { SearchInputComponent } from './components/search-input/search-input.component'
+import { SearchInputComponent } from './components/search-input/search-input.component';
+import { LogInPageComponent } from './components/log-in-page/log-in-page.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+
+import { MatDialogModule } from '@angular/material/dialog';
+import { SignUpPageComponent } from './components/sign-up-page/sign-up-page.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
     declarations: [
@@ -29,7 +36,9 @@ import { SearchInputComponent } from './components/search-input/search-input.com
         AboutUsContainerComponent,
         MenyLeftPanelComponent,
         MenyOptionComponent,
-        SearchInputComponent
+        SearchInputComponent,
+        LogInPageComponent,
+        SignUpPageComponent
 
     ],
     providers: [],
@@ -37,7 +46,10 @@ import { SearchInputComponent } from './components/search-input/search-input.com
     imports: [
         BrowserModule,
         AppRoutingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        NoopAnimationsModule,
+        MatDialogModule,
+        HttpClientModule
     ]
 })
 export class AppModule { }

@@ -42,7 +42,7 @@ namespace LocalGoods.PL.Controllers
             return Ok(order);
         }
 
-        [HttpGet("order-statuses")]
+        [HttpGet("statuses")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OrderStatusModel>))]
         public async Task<ActionResult> GetOrderStatuses()
         {

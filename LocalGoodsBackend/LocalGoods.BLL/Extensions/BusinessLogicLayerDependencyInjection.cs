@@ -54,6 +54,7 @@ namespace LocalGoods.BLL.Extensions
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }

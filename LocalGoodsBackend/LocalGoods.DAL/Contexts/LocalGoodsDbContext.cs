@@ -81,5 +81,6 @@ namespace LocalGoods.DAL.Contexts
         public DbSet<UnitType> UnitTypes { get; set; }
         public DbSet<VendorPaymentMethod> VendorPaymentMethods { get; set; }
         public DbSet<VendorDeliveryMethod> VendorDeliveryMethods { get; set; }
+        public DbSet<OrderStatus> OrderStatuses { get; set; }
     }
 }

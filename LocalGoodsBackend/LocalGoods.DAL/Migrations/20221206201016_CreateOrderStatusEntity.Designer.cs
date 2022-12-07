@@ -4,14 +4,16 @@ using LocalGoods.DAL.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LocalGoods.DAL.Migrations
 {
     [DbContext(typeof(LocalGoodsDbContext))]
-    partial class LocalGoodsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221206201016_CreateOrderStatusEntity")]
+    partial class CreateOrderStatusEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -360,7 +362,7 @@ namespace LocalGoods.DAL.Migrations
                         new
                         {
                             Id = new Guid("6f0a355f-c0b1-46a3-a93a-94fad9aa1ed3"),
-                            Name = "Pending"
+                            Name = "In processing"
                         },
                         new
                         {
@@ -369,7 +371,7 @@ namespace LocalGoods.DAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("17cf0057-aa23-4cdf-96a4-6573c7ae96e6"),
+                            Id = new Guid("c9cf6ba9-26c9-46cd-a660-6ae4f23a3d96"),
                             Name = "Completed"
                         },
                         new

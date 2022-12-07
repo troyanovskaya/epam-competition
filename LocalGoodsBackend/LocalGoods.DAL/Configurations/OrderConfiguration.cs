@@ -1,4 +1,5 @@
 ﻿using LocalGoods.DAL.Entities;
+using LocalGoods.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -29,6 +30,10 @@ namespace LocalGoods.DAL.Configurations
             builder
                 .HasOne(o => o.DeliveryMethod)
                 .WithMany(dm => dm.Orders);
+
+            builder
+                .Property(o => o.OrderStatusId)
+                .HasDefaultValue(GlobalValues.NewOrderStatusId);
         }
     }
 }

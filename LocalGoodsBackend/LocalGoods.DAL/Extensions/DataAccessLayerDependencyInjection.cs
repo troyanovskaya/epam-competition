@@ -66,6 +66,7 @@ namespace LocalGoods.DAL.Extensions
             services.AddScoped<IVendorDeliveryMethodRepository, VendorDeliveryMethodRepository>();
             services.AddScoped<IVendorPaymentMethodRepository, VendorPaymentMethodRepository>();
             services.AddScoped<IVendorRepository, VendorRepository>();
+            services.AddScoped<IOrderStatusRepository, OrderStatusRepository>();
         }
     }
 }

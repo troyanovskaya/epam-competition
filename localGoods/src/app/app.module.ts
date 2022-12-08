@@ -15,6 +15,16 @@ import { AboutUsContainerComponent } from './components/about-us-container/about
 import { MenyLeftPanelComponent } from './components/meny-left-panel/meny-left-panel.component';
 import { MenyOptionComponent } from './components/meny-option/meny-option.component';
 import { SearchInputComponent } from './components/search-input/search-input.component';
+import { BasketComponent } from './components/basket/basket.component'
+import { FormsModule } from '@angular/forms';
+import { BasketItemComponent } from './components/basket-item/basket-item.component';
+import { PayForOrderComponent } from './components/pay-for-order/pay-for-order.component';
+import { UserInfoComponent } from './components/user-info/user-info.component';
+import { MainPageComponent } from './components/main-page/main-page.component';
+import { Routes, RouterModule } from '@angular/router';
+import { UserStatusComponent } from './components/user-status/user-status.component';
+import { UserHistoryComponent } from './components/user-history/user-history.component';
+import { UserNavigationComponent } from './components/user-navigation/user-navigation.component';
 import { LogInPageComponent } from './components/log-in-page/log-in-page.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
@@ -23,6 +33,12 @@ import { SignUpPageComponent } from './components/sign-up-page/sign-up-page.comp
 import { HttpClientModule } from '@angular/common/http';
 
 
+const appRoutes:Routes = [
+{  path: '', component: MainPageComponent},
+{  path: 'user/info', component: UserInfoComponent},
+{  path: 'user/status', component: UserStatusComponent},
+{  path: 'user/history', component: UserHistoryComponent}
+]
 @NgModule({
     declarations: [
         AppComponent,
@@ -37,6 +53,14 @@ import { HttpClientModule } from '@angular/common/http';
         MenyLeftPanelComponent,
         MenyOptionComponent,
         SearchInputComponent,
+        BasketComponent,
+        BasketItemComponent,
+        PayForOrderComponent,
+        UserInfoComponent,
+        MainPageComponent,
+        UserStatusComponent,
+        UserHistoryComponent,
+        UserNavigationComponent,
         LogInPageComponent,
         SignUpPageComponent
 
@@ -47,6 +71,8 @@ import { HttpClientModule } from '@angular/common/http';
         BrowserModule,
         AppRoutingModule,
         ReactiveFormsModule,
+        FormsModule,
+        RouterModule.forRoot(appRoutes),
         NoopAnimationsModule,
         MatDialogModule,
         HttpClientModule

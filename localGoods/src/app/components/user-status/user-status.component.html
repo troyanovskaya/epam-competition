@@ -1,0 +1,15 @@
+<app-basket></app-basket>
+<app-pay-for-order></app-pay-for-order>
+<app-user-navigation [active]="2"></app-user-navigation>
+
+<div class="content">
+  <div class="status">
+    <div class="status-item" *ngFor="let order of statusService.currentOrders">
+      <div><p>Order number: {{order.id}}</p></div>
+      <div><p>Adress: {{order.adress}}</p></div>
+      <div><p>Vendor: {{order.vendor}}</p></div>
+      <div><p>Total: {{order.total}}</p></div>
+      <div><p>Order status: {{order.status}}</p></div>
+    </div>
+  </div>
+</div>

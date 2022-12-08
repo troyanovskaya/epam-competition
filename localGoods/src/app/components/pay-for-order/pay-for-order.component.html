@@ -1,0 +1,47 @@
+<div *ngIf="visibility.isOrderFinishVisible" class="black-container" (click)="orderFinished=false; visibility.isOrderFinishVisible = false">
+  <div class="order" (click)="$event.stopPropagation()">
+    <div class="header"> Pay for your goods now!</div>
+    <p class="text">Verify your order from {{basketService.orderArr[0].vendor}}</p>
+    <div class="items-container">
+      <div class="item" *ngFor="let item of basketService.orderArr">
+        <div class="name">{{item.name |titlecase}}</div>
+        <div class="amount"> Amount {{item.amount}}</div>
+        <div class="product-price">{{item.price * item.amount | currency: 'GBP'}}</div>
+      </div>
+    </div>
+    <div class="total">
+      <p>Total price</p>
+      <p>{{basketService.orderPrice | currency:'GBP'}}</p>
+    </div>
+    <div>
+      <form *ngIf="!orderFinished">
+        <div class="formQ">
+          <p>Please select your delivery method:</p>
+          <div *ngFor="let del of basketService.orderVendor.deliveryMethods; index as i ">
+            <input checked="{{i===0}}" type="radio" id={{del}} name="deliveryMethods" value={{del}}>
+            <label for={{del}}>{{del | titlecase}}</label><br>
+          </div>
+        </div>
+        <div class="formQ">
+          <p>Please select your payment method:</p>
+          <div *ngFor="let pay of basketService.orderVendor.paymentMethods; index as i ">
+            <input checked="{{i===0}}" type="radio" id={{pay}} name="paymentMethods" value={{pay}}>
+            <label for={{pay}}>{{pay | titlecase}}</label><br>
+          </div>
+        </div>
+        <button (click)="sendOrder()">Сonfirm the order</button>
+      </form>
+
+      <div *ngIf="orderFinished" class="textAfterFinish">
+        <p>Thank you for your order, view your order state in the user profile</p>
+
+      </div>
+
+    </div>
+
+
+    </div>
+
+</div>
+
+

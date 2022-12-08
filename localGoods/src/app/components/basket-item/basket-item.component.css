@@ -1,0 +1,42 @@
+.icons, .delivery{
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  gap:10px;
+}
+
+.product-img{
+  border-radius: 10px;
+  margin-top:20px;
+  width:200px;
+  height:150px;
+}
+h3{
+  margin:0px;
+  padding-left: 10px;
+}
+
+input{
+  width:50px;
+}
+
+.price{
+  margin-right:20px;
+  font-size: 1.2em;
+}
+
+.bin{
+  transition: .5s;
+  width:30px;
+  height:30px;
+}
+
+.bin:hover{
+  transform: scale(1.2);
+}
+
+.delivery img{
+  width:30px;
+  height:30px;
+}
+

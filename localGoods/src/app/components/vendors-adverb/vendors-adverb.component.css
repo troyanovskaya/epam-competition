@@ -21,3 +21,8 @@ li{
   flex-direction: row;
   align-items: center;
 }
+
+.apple{
+  height:15px;
+  width:15px;
+}

@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpRequestService } from '../http-request.service';
 import { Observable, catchError, of } from 'rxjs';
 import { City, Country } from '../country.model';
-import { User } from 'src/app/user.model';
+import { User } from 'src/app/schema/user.model';
 
 @Component({
   selector: 'app-sign-up-page',

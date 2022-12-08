@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class VisibilityService {
+  isBasketVisible:boolean = false;
+  isOrderFinishVisible:boolean = false;
 
   constructor() { }
 }

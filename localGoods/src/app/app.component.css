@@ -1,13 +1,1 @@
-.flex-container{
-  display:flex;
-  flex-direction: row;
-  width:100%;
 
-}
-.flex-container app-meny-left-panel{
-  width:20%;
-}
-
-.flex-container app-local-vendors-search-adverb{
-  width:80%;
-}

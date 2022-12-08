@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CategoriesService } from 'src/app/services/categories.service';
 
 @Component({
   selector: 'app-meny-left-panel',
@@ -6,10 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./meny-left-panel.component.css']
 })
 export class MenyLeftPanelComponent implements OnInit {
-  arrOfOptions: string[] = [ 'farm boxes', 'produce','meat & seafood',
-  'dairy & eggs','bakery','pantry','drinks','easy meals', 'new & seasonal']
 
-  constructor() { }
+  constructor(public categoriesService: CategoriesService) { }
 
   ngOnInit(): void {
   }

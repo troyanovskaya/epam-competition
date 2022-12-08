@@ -1,0 +1,32 @@
+.profile-menu{
+  background-color: cadetblue;
+  padding:10px;
+  height: 50px;
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.profile-menu > *{
+  padding:10px;
+  max-width:150px;
+  margin: 5px;
+  border:1px solid white;
+}
+
+.profile-menu a{
+  color:white;
+}
+.vendor-menu{
+  background-color: #7382a1;
+}
+
+.profile-menu a:hover{
+  text-decoration: underline;
+}
+
+.active{
+  text-decoration: underline;
+  background-color: lightblue;
+}

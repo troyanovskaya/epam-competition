@@ -10,7 +10,7 @@
 }
 .profile-menu > *{
   padding:10px;
-  width:100px;
+  max-width:150px;
   margin: 5px;
   border:1px solid white;
 }
@@ -18,6 +18,15 @@
 .profile-menu a{
   color:white;
 }
-.active-menu{
+.vendor-menu{
   background-color: #7382a1;
+}
+
+.profile-menu a:hover{
+  text-decoration: underline;
+}
+
+.active{
+  text-decoration: underline;
+  background-color: lightblue;
 }

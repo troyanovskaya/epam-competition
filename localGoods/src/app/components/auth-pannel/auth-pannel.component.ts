@@ -12,7 +12,7 @@ export class AuthPannelComponent implements OnInit {
   userInfoHidden:boolean = true;
 
   constructor(public visibility: VisibilityService, public basketService:BasketService) { }
-
+  
   ngOnInit(): void {
 
   }

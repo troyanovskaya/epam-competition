@@ -1,4 +1,6 @@
-<app-user-navigation></app-user-navigation>
+<app-basket></app-basket>
+<app-pay-for-order></app-pay-for-order>
+<app-user-navigation [active]="3"></app-user-navigation>
 
 <div class="history">
   <div class="history-item" *ngFor="let order of historyService.pastOrders">

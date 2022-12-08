@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { City } from '../schema/City';
-import { Country } from '../schema/Country';
+import { City } from '../schema/city.model';
+import { Country } from '../schema/country.model';
 
 @Injectable({
   providedIn: 'root'

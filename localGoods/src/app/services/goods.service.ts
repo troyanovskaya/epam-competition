@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Good } from '../schema/Good';
+import { Good } from '../schema/goods.model';
 
 @Injectable({
   providedIn: 'root'

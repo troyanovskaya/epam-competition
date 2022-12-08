@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {Category} from '../../schema/Category'
+import {Category} from '../../schema/category.model'
 
 @Component({
   selector: 'app-meny-option',

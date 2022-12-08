@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UserRole } from '../schema/UserRole';
+import { UserRole } from '../schema/userRole.model';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +7,7 @@ import { UserRole } from '../schema/UserRole';
 export class UserService {
   user = {name:'UserName', surname:'UserSurname', dateOfBirth:'16/03/2000', country:'Ukraine', city:'Kyiv',
   adress: 'Green street, 16B, 74221', phoneNumber:'0951232168', email:'user@gmail.com'};
-  userRole: UserRole = 'VENDOR';
+  userRole: UserRole = 'USER';
 
   constructor() { }
 }

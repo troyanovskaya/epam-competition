@@ -32,7 +32,6 @@ label{
     height: inherit;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 }
 
 .side-sections-part:first-child{

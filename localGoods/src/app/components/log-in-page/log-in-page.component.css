@@ -52,7 +52,7 @@ button:hover {
     align-items: center;
 }
 
-.sign-up {
+.sign-up , .forgot-password{
     color: #162e50;
     margin-left: 3%;
     transition: transform .5s;
@@ -68,4 +68,24 @@ input{
     border-radius: 5px;
     border: 0.5px solid gray;
     margin-top: 2%;
+}
+
+.forgot-password{
+    font-size: smaller;
+    text-align: end;
+    padding: 2%;
+}
+
+.forgot-password:hover{
+    transform: scale(1.1)
+}
+
+.requirementsError{
+    font-size: 7px;
+    color: red;
+}
+
+.passwordRequirements{
+    font-size: 7px;
+    color: green;
 }

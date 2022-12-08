@@ -1,3 +1,2 @@
-type UserRole = 'VENDOR' | 'USER';
-export {UserRole}
+export type UserRole = 'VENDOR' | 'USER';
 

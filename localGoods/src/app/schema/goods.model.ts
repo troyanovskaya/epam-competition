@@ -1,6 +1,6 @@
 import { Category } from "./category.model"
 
-interface Good{
+export interface Good{
   id: string,
   name: string,
   description: string,
@@ -17,5 +17,4 @@ interface Good{
   images: string[]
 }
 
-export {Good}
 

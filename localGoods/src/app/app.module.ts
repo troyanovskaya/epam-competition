@@ -26,19 +26,11 @@ import { UserStatusComponent } from './components/user-status/user-status.compon
 import { UserHistoryComponent } from './components/user-history/user-history.component';
 import { UserNavigationComponent } from './components/user-navigation/user-navigation.component';
 
-const appRoutes:Routes = [{
-  path: '', component: MainPageComponent
-},
-{
-  path: 'user/info', component: UserInfoComponent
-},
-{
-  path: 'user/status', component: UserStatusComponent
-},
-{
-  path: 'user/history', component: UserHistoryComponent
-}
-
+const appRoutes:Routes = [
+{  path: '', component: MainPageComponent},
+{  path: 'user/info', component: UserInfoComponent},
+{  path: 'user/status', component: UserStatusComponent},
+{  path: 'user/history', component: UserHistoryComponent}
 ]
 @NgModule({
     declarations: [

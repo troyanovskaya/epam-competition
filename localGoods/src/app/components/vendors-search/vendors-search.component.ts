@@ -22,13 +22,6 @@ export class VendorsSearchComponent{
   getCountry(){
     this.countriesService.choosenCountry = this.countriesService.countries.find(el => el.name===this.country.value)?? {id:'0', name:'Choose country first!', cities:[{id:'0', name:'Choose country first!', countryId:'0'}]};
   }
-  cl(){
-    console.log(this.country.value);
-    console.log(this.countriesService.choosenCountry);
-    console.log(this.countriesService.countries);
-    console.log(this.countriesService.choosenCity);
-  }
-
   getCity(){
     this.countriesService.choosenCity = this.countriesService.choosenCountry.cities.filter( el => el.name===this.city.value)[0];
     this.goods.findGoods(this.countriesService.choosenCity.id);

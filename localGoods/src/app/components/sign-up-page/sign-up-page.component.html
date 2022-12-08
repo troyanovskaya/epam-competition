@@ -1,0 +1,86 @@
+<div class="header-div">
+    <div class="header">Welcome to our shop!</div>
+    <span class="cross" (click)="closeWindow()">&#10060;</span>
+</div>
+
+<form (submit)="createAccount()" [formGroup]="validationForm">
+
+    <div class="side-sections">
+        <div class="side-sections-part">
+
+            <div class="label-input-pair">
+                <label for="name" class="input-option">First Name*</label>
+                <input type="text" formControlName="firstName" id="name" placeholder="First Name" />
+            </div>
+
+            <div class="label-input-pair">
+                <label for="surname" class="input-option">Last Name*</label>
+                <input type="text" formControlName="lastName" id="surname" placeholder="Last Name" />
+            </div>
+
+            <div class="label-input-pair">
+                <label for="date" class="input-option">Birth Date*</label>
+                <input type="date" formControlName="date" id="date" />
+            </div>
+
+            <div class="label-input-pair">
+                <label for="cities" class="input-option">City*</label>
+                <select name="cities" formControlName="city" id="cities" (change)="selectCity()">
+                    <option *ngFor="let city of cities">{{city.name}}</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="side-sections-part">
+            <div class="label-input-pair">
+                <label for="email" class="input-option">Email*</label>
+                <input type="email" formControlName="email" id="email" placeholder="email" />
+            </div>
+
+            <div class="label-input-pair">
+                <label for="phone" class="input-option">Phone number*
+                    <span class="requirementsError"
+                        *ngIf="validationForm.controls['phone'].invalid && validationForm.controls['phone'].value">please,
+                        write existing
+                        number</span>
+                </label>
+                <input type="text" formControlName="phone"
+                    pattern="^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$" id="phone"
+                    placeholder="phone number" />
+            </div>
+
+            <div class="label-input-pair">
+                <label for="password" class="input-option">Password*
+                    <span
+                        [ngClass]="{ requirementsError: validationForm.controls['password'].invalid && !validationForm.controls['password'].pristine,
+                                       passwordRequirements: validationForm.controls['password'].pristine || validationForm.controls['password'].valid  }">should
+                        contain min 8 characters, min 1 upper case letter and 1 number</span>
+                </label>
+
+                <input type="password" formControlName="password" pattern="^(?=.*[0-9])(?=.*[A-Z])(?!.* ).{8,}$"
+                    id="password" placeholder="password" />
+            </div>
+
+            <div class="label-input-pair">
+                <label for="confirmation" class="input-option">Confirm your password*
+                    <span class="requirementsError"
+                        *ngIf="!validationForm.controls['confirmation'].valid && validationForm.controls['confirmation'].dirty">
+                        should match with password
+                    </span>
+                </label>
+                <input type="password" formControlName="confirmation" pattern="^(?=.*[0-9])(?=.*[A-Z])(?!.* ).{8,}$"
+                    id="confirmation" placeholder="confirm your password" />
+            </div>
+        </div>
+
+    </div>
+
+    <div class="button-line">
+        <button type="submit"
+            [disabled]="!(validationForm.valid && (validationForm.value.password === validationForm.value.confirmation))">
+            Create an account
+        </button>
+    </div>
+
+</form>

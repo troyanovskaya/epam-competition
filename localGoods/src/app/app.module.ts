@@ -25,6 +25,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { UserStatusComponent } from './components/user-status/user-status.component';
 import { UserHistoryComponent } from './components/user-history/user-history.component';
 import { UserNavigationComponent } from './components/user-navigation/user-navigation.component';
+import { LogInPageComponent } from './components/log-in-page/log-in-page.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+
+import { MatDialogModule } from '@angular/material/dialog';
+import { SignUpPageComponent } from './components/sign-up-page/sign-up-page.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 const appRoutes:Routes = [
 {  path: '', component: MainPageComponent},
@@ -53,7 +60,9 @@ const appRoutes:Routes = [
         MainPageComponent,
         UserStatusComponent,
         UserHistoryComponent,
-        UserNavigationComponent
+        UserNavigationComponent,
+        LogInPageComponent,
+        SignUpPageComponent
 
     ],
     providers: [],
@@ -64,6 +73,9 @@ const appRoutes:Routes = [
         ReactiveFormsModule,
         FormsModule,
         RouterModule.forRoot(appRoutes),
+        NoopAnimationsModule,
+        MatDialogModule,
+        HttpClientModule
     ]
 })
 export class AppModule { }

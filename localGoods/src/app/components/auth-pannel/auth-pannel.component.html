@@ -5,9 +5,9 @@
         <div class="avatar" routerLink="/user/info">
           <app-user-info *ngIf="!userInfoHidden"></app-user-info>
         </div>
-        <a href="#" class="log-in">Log in </a>
+        <span class="log-in" (click)="openLogInPage()">Log in </span>
         <div>|</div>
-        <a href="#" class="sign-up"> Sign up</a>
+        <span class="sign-up" (click)="openSignUpPage()"> Sign up</span>
         <img (click)="visibility.isBasketVisible = true" class="basket" src="assets/brown-basket.png" alt="basket">
         <p>{{basketService.total | currency: 'GBP'}}</p>
     </div>

@@ -1,11 +1,20 @@
-<div class="basket-menu">
-  <p (click)="basketService.showVendor='all'; activeVendor = 'all' "
-  [ngClass]="{'active': activeVendor==='all'}">All vendors</p>
-  <div *ngFor="let item of basketService.basket; index as i">
-    <p (click)="showVendorGoods(item.good.vendorId)"
-    [ngClass]="{'active': activeVendor===basketService.getVendor(item.good.vendorId).companyName}"
-     *ngIf="i==0 || basketService.basket[i-1].good.vendorId!==item.good.vendorId ">
-      {{basketService.getVendor(item.good.vendorId).companyName | titlecase}}
-    </p>
+<div class="basket-menu-logo">
+  <div class="basket-logo">
+    <div><span class="your-basket">YOUR BASKET</span></div>
+    <img class="apple-rabbit" src="assets/apple-rabbit.png" alt="rabbit">
+    <div routerLink="/" class="back-main"><span>BACK TO MAIN</span> </div>
+
+  </div>
+  <div class="basket-menu">
+    <p (click)="basketService.showVendor='all'; activeVendor = 'all' "
+    [ngClass]="{'active': activeVendor==='all'}">All vendors</p>
+    <div *ngFor="let item of basketService.basket; index as i">
+      <p (click)="showVendorGoods(item.good.vendorId)"
+      [ngClass]="{'active': activeVendor===basketService.getVendor(item.good.vendorId).companyName}"
+       *ngIf="i==0 || basketService.basket[i-1].good.vendorId!==item.good.vendorId ">
+        {{basketService.getVendor(item.good.vendorId).companyName | titlecase}}
+      </p>
+    </div>
   </div>
 </div>
+

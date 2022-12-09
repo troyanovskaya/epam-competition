@@ -10,14 +10,14 @@
 }
 
 .order{
-  max-height: 400px;
+  max-height: 500px;
   overflow-y: auto;
   overflow-x: auto;
   margin: 0 auto;
   width:70%;
   min-height: 200px ;
   border-radius: 10px;
-  background-color: #f7e5d0;
+  background-color: white;
 
 }
 
@@ -98,6 +98,10 @@ input{
   color:grey;
   font-style: italic;
   padding: 0px 50px;
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
 }
 
 .total{
@@ -106,6 +110,11 @@ input{
   gap:20px;
   justify-content: flex-end;
   padding: 0px 50px;
+}
+
+img.chicken{
+  width:300px;
+  height:200px;
 }
 
 

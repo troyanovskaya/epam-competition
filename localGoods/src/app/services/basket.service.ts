@@ -51,7 +51,21 @@ export class BasketService {
     paymentMethods:['Card', 'Cash']};
   getVendor(id:string):{id:string, companyName:string, deliveryMethods:string[],
     paymentMethods:string[] }{
-    return this.vendors.filter( el => el.id === id)[0];
+    return this.vendors.filter( el => el.id === id)[0] ??
+    {id:'none', companyName:'none', deliveryMethods:[], paymentMethods:[]};
+  }
+  vendorIdByName(name:string):string{
+    let cN = this.vendors.find( el => el.companyName === name);
+    if(cN){
+      return cN.id;
+    }
+    return 'none';
+  }
+  isVendorInBasket(id:string):boolean{
+    return !this.basket.reduce((past, curr)=>{
+      return past && curr.good.vendorId !== id;
+    }, true)
+
   }
   constructor() { }
 }

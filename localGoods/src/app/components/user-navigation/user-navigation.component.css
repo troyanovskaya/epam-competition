@@ -1,3 +1,16 @@
+.back-to-main{
+  background-color: #7382a1;
+  color:white;
+  font-size: 1.3em;
+}
+
+.back-to-main > div{
+  padding: 20px;
+  width:max-content;
+}
+.back-to-main > div:hover{
+  text-decoration: underline;
+}
 .profile-menu{
   background-color: cadetblue;
   padding:10px;
@@ -29,4 +42,7 @@
 .active{
   text-decoration: underline;
   background-color: lightblue;
+}
+a{
+  cursor: pointer;
 }

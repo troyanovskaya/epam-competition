@@ -6,12 +6,26 @@
         <div class="item-container col-1">
           <label for="company">Company name:</label>
           <input placeholder="company" type="text" name="company">
-          <label for="country">Country name:</label>
-          <input placeholder="country" type="text" name="country">
-          <label for="city">City name:</label>
-          <input placeholder="city" type="text" name="city">
-          <label for="adress">Adress:</label>
-          <input placeholder="adress" type="text" name="adress">
+          <p>Payment Methods:</p>
+          <div>
+            <input type="checkbox" id="card" name="card" value="Card">
+            <label for="card"> Card </label>
+          </div>
+          <div>
+            <input type="checkbox" id="cash" name="cash" value="Cash">
+            <label for="cash"> Cash </label>
+          </div>
+
+          <p>Delivery Methods:</p>
+          <div>
+            <input type="checkbox" id="takeaway" name="takeaway" value="Takeaway">
+            <label for="takeaway"> Takeaway </label>
+          </div>
+          <div>
+            <input type="checkbox" id="delivery" name="delivery" value="Delivery">
+            <label for="Deliveryash"> Delivery </label>
+          </div>
+
         </div>
         <div class="item-container col-2">
           <label for="email">Your email:</label>
@@ -43,7 +57,7 @@
 
         </div>
       </div>
-      <button> Create a vendor </button>
+      <button (click)="userService.userRole = 'VENDOR'; visibilityService.isVendorRegVisible = false"> Create a vendor </button>
     </form>
   </div>
 </div>

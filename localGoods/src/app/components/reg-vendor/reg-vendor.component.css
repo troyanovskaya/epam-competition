@@ -10,15 +10,14 @@
 }
 
 .vendor-reg{
-  max-height: 490px;
+  max-height: 500px;
   overflow-y: auto;
   overflow-x: auto;
   margin: 0 auto;
   width:70%;
   min-height: 200px ;
   border-radius: 10px;
-  background-color: #f7e5d0;
-
+  background-color: white;
 }
 
 .header{

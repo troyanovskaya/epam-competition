@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BasketService } from 'src/app/services/basket.service';
+import { VisibilityService } from 'src/app/services/visibility.service';
 
 @Component({
   selector: 'app-basket-page',
@@ -8,8 +9,9 @@ import { BasketService } from 'src/app/services/basket.service';
 })
 export class BasketPageComponent implements OnInit {
 
-  constructor(public basketService:BasketService) { }
-  openOrder(str:string){
+  constructor(public basketService:BasketService, public visibility:VisibilityService) { }
+  showPayWindow(){
+    this.visibility.isOrderFinishVisible = true;
 
   }
 

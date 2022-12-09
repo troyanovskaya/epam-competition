@@ -1,3 +1,4 @@
+<app-pay-for-order></app-pay-for-order>
 <app-basket-panel activeVendor="all"></app-basket-panel>
 <div class="basket">
     <div *ngFor="let item of basketService.basket | basketVendor:basketService.showVendor; index as i">
@@ -8,7 +9,7 @@
       <img class="tray" src="assets/tray.png" alt="tray">
 </div>
 <br>
-<div class="finish-order">
-  <button>Finish your order</button>
+<div *ngIf="basketService.basket.length!==0" class="finish-order">
+  <button (click)="showPayWindow()">Finish your order</button>
 </div>
 

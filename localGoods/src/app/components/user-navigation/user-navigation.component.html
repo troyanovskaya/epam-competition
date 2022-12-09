@@ -9,7 +9,7 @@
     <a>Order history</a>
   </div>
   <div [ngClass]="{'active': active===4}" class="vendor-menu" *ngIf="userService.userRole==='USER'">
-    <a href="#">Become a vendor</a>
+    <a (click)="openVendorReg()">Become a vendor</a>
   </div>
   <div [ngClass]="{'active': active===5}" class="vendor-menu" *ngIf="userService.userRole==='VENDOR'">
     <a href="#">Published goods</a>

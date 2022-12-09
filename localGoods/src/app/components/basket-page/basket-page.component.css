@@ -1,0 +1,46 @@
+.basket{
+  display:flex;
+  flex-direction:row;
+  flex-wrap: wrap;
+  padding: 20px;
+  gap:20px;
+}
+.vendor-button{
+  display: flex;
+  flex-direction:row;
+  gap:20px;
+  height:50px;
+  width:100%;
+  background-color: aqua;
+}
+
+.no-items{
+  display:block;
+  margin: 0 auto;
+
+}
+
+.no-items p{
+  color:grey;
+  font-style: italic;
+}
+
+.tray{
+  width:300px;
+  height:200px;
+}
+button{
+  background-color: #162e50;
+  color:white;
+  text-align: center;
+  padding:10px;
+  width:200px;
+  height:50px;
+  border-radius: 10px;
+  margin:20px 40px;
+}
+
+.finish-order{
+  width:100%;
+}
+

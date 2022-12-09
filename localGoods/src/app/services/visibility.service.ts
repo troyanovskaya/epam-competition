@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class VisibilityService {
   isBasketVisible:boolean = false;
   isOrderFinishVisible:boolean = false;
+  isVendorRegVisible:boolean = false;
 
   constructor() { }
 }

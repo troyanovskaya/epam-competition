@@ -1,0 +1,14 @@
+<app-basket-panel activeVendor="all"></app-basket-panel>
+<div class="basket">
+    <div *ngFor="let item of basketService.basket | basketVendor:basketService.showVendor; index as i">
+      <app-basket-item class="item"  [item]="item"></app-basket-item>
+    </div>
+    <div class="no-items" *ngIf="basketService.basket.length===0">
+      <p>Now you have nothing to buy, go to the shop first!</p>
+      <img class="tray" src="assets/tray.png" alt="tray">
+</div>
+<br>
+<div class="finish-order">
+  <button>Finish your order</button>
+</div>
+

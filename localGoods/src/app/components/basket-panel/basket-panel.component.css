@@ -1,0 +1,26 @@
+.basket-menu{
+  background-color: cadetblue;
+  padding:10px;
+  height: 50px;
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color:white;
+}
+.basket-menu p{
+  padding:10px;
+  max-width:150px;
+  margin: 5px;
+  border:1px solid white;
+}
+
+.basket-menu p:hover{
+  text-decoration: underline;
+}
+
+.active{
+  text-decoration: underline;
+  background-color: lightblue;
+}

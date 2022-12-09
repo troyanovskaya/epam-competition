@@ -9,7 +9,7 @@ import { VisibilityService } from 'src/app/services/visibility.service';
 })
 export class PayForOrderComponent implements OnInit {
   sendOrder(){
-    this.basketService.basket = this.basketService.basket.filter( el => el.vendor!==this.basketService.orderVendor.companyName)
+    this.basketService.basket = this.basketService.basket.filter( el => el.good.vendorId!==this.basketService.orderVendor.companyName)
     this.basketService.onTotalChange();
     this.orderFinished = true;
     this.visibility.isBasketVisible = false;

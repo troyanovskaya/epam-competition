@@ -15,7 +15,6 @@ import { AboutUsContainerComponent } from './components/about-us-container/about
 import { MenyLeftPanelComponent } from './components/meny-left-panel/meny-left-panel.component';
 import { MenyOptionComponent } from './components/meny-option/meny-option.component';
 import { SearchInputComponent } from './components/search-input/search-input.component';
-import { BasketComponent } from './components/basket/basket.component'
 import { FormsModule } from '@angular/forms';
 import { BasketItemComponent } from './components/basket-item/basket-item.component';
 import { PayForOrderComponent } from './components/pay-for-order/pay-for-order.component';
@@ -31,13 +30,18 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { MatDialogModule } from '@angular/material/dialog';
 import { SignUpPageComponent } from './components/sign-up-page/sign-up-page.component';
 import { HttpClientModule } from '@angular/common/http';
+import { RegVendorComponent } from './components/reg-vendor/reg-vendor.component';
+import { BasketPageComponent } from './components/basket-page/basket-page.component';
+import { BasketPanelComponent } from './components/basket-panel/basket-panel.component';
+import { BasketVendorPipe } from './pipes/basket-vendor.pipe';
 
 
 const appRoutes:Routes = [
 {  path: '', component: MainPageComponent},
 {  path: 'user/info', component: UserInfoComponent},
 {  path: 'user/status', component: UserStatusComponent},
-{  path: 'user/history', component: UserHistoryComponent}
+{  path: 'user/history', component: UserHistoryComponent},
+{  path: 'basket', component: BasketPageComponent}
 ]
 @NgModule({
     declarations: [
@@ -53,7 +57,6 @@ const appRoutes:Routes = [
         MenyLeftPanelComponent,
         MenyOptionComponent,
         SearchInputComponent,
-        BasketComponent,
         BasketItemComponent,
         PayForOrderComponent,
         UserInfoComponent,
@@ -62,7 +65,11 @@ const appRoutes:Routes = [
         UserHistoryComponent,
         UserNavigationComponent,
         LogInPageComponent,
-        SignUpPageComponent
+        SignUpPageComponent,
+        RegVendorComponent,
+        BasketPageComponent,
+        BasketPanelComponent,
+        BasketVendorPipe
 
     ],
     providers: [],

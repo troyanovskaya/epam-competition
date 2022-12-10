@@ -27,6 +27,7 @@ namespace LocalGoods.BLL.Services
         private readonly IPaymentMethodRepository _paymentMethodRepository;
         private readonly UserManager<User> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private const string VendorRole = "Vendor";
 
         public VendorService(IMapper mapper, IVendorRepository vendorRepository,
             IVendorDeliveryMethodRepository vendorDeliveryMethodRepository,
@@ -75,11 +76,11 @@ namespace LocalGoods.BLL.Services
             await InsertDeliveryMethodsAsync(vendor.Id, createVendorModel.DeliveryMethods);
             await InsertPaymentMethodsAsync(vendor.Id, createVendorModel.PaymentMethods);
 
-            await _userManager.AddToRoleAsync(currentUser, "Vendor");
+            await _userManager.AddToRoleAsync(currentUser, VendorRole);
             await _vendorRepository.SaveChangesAsync();
 
             return _mapper.Map<VendorModel>(vendor);
-        }
+         }
 
         private async Task<User> GetCurrentUser()
         {
@@ -96,34 +97,34 @@ namespace LocalGoods.BLL.Services
 
         private async Task InsertDeliveryMethodsAsync(Guid vendorId, IEnumerable<DeliveryInformationModel> deliveryMethods)
         {
-            var nonExistentIds = _deliveryMethodRepository.GetExceptIdsAsync(deliveryMethods.Select(dm => dm.DeliveryMethodId));
+            var nonExistentIds = _deliveryMethodRepository
+                .GetExceptIdsAsync(deliveryMethods.Select(dm => dm.DeliveryMethodId)).ToList();
 
             if (nonExistentIds.Any())
             {
                 throw new DeliveryMethodNotFoundException(nonExistentIds.FirstOrDefault());
             }
 
-            var vendorDeliveryMethods = _mapper.Map<IEnumerable<VendorDeliveryMethod>>(deliveryMethods);
-            vendorDeliveryMethods.ToList().ForEach(vdm => vdm.VendorId = vendorId);
+            var vendorDeliveryMethods = _mapper.Map<IEnumerable<VendorDeliveryMethod>>(deliveryMethods).ToList();
+            vendorDeliveryMethods.ForEach(vdm => vdm.VendorId = vendorId);
+            
             await _vendorDeliveryMethodRepository.AddRangeAsync(vendorDeliveryMethods);
-
-            await _vendorDeliveryMethodRepository.SaveChangesAsync();
         }
 
         private async Task InsertPaymentMethodsAsync(Guid vendorId, IEnumerable<PaymentInformationModel> paymentMethods)
         {
-            var nonExistentIds = _paymentMethodRepository.GetExceptIdsAsync(paymentMethods.Select(pm => pm.PaymentMethodId));
+            var nonExistentIds = _paymentMethodRepository
+                .GetExceptIdsAsync(paymentMethods.Select(pm => pm.PaymentMethodId)).ToList();
 
             if (nonExistentIds.Any())
             {
                 throw new PaymentMethodNotFoundException(nonExistentIds.FirstOrDefault());
             }
 
-            var vendorPaymentMethods = _mapper.Map<IEnumerable<VendorPaymentMethod>>(paymentMethods);
-            vendorPaymentMethods.ToList().ForEach(vpm => vpm.VendorId = vendorId);
+            var vendorPaymentMethods = _mapper.Map<IEnumerable<VendorPaymentMethod>>(paymentMethods).ToList();
+            vendorPaymentMethods.ForEach(vpm => vpm.VendorId = vendorId);
+            
             await _vendorPaymentMethodRepository.AddRangeAsync(vendorPaymentMethods);
-
-            await _vendorPaymentMethodRepository.SaveChangesAsync();
         }
     }
 }

@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
+using LocalGoods.PL.Models.Vendor;
 
 namespace LocalGoods.PL.Controllers
 {
@@ -17,11 +19,16 @@ namespace LocalGoods.PL.Controllers
     {
         private readonly IVendorService _vendorService;
         private readonly IProductService _productService;
+        private readonly IMapper _mapper;
 
-        public VendorsController(IVendorService vendorService, IProductService productService)
+        public VendorsController(
+            IVendorService vendorService, 
+            IProductService productService, 
+            IMapper mapper)
         {
             _vendorService = vendorService;
             _productService = productService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -30,7 +37,7 @@ namespace LocalGoods.PL.Controllers
         {
             var vendors = await _vendorService.GetAllByFilterAsync(vendorFilterModel);
 
-            return Ok(vendors);
+            return Ok(_mapper.Map<IEnumerable<VendorResponse>>(vendors));
         }
 
         [HttpGet("{id}/products")]

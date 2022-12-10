@@ -1,20 +1,26 @@
-<div class="profile-menu">
-  <div [ngClass]="{'active': active===1}" routerLink="/user/info">
-    <a>User profile</a>
+<div class="user-navigation">
+  <div class="back-to-main">
+    <div routerLink="/">BACK TO MAIN</div>
   </div>
-  <div [ngClass]="{'active': active===2}" routerLink="/user/status">
-    <a>Track your order</a>
-  </div>
-  <div [ngClass]="{'active': active===3}" routerLink="/user/history">
-    <a>Order history</a>
-  </div>
-  <div [ngClass]="{'active': active===4}" class="vendor-menu" *ngIf="userService.userRole==='USER'">
-    <a href="#">Become a vendor</a>
-  </div>
-  <div [ngClass]="{'active': active===5}" class="vendor-menu" *ngIf="userService.userRole==='VENDOR'">
-    <a href="#">Published goods</a>
-  </div>
-  <div [ngClass]="{'active': active===6}" class="vendor-menu" *ngIf="userService.userRole==='VENDOR'">
-    <a href="#">Published orders</a>
+  <div class="profile-menu">
+    <div [ngClass]="{'active': active===1}" routerLink="/user/info">
+      <a>User profile</a>
+    </div>
+    <div [ngClass]="{'active': active===2}" routerLink="/user/status">
+      <a>Track your order</a>
+    </div>
+    <div [ngClass]="{'active': active===3}" routerLink="/user/history">
+      <a>Order history</a>
+    </div>
+    <div [ngClass]="{'active': active===4}" class="vendor-menu" *ngIf="userService.userRole==='USER'">
+      <a (click)="openVendorReg()">Become a vendor</a>
+    </div>
+    <div [ngClass]="{'active': active===5}" class="vendor-menu" *ngIf="userService.userRole==='VENDOR'">
+      <a>My goods</a>
+    </div>
+    <div [ngClass]="{'active': active===6}" class="vendor-menu" *ngIf="userService.userRole==='VENDOR'">
+      <a>Ordered from me</a>
+    </div>
   </div>
 </div>
+

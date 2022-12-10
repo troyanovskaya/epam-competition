@@ -6,7 +6,7 @@ export interface Good{
   description: string,
   price: number,
   poster: string,
-  discount: 0,
+  discount: number,
   vendorId: string,
   amount: number,
   unitType: {

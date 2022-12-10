@@ -1,4 +1,4 @@
-import { Component, DoCheck, Input, OnInit } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { BasketService } from 'src/app/services/basket.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { BasketService } from 'src/app/services/basket.service';
   styleUrls: ['./basket-panel.component.css']
 })
 export class BasketPanelComponent implements OnInit, DoCheck {
-  @Input() activeVendor:string = '';
+  activeVendor:string = 'all';
   showVendorGoods(id:string){
     this.basketService.showVendor=id;
     this.activeVendor = this.basketService.getVendor(id).companyName;
@@ -16,6 +16,7 @@ export class BasketPanelComponent implements OnInit, DoCheck {
   constructor(public basketService:BasketService) { }
 
   ngOnInit(): void {
+    this.basketService.showVendor = 'all';
   }
 
   ngDoCheck(){

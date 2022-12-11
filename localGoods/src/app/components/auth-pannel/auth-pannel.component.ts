@@ -17,13 +17,16 @@ export class AuthPannelComponent {
     this.dialogRef.open(LogInPageComponent, {
       height: '50%',
       width: '40%',
+      panelClass: 'custom-dialog-container' 
     },
     );
   }
+  
   openSignUpPage(){
     this.dialogRef.open(SignUpPageComponent, {
       height: '60%',
       width: '50%',
+      panelClass: 'custom-dialog-container' 
     },
     );
   }

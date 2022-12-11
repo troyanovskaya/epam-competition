@@ -1,5 +1,11 @@
 .header-div {
     display: flex;
+    width: inherit;
+    background-color: #162e50;
+    color: white;
+    font-size: 1.2em;
+    line-height: 40px;
+    padding-top: 0;
 }
 
 .header {
@@ -11,6 +17,7 @@
 
 .cross {
     cursor: pointer;
+    margin-right: 2%;
 }
 
 form {

@@ -36,7 +36,6 @@ export class HttpRequestService {
         alert(err.error.message)
         return of('');
       })
-    )
-      .subscribe()
+    ).subscribe()
   }
 }

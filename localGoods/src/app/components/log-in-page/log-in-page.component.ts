@@ -49,6 +49,7 @@ export class LogInPageComponent {
     this.signUpDialogRef.open(SignUpPageComponent, {
       height: '60%',
       width: '50%',
+      panelClass: 'custom-dialog-container' 
     },
     );
   }

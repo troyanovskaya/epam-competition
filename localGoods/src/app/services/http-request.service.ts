@@ -30,7 +30,7 @@ export class HttpRequestService {
     return this.http.get<Country[]>(`${this.URL}/Countries`);
   }
 
-  confirmEmail(email: string, token: string){
+  confirmEmail(email: any, token: any){
     var parameters = {email: '', token: ''};
 
     if (email) parameters['email'] = email;

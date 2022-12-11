@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpRequestService } from 'src/app/services/http-request.service';
 
 @Component({
@@ -20,9 +20,9 @@ export class EmailConfirmationComponent implements OnInit {
   }
 
   getRouteParams(){
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      this.email = params.get('email');
-      this.token = params.get('token');
+    this.route.queryParams.subscribe(params => {
+      this.email = params['email']
+      this.token = params['token']
 
       this.confirmEmail(this.email, this.token);
     })

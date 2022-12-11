@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { City, Country } from '../components/country.model';
 import { Category } from '../schema/category.model';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -27,5 +28,16 @@ export class HttpRequestService {
 
   getCountries(): Observable<Country[]> {
     return this.http.get<Country[]>(`${this.URL}/Countries`);
+  }
+
+  confirmEmail(email: string, token: string){
+    var parameters = {email: '', token: ''};
+
+    if (email) parameters['email'] = email;
+    if (token) parameters['token'] = token;
+
+    return this.http.get(`${environment.apiUrl}/auth/confirmEmail`, {
+      params: parameters
+    });
   }
 }

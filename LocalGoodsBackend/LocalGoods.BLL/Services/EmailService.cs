@@ -19,7 +19,7 @@ namespace LocalGoods.BLL.Services
         {
             var subject = "Email confirmation on LocalGoods website";
             var body = "Hello! You've signed up on LocalGoods website. " +
-                                $"Click here to confirm your account: {link} (link to Angular page). " +
+                                $"Click here to confirm your account: {link}. " +
                                 "Please ignore this email if it wasn't you.";
             
             var url = _configuration.GetConnectionString("LOGICAL_APP_URL");

@@ -14,6 +14,7 @@ using LocalGoods.DAL.Repositories.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Configuration;
 
 namespace LocalGoods.BLL.Services
 {
@@ -26,6 +27,7 @@ namespace LocalGoods.BLL.Services
         private readonly ICityRepository _cityRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IEmailService _emailService;
+        private readonly IConfiguration _configuration;
 
         public AuthService(
             UserManager<User> userManager,
@@ -34,7 +36,8 @@ namespace LocalGoods.BLL.Services
             IJwtHandler jwtHandler,
             ICityRepository cityRepository,
             IHttpContextAccessor httpContextAccessor,
-            IEmailService emailService)
+            IEmailService emailService, 
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -43,6 +46,7 @@ namespace LocalGoods.BLL.Services
             _cityRepository = cityRepository;
             _httpContextAccessor = httpContextAccessor;
             _emailService = emailService;
+            _configuration = configuration;
         }
 
         public async Task SignupAsync(SignupModel model)
@@ -65,8 +69,8 @@ namespace LocalGoods.BLL.Services
             var tokenBytes = Encoding.UTF8.GetBytes(token);
             var tokenEncoded = WebEncoders.Base64UrlEncode(tokenBytes);
             
-            var confirmationLink = "https://" + _httpContextAccessor.HttpContext.Request.Host
-                                   + $"/api/auth/confirmEmail?token={tokenEncoded}&email={user.Email}";
+            var confirmationLink = _configuration.GetSection("UIUrl").Value
+                                   + $"auth/confirm-email?token={tokenEncoded}&email={user.Email}";
 
             await _emailService.SendEmailConfirmationLinkAsync(user.Email, confirmationLink);
             await _userManager.AddToRoleAsync(user, "Buyer");

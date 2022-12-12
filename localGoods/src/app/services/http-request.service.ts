@@ -30,7 +30,7 @@ export class HttpRequestService {
   getCountries(): Observable<Country[]> {
     return this.http.get<Country[]>(`${this.URL}/Countries`);
   }
- 
+
   checkUser(url: string, value: Object, dialogRef: any) {
     this.post(url, value).pipe(
       tap(token => {

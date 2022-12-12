@@ -33,6 +33,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { RegVendorComponent } from './components/reg-vendor/reg-vendor.component';
 import { BasketPageComponent } from './components/basket-page/basket-page.component';
 import { BasketPanelComponent } from './components/basket-panel/basket-panel.component';
+import { ProductPageComponent } from './components/product-page/product-page.component';
+import { VendorGoodsComponent } from './components/vendor-goods/vendor-goods.component';
+import { VendorOrdersComponent } from './components/vendor-orders/vendor-orders.component';
+import { VendorOrderItemComponent } from './components/vendor-order-item/vendor-order-item.component';
+import { VendorGoodItemComponent } from './components/vendor-good-item/vendor-good-item.component';
 import { BasketVendorPipe } from '../app/pipes/basket-vendor.pipe';
 
 
@@ -41,7 +46,10 @@ const appRoutes:Routes = [
 {  path: 'user/info', component: UserInfoComponent},
 {  path: 'user/status', component: UserStatusComponent},
 {  path: 'user/history', component: UserHistoryComponent},
-{  path: 'basket', component: BasketPageComponent}
+{  path: 'basket', component: BasketPageComponent},
+{  path: 'product/:id', component: ProductPageComponent},
+{  path: 'vendor/goods', component: VendorGoodsComponent},
+{  path: 'vendor/orders', component: VendorOrdersComponent}
 ]
 @NgModule({
     declarations: [
@@ -69,7 +77,12 @@ const appRoutes:Routes = [
         RegVendorComponent,
         BasketPageComponent,
         BasketPanelComponent,
-        BasketVendorPipe
+        BasketVendorPipe,
+        ProductPageComponent,
+        VendorGoodsComponent,
+        VendorOrdersComponent,
+        VendorOrderItemComponent,
+        VendorGoodItemComponent
 
     ],
     providers: [],

@@ -21,6 +21,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { MatDialogModule } from '@angular/material/dialog';
 import { SignUpPageComponent } from './components/sign-up-page/sign-up-page.component';
 import { HttpClientModule } from '@angular/common/http';
+import { BasketVendorPipe } from './pipes/basket-vendor.pipe';
 
 
 @NgModule({
@@ -38,7 +39,11 @@ import { HttpClientModule } from '@angular/common/http';
         MenyOptionComponent,
         SearchInputComponent,
         LogInPageComponent,
-        SignUpPageComponent
+        SignUpPageComponent,
+        RegVendorComponent,
+        BasketPageComponent,
+        BasketPanelComponent,
+        BasketVendorPipe
 
     ],
     providers: [],

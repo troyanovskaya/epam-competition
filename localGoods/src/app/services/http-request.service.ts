@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, of, tap } from 'rxjs';
+import { LocalStorageService } from '../../app/local-storage.service'
+import { Observable } from 'rxjs';
 import { City, Country } from '../components/country.model';
 import { Category } from '../schema/category.model';
-import { LocalStorageService } from '../../app/local-storage.service'
-
 
 
 @Injectable({
@@ -31,7 +31,7 @@ export class HttpRequestService {
   getCountries(): Observable<Country[]> {
     return this.http.get<Country[]>(`${this.URL}/Countries`);
   }
-  
+ 
   checkUser(url: string, value: Object, dialogRef: any) {
     this.post(url, value).pipe(
       tap(token => {

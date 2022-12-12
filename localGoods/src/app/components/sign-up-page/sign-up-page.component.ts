@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpRequestService } from '../../services/http-request.service';
-import { catchError, of, tap } from 'rxjs';
-import { City, Country } from '../country.model';
 import { LocalStorageService } from 'src/app/local-storage.service';
-
+import { Observable, catchError, of , tap } from 'rxjs';
+import { City, Country } from '../country.model';
+import { User } from 'src/app/schema/user.model';
 
 @Component({
   selector: 'app-sign-up-page',

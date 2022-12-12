@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { SignUpPageComponent } from '../sign-up-page/sign-up-page.component';
-import { HttpRequestService } from '../../services/http-request.service'
+import { HttpRequestService } from '../../services/http-request.service';
+import { catchError, of} from 'rxjs';
 
 @Component({
   selector: 'app-log-in-page',
@@ -12,7 +13,7 @@ import { HttpRequestService } from '../../services/http-request.service'
 
 export class LogInPageComponent {
 
-  constructor(private dialogRef: MatDialogRef<LogInPageComponent>, 
+  constructor(private dialogRef: MatDialogRef<LogInPageComponent>,
               private signUpDialogRef: MatDialog,
               private http:HttpRequestService) { }
 
@@ -42,7 +43,7 @@ export class LogInPageComponent {
     this.dialogRef.close()
   }
 
-  openSignUp(){    
+  openSignUp(){
     this.dialogRef.close()
     this.signUpDialogRef.open(SignUpPageComponent, {
       height: '60%',

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, of, tap } from 'rxjs';
-import { LocalStorageService } from '../../app/local-storage.service'
-import { Observable } from 'rxjs';
+import { LocalStorageService } from '../../app/local-storage.service';
 import { City, Country } from '../components/country.model';
 import { Category } from '../schema/category.model';
 

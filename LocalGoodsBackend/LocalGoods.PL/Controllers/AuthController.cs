@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using LocalGoods.BLL.Models.Auth;
 using LocalGoods.BLL.Models.Auth.JWT;
@@ -29,6 +30,13 @@ namespace LocalGoods.PL.Controllers
             var confirmEmailModel = _mapper.Map<ConfirmEmailModel>(request);
             await _authService.ConfirmEmailAsync(confirmEmailModel);
             return Ok();
+        }
+
+        [HttpGet("sendEmailConfirmationLink")]
+        public async Task<IActionResult> SendEmailConfirmation([FromQuery]string email)
+        {
+            await _authService.SendEmailConfirmationLink(email);
+            return NoContent();
         }
 
         [HttpPost("login")]

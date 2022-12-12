@@ -57,6 +57,7 @@ namespace LocalGoods.BLL.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPaymentMethodService, PaymentMethodService>();
             services.AddScoped<IDeliveryMethodService, DeliveryMethodService>();
+            services.AddScoped<IUnitTypeService, UnitTypeService>();
 
             return services;
         }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Authentication;
 using System.Text;
@@ -65,6 +67,19 @@ namespace LocalGoods.BLL.Services
                 throw new AuthException(result.ToString());
             }
 
+            await SendEmailConfirmationLink(user.Email);
+            await _userManager.AddToRoleAsync(user, "Buyer");
+        }
+        
+        public async Task SendEmailConfirmationLink(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                throw new UserNotFoundException(email);
+            }
+            
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var tokenBytes = Encoding.UTF8.GetBytes(token);
             var tokenEncoded = WebEncoders.Base64UrlEncode(tokenBytes);
@@ -73,7 +88,6 @@ namespace LocalGoods.BLL.Services
                                    + $"auth/confirm-email?token={tokenEncoded}&email={user.Email}";
 
             await _emailService.SendEmailConfirmationLinkAsync(user.Email, confirmationLink);
-            await _userManager.AddToRoleAsync(user, "Buyer");
         }
 
         public async Task<JwtResponse> LoginAsync(LoginModel model)
@@ -82,11 +96,11 @@ namespace LocalGoods.BLL.Services
 
             if (user == null)
             {
-                throw new Exception(model.Email);
+                throw new UserNotFoundException("Invalid email or password");
             }
 
             var result = await _signInManager
-                .PasswordSignInAsync(user, model.Password, model.RememberMe, false);
+                .PasswordSignInAsync(user, model.Password, false, false);
 
             if (!result.Succeeded)
             {
@@ -100,7 +114,6 @@ namespace LocalGoods.BLL.Services
             return new JwtResponse()
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
-                ValidTo = token.ValidTo
             };
         }
 

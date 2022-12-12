@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { catchError, Observable, of, tap } from 'rxjs';
+import { LocalStorageService } from '../../app/local-storage.service'
 import { Observable } from 'rxjs';
 import { City, Country } from '../components/country.model';
 import { Category } from '../schema/category.model';
@@ -11,7 +13,8 @@ import { Category } from '../schema/category.model';
 export class HttpRequestService {
   URL:string = 'https://localgoodsapi.azurewebsites.net/api';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private localStorageService: LocalStorageService) { }
 
   getCategories():Observable<Category[]>{
     return this.http.get<Category[]>(`${this.URL}/Categories`)
@@ -27,5 +30,19 @@ export class HttpRequestService {
 
   getCountries(): Observable<Country[]> {
     return this.http.get<Country[]>(`${this.URL}/Countries`);
+  }
+ 
+  checkUser(url: string, value: Object, dialogRef: any) {
+    this.post(url, value).pipe(
+      tap(token => {
+        this.localStorageService.setItemToStorage('user', token.toString());
+        dialogRef.close();
+        return;
+      }),
+      catchError(err => {
+        alert(err.error.message)
+        return of('');
+      })
+    ).subscribe()
   }
 }

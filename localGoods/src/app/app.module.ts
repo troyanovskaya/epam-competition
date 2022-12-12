@@ -33,7 +33,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RegVendorComponent } from './components/reg-vendor/reg-vendor.component';
 import { BasketPageComponent } from './components/basket-page/basket-page.component';
 import { BasketPanelComponent } from './components/basket-panel/basket-panel.component';
-import { BasketVendorPipe } from './pipes/basket-vendor.pipe';
+import { BasketVendorPipe } from '../app/pipes/basket-vendor.pipe';
 
 
 const appRoutes:Routes = [

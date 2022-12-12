@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { SignUpPageComponent } from '../sign-up-page/sign-up-page.component';
 import { HttpRequestService } from '../../services/http-request.service';
@@ -18,19 +18,25 @@ export class LogInPageComponent {
               private http:HttpRequestService) { }
 
   validationForm = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl('')
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email
+    ]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+      Validators.pattern("^(?=.*[0-9])(?=.*[A-Z])(?!.* ).{8,}$"),
+      Validators.maxLength(20)
+    ]),
   })
 
   checkUser() {
-    this.http.post("/Auth/login",{email: this.validationForm.value.email, password: this.validationForm.value.password})
-    .pipe(
-      catchError(err => {
-        alert(err.error.message)
-        return of('');
-      })
-    )
-    .subscribe()
+    this.http.checkUser("/Auth/login",
+      {
+        email: this.validationForm.value.email,
+        password: this.validationForm.value.password
+      },
+      this.dialogRef)
   }
 
   closeWindow() {
@@ -42,6 +48,7 @@ export class LogInPageComponent {
     this.signUpDialogRef.open(SignUpPageComponent, {
       height: '60%',
       width: '50%',
+      panelClass: 'custom-dialog-container' 
     },
     );
   }

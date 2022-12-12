@@ -23,8 +23,9 @@
 .auth-container {
   display: flex;
   flex-direction: row;
+  align-items: center;
   padding: 20px;
-
+  gap:10px;
 }
 
 .menu>div {
@@ -47,3 +48,34 @@
 .sign-up:hover {
   transform: scale(1.2);
 }
+
+.basket{
+  transition: .5s;
+  width:30px;
+  height:30px;
+}
+.basket:hover{
+  transform: scale(1.1);
+}
+
+.avatar{
+  background-color: cadetblue;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  position:relative;
+}
+
+app-user-info{
+  position:absolute;
+  right:-170px;
+  top:60px;
+}
+
+img.apple{
+  width:20px;
+  height:20px;
+}
+
+
+

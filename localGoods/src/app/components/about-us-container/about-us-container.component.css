@@ -32,3 +32,8 @@ img {
     display: block;
     margin-bottom: 5%;
 }
+
+.basket-img{
+  width: 100px;
+  height: 100px;
+}

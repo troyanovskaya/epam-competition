@@ -1,10 +1,16 @@
 <div class="menu">
-    <div class="logo-container"><span  class="logo">{{logoName | uppercase}}</span></div>
+    <div class="logo-container" routerLink="/">
+      <div  class="logo"> LOCAL.G<img class="apple" src="assets/apple.png" alt="apple"><img class="apple" src="assets/apple.png" alt="apple">DS </div></div>
     <div>
       <div class="auth-container">
+        <div class="avatar" routerLink="/user/info">
+          <app-user-info *ngIf="!userInfoHidden"></app-user-info>
+        </div>
         <span class="log-in" (click)="openLogInPage()">Log in </span>
-        <div>|</div> 
+        <div>|</div>
         <span class="sign-up" (click)="openSignUpPage()"> Sign up</span>
-      </div>
+        <img routerLink="/basket" class="basket" src="assets/brown-basket.png" alt="basket">
+        <p>{{basketService.total | currency: 'GBP'}}</p>
+    </div>
     </div>
 </div>

@@ -1,0 +1,63 @@
+<div *ngIf="visibilityService.isVendorRegVisible" (click)="visibilityService.isVendorRegVisible = false" class="black-container">
+  <div class="vendor-reg" (click)="$event.stopPropagation()">
+    <div class="header"> Become a vendor now!</div>
+    <form >
+      <div class="flex-container">
+        <div class="item-container col-1">
+          <label for="company">Company name:</label>
+          <input placeholder="company" type="text" name="company">
+          <p>Payment Methods:</p>
+          <div>
+            <input type="checkbox" id="card" name="card" value="Card">
+            <label for="card"> Card </label>
+          </div>
+          <div>
+            <input type="checkbox" id="cash" name="cash" value="Cash">
+            <label for="cash"> Cash </label>
+          </div>
+
+          <p>Delivery Methods:</p>
+          <div>
+            <input type="checkbox" id="takeaway" name="takeaway" value="Takeaway">
+            <label for="takeaway"> Takeaway </label>
+          </div>
+          <div>
+            <input type="checkbox" id="delivery" name="delivery" value="Delivery">
+            <label for="Deliveryash"> Delivery </label>
+          </div>
+
+        </div>
+        <div class="item-container col-2">
+          <label for="email">Your email:</label>
+          <input placeholder="email" type="text" name="email">
+          <label for="phone">Phone number:</label>
+          <input placeholder="phone" type="text" name="phone">
+          <p>Messengers:</p>
+          <div>
+            <input type="checkbox" id="viber" name="Viber" value="Viber">
+            <label for="viber"> Viber </label>
+          </div>
+          <div>
+            <input type="checkbox" id="whatsapp" name="whatsapp" value="Whatsapp">
+            <label for="whatsapp"> WhatsApp</label>
+          </div>
+          <div>
+            <input type="checkbox" id="telegram" name="telegram" value="Telegram">
+            <label for="telegram"> Telegram</label>
+          </div>
+          <p>Social media:</p>
+          <div>
+            <input type="checkbox" id="facebook" name="facebook" value="Facebook">
+            <label for="facebook"> Facebook</label>
+          </div>
+          <div>
+            <input type="checkbox" id="instagram" name="instagram" value="Instagram">
+            <label for="instagram"> Instagram</label>
+          </div>
+
+        </div>
+      </div>
+      <button (click)="userService.userRole = 'VENDOR'; visibilityService.isVendorRegVisible = false"> Create a vendor </button>
+    </form>
+  </div>
+</div>

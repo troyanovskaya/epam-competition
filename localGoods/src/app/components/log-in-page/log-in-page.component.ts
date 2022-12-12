@@ -3,7 +3,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { SignUpPageComponent } from '../sign-up-page/sign-up-page.component';
 import { HttpRequestService } from '../http-request.service';
-import { LocalStorageService } from '../../local-storage.service'
 
 @Component({
   selector: 'app-log-in-page',
@@ -13,10 +12,9 @@ import { LocalStorageService } from '../../local-storage.service'
 
 export class LogInPageComponent {
 
-  constructor(private dialogRef: MatDialogRef<LogInPageComponent>,
-    private signUpDialogRef: MatDialog,
-    private http: HttpRequestService,
-    private localStorageService: LocalStorageService) { }
+  constructor(private dialogRef: MatDialogRef<LogInPageComponent>, 
+              private signUpDialogRef: MatDialog,
+              private http:HttpRequestService) { }
 
   validationForm = new FormGroup({
     email: new FormControl('', [
@@ -44,7 +42,7 @@ export class LogInPageComponent {
     this.dialogRef.close()
   }
 
-  openSignUp() {
+  openSignUp(){    
     this.dialogRef.close()
     this.signUpDialogRef.open(SignUpPageComponent, {
       height: '60%',

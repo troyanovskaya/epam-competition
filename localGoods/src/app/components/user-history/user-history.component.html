@@ -1,0 +1,13 @@
+
+<app-pay-for-order></app-pay-for-order>
+<app-user-navigation [active]="3"></app-user-navigation>
+
+<div class="history">
+  <div class="history-item" *ngFor="let order of historyService.pastOrders">
+    <div><p>Order number: {{order.id}}</p></div>
+    <div><p>Order date: {{order.date}}</p></div>
+    <div><p>Adress: {{order.adress}}</p></div>
+    <div><p>Vendor: {{order.vendor}}</p></div>
+    <div><p>Total: {{order.total}}</p></div>
+  </div>
+</div>

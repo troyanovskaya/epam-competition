@@ -34,7 +34,7 @@ export class HttpRequestService {
   checkUser(url: string, value: Object, dialogRef: any) {
     this.post(url, value).pipe(
       tap(token => {
-        this.localStorageService.setItemToStorage('user', token.toString());
+        this.localStorageService.setItemToStorage('user', JSON.stringify(token));
         dialogRef.close();
         return;
       }),

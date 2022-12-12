@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { SignUpPageComponent } from '../sign-up-page/sign-up-page.component';
-import { HttpRequestService } from '../http-request.service';
+import { HttpRequestService } from '../../services/http-request.service'
 
 @Component({
   selector: 'app-log-in-page',

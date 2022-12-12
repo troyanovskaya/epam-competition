@@ -31,7 +31,6 @@ namespace LocalGoods.BLL.Extensions
                     {
                         ValidateIssuer = true,
                         ValidateAudience = true,
-                        ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = configuration.GetSection("JwtSettings")["Issuer"],
                         ValidAudience = configuration.GetSection("JwtSettings")["Audience"],

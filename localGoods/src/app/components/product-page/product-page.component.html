@@ -1,0 +1,38 @@
+<div class="wrapper">
+  <div class="flex-container">
+    <div class="left">
+      <div class="img-container">
+        <img src="{{good.poster}}" alt="good">
+      </div>
+      <div class="name">
+        <h2>{{good.name | titlecase}}</h2>
+      </div>
+      <div class="description">
+        <div> <strong>Description:</strong>  {{good.description}}</div>
+      </div>
+    </div>
+    <div class="right">
+      <div class="vendor">
+        <h3>Vendor is {{vendor.companyName | titlecase}}</h3>
+      </div>
+      <div class="price">
+        <div><span  *ngIf="false"></span> <span class="span-price">{{good.price | currency:'GBP'}}</span></div>
+      </div>
+      <div class="delivery">
+        <h3>Delivery methods:</h3>
+        <div *ngFor="let del of vendor.deliveryMethods">
+          - {{del | titlecase}}
+        </div>
+      </div>
+      <div class="payment">
+        <h3>Payment methods:</h3>
+        <div *ngFor="let pay of vendor.paymentMethods">
+          - {{pay | titlecase}}
+        </div>
+    </div>
+    <div class="buy">
+      <button (click)="addToBasket()">Buy</button>
+    </div>
+  </div>
+</div>
+

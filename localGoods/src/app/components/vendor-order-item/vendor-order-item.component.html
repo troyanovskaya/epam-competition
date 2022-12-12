@@ -1,0 +1,9 @@
+<div>
+  <div class="order-item">
+    <div><p>Order number: {{order.good.id}}</p></div>
+    <div><p>Adress: {{order.recipient.address}}</p></div>
+    <div><p>Receiver: {{order.recipient.name}} {{order.recipient.surname}}</p></div>
+    <div><p>Contact Information: {{order.recipient.phone}}</p></div>
+    <div><p>Total: {{order.good.price*order.quantity | currency: 'GBP'}}</p></div>
+  </div>
+</div>

@@ -15,10 +15,10 @@
     <div [ngClass]="{'active': active===4}" class="vendor-menu" *ngIf="userService.userRole==='USER'">
       <a (click)="openVendorReg()">Become a vendor</a>
     </div>
-    <div [ngClass]="{'active': active===5}" class="vendor-menu" *ngIf="userService.userRole==='VENDOR'">
+    <div [ngClass]="{'active': active===5}" routerLink="/vendor/goods" class="vendor-menu" *ngIf="userService.userRole==='VENDOR'">
       <a>My goods</a>
     </div>
-    <div [ngClass]="{'active': active===6}" class="vendor-menu" *ngIf="userService.userRole==='VENDOR'">
+    <div [ngClass]="{'active': active===6}" routerLink="/vendor/orders" class="vendor-menu" *ngIf="userService.userRole==='VENDOR'">
       <a>Ordered from me</a>
     </div>
   </div>

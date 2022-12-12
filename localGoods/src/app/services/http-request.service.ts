@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, of, tap } from 'rxjs';
-import { LocalStorageService } from '../../app/local-storage.service'
+import { LocalStorageService } from '../../app/local-storage.service';
 import { City, Country } from '../components/country.model';
 import { Category } from '../schema/category.model';
 
@@ -34,7 +34,7 @@ export class HttpRequestService {
   checkUser(url: string, value: Object, dialogRef: any) {
     this.post(url, value).pipe(
       tap(token => {
-        this.localStorageService.setItemToStorage('user', token.toString());
+        this.localStorageService.setItemToStorage('user', JSON.stringify(token));
         dialogRef.close();
         return;
       }),

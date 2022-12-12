@@ -3,12 +3,12 @@
       <div  class="logo"> LOCAL.G<img class="apple" src="assets/apple.png" alt="apple"><img class="apple" src="assets/apple.png" alt="apple">DS </div></div>
     <div>
       <div class="auth-container">
-        <div class="avatar" routerLink="/user/info">
+        <div *ngIf="userService.isAutorized" class="avatar" routerLink="/user/info">
           <app-user-info *ngIf="!userInfoHidden"></app-user-info>
         </div>
-        <span class="log-in" (click)="openLogInPage()">Log in </span>
-        <div>|</div>
-        <span class="sign-up" (click)="openSignUpPage()"> Sign up</span>
+        <span *ngIf="!userService.isAutorized" class="log-in" (click)="openLogInPage()">Log in </span>
+        <div *ngIf="!userService.isAutorized">|</div>
+        <span *ngIf="!userService.isAutorized" class="sign-up" (click)="openSignUpPage()"> Sign up</span>
         <img routerLink="/basket" class="basket" src="assets/brown-basket.png" alt="basket">
         <p>{{basketService.total | currency: 'GBP'}}</p>
     </div>

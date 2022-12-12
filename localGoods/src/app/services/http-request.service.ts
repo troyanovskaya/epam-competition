@@ -4,6 +4,7 @@ import { catchError, Observable, of, tap } from 'rxjs';
 import { LocalStorageService } from '../../app/local-storage.service';
 import { City, Country } from '../components/country.model';
 import { Category } from '../schema/category.model';
+import { UserService } from './user.service';
 
 
 @Injectable({
@@ -13,7 +14,8 @@ export class HttpRequestService {
   URL:string = 'https://localgoodsapi.azurewebsites.net/api';
 
   constructor(private http: HttpClient,
-    private localStorageService: LocalStorageService) { }
+    private localStorageService: LocalStorageService,
+    private userService:UserService) { }
 
   getCategories():Observable<Category[]>{
     return this.http.get<Category[]>(`${this.URL}/Categories`)
@@ -35,6 +37,7 @@ export class HttpRequestService {
     this.post(url, value).pipe(
       tap(token => {
         this.localStorageService.setItemToStorage('user', JSON.stringify(token));
+        this.userService.isAutorized = true;
         dialogRef.close();
         return;
       }),

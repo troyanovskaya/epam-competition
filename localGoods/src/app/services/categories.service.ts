@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CategoriesStatus } from '../schema/categoriesStatus.model';
 import { Category } from '../schema/category.model';
 import { HttpRequestService } from './http-request.service';
 
@@ -8,6 +9,7 @@ import { HttpRequestService } from './http-request.service';
 })
 export class CategoriesService {
   categories: Category[] = [];
+  listOfChosen:string[] = [];
 
   constructor(private http: HttpRequestService) {
     this.http.getCategories()

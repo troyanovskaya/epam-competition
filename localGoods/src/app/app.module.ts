@@ -39,7 +39,8 @@ import { VendorOrdersComponent } from './components/vendor-orders/vendor-orders.
 import { VendorOrderItemComponent } from './components/vendor-order-item/vendor-order-item.component';
 import { VendorGoodItemComponent } from './components/vendor-good-item/vendor-good-item.component';
 import { BasketVendorPipe } from '../app/pipes/basket-vendor.pipe';
-
+import { VendorItemPageComponent } from './components/vendor-item-page/vendor-item-page.component';
+import { GoodComponent } from './components/good/good.component';
 
 const appRoutes:Routes = [
 {  path: '', component: MainPageComponent},
@@ -82,8 +83,9 @@ const appRoutes:Routes = [
         VendorGoodsComponent,
         VendorOrdersComponent,
         VendorOrderItemComponent,
-        VendorGoodItemComponent
-
+        VendorGoodItemComponent,
+        VendorItemPageComponent,
+        GoodComponent,
     ],
     providers: [],
     bootstrap: [AppComponent],

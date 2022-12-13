@@ -1,17 +1,18 @@
+<form class="flex-container">
+  <label for="countries">Choose a country:</label>
+  <select (click)="getCountry()" name="country" id="countries" [formControl]="country">
+    <option *ngFor="let count of countriesService.countries" value={{count.name}}>{{count.name | titlecase}}</option>
+  </select>
+  <p class="del-q">Where products can be delivered?</p>
+  <label for="city">Choose a city:</label>
+  <select (click)="getCity()" [formControl]="city" name="city" id="city" [formControl]="city">
+    <option *ngFor="let city of countriesService.choosenCountry.cities" value={{city.name}}>{{city.name | titlecase}}
+    </option>
+  </select>
 
-  <form class="flex-container">
-    <label for="countries">Choose a country:</label>
-    <select (click)="getCountry()" name="country" id="countries" [formControl]="country">
-      <option *ngFor="let count of countriesService.countries" value={{count.name}} >{{count.name | titlecase}}</option>
-    </select>
-    <p class="del-q">Where products can be delivered?</p>
-    <label for="city">Choose a city:</label>
-    <select (click)="getCity()" [formControl]="city" name="city" id="city" [formControl]="city">
-      <option *ngFor="let city of countriesService.choosenCountry.cities" value={{city.name}} >{{city.name | titlecase}}</option>
-    </select>
-
-    <div class="vendors-flex-container">
-      <div class="vendor-item" *ngFor="let vendor of vendors"><p>{{vendor}}</p> </div>
+  <div class="vendors-flex-container">
+    <div class="vendor-item" *ngFor="let vendor of vendors; let i = index" (click)="selectVendor(vendor)" routerLink="/vendor.name/products">
+      <p>{{vendor.name}}</p>
     </div>
-  </form>
-
+  </div>
+</form>

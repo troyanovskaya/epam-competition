@@ -30,43 +30,6 @@ namespace LocalGoods.PL
         {
             services.AddControllers();
             services.AddSwaggerGen();
-            
-            services.AddIdentity<User, Role>(opt =>
-                {
-                    opt.Password.RequiredLength = 8;
-                    opt.Password.RequireLowercase = false;
-                    opt.Password.RequireNonAlphanumeric = false;
-                    opt.User.RequireUniqueEmail = true;
-                    opt.SignIn.RequireConfirmedEmail = true;
-                })
-                .AddDefaultTokenProviders()
-                .AddEntityFrameworkStores<LocalGoodsDbContext>()
-                .AddUserStore<UserStore<User, Role, LocalGoodsDbContext, Guid>>()
-                .AddRoleStore<RoleStore<Role, LocalGoodsDbContext, Guid>>();
-            
-            services.AddAuthorization();
-            services
-                /*.AddAuthentication(opt =>
-                {
-                    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                    opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                })*/
-                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters()
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidateLifetime = true,
-                        ValidIssuer = Configuration.GetSection("JwtSettings")["Issuer"],
-                        ValidAudience = Configuration.GetSection("JwtSettings")["Audience"],
-                        IssuerSigningKey =
-                            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("JwtSettings")["Key"]))
-                    };
-                });
 
             services.AddPresentationLayerServices(Configuration);
             services.AddDataAccessLayerServices(Configuration);

@@ -16,7 +16,7 @@ namespace LocalGoods.DAL.Extensions
         public static IServiceCollection AddDataAccessLayerServices(this IServiceCollection services, IConfiguration configuration)
         {
             AddMyDbContext(services, configuration);
-            //AddIdentity(services);
+            AddIdentity(services);
             AddRepositories(services);
 
             return services;
@@ -32,7 +32,7 @@ namespace LocalGoods.DAL.Extensions
             });
         }
 
-        /*private static IServiceCollection AddIdentity(
+        private static IServiceCollection AddIdentity(
             this IServiceCollection services)
         {
             services.AddIdentity<User, Role>(opt =>
@@ -49,7 +49,7 @@ namespace LocalGoods.DAL.Extensions
                 .AddRoleStore<RoleStore<Role, LocalGoodsDbContext, Guid>>();
 
             return services;
-        }*/
+        }
 
         private static void AddRepositories(IServiceCollection services)
         {

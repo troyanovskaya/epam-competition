@@ -23,8 +23,7 @@ namespace LocalGoods.PL.Controllers
             _categoryService = categoryService;
             _mapper = mapper;
         }
-
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CategoryResponse>))]
         public async Task<IActionResult> GetAll()

@@ -30,14 +30,14 @@ namespace LocalGoods.BLL.Extensions
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            //services.AddAuthentication(configuration);
+            services.AddAuthentication(configuration);
             services.AddServices();
             services.AddValidators();
 
             return services;
         }
         
-        /*private static IServiceCollection AddAuthentication(
+        private static IServiceCollection AddAuthentication(
             this IServiceCollection services,
             IConfiguration configuration)
         {
@@ -59,7 +59,7 @@ namespace LocalGoods.BLL.Extensions
                 });
 
             return services;
-        }*/
+        }
 
         private static IServiceCollection AddServices(
             this IServiceCollection services)

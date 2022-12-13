@@ -1,21 +1,46 @@
-body{
-  margin:0px;
-  padding:0px;
-  background-color: #f7e5d0;
-}
-a{
-  text-decoration: none;
-}
-ul{
-  list-style-type:none;
+body {
+    margin: 0px;
+    padding: 0px;
+    background-color: #f7e5d0;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+a {
+    text-decoration: none;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+ul {
+    list-style-type: none;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
 .custom-dialog-container .mat-dialog-container {
-  padding: 0;
-  border-radius: 10px;
+    padding: 0;
+    border-radius: 10px;
+}
+
+.SUCCESS {
+    background-color: rgb(42, 42, 175);
+}
+
+.ERROR {
+    background-color: rgb(250, 64, 51);
 }

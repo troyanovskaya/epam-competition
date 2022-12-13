@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,7 +14,7 @@ import { AboutUsContainerComponent } from './components/about-us-container/about
 import { MenyLeftPanelComponent } from './components/meny-left-panel/meny-left-panel.component';
 import { MenyOptionComponent } from './components/meny-option/meny-option.component';
 import { SearchInputComponent } from './components/search-input/search-input.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BasketItemComponent } from './components/basket-item/basket-item.component';
 import { PayForOrderComponent } from './components/pay-for-order/pay-for-order.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
@@ -26,6 +25,7 @@ import { UserHistoryComponent } from './components/user-history/user-history.com
 import { UserNavigationComponent } from './components/user-navigation/user-navigation.component';
 import { LogInPageComponent } from './components/log-in-page/log-in-page.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { SignUpPageComponent } from './components/sign-up-page/sign-up-page.component';
@@ -39,6 +39,9 @@ import { VendorOrdersComponent } from './components/vendor-orders/vendor-orders.
 import { VendorOrderItemComponent } from './components/vendor-order-item/vendor-order-item.component';
 import { VendorGoodItemComponent } from './components/vendor-good-item/vendor-good-item.component';
 import { BasketVendorPipe } from '../app/pipes/basket-vendor.pipe';
+import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
+import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
+import { NotifierComponent } from './components/notifier/notifier.component';
 
 
 const appRoutes:Routes = [
@@ -49,7 +52,9 @@ const appRoutes:Routes = [
 {  path: 'basket', component: BasketPageComponent},
 {  path: 'product/:id', component: ProductPageComponent},
 {  path: 'vendor/goods', component: VendorGoodsComponent},
-{  path: 'vendor/orders', component: VendorOrdersComponent}
+{  path: 'vendor/orders', component: VendorOrdersComponent},
+{  path: 'auth/confirm-email', component: EmailConfirmationComponent},
+{  path: 'auth/password-recovery', component: PasswordRecoveryComponent}
 ]
 @NgModule({
     declarations: [
@@ -82,8 +87,10 @@ const appRoutes:Routes = [
         VendorGoodsComponent,
         VendorOrdersComponent,
         VendorOrderItemComponent,
-        VendorGoodItemComponent
-
+        VendorGoodItemComponent,
+        EmailConfirmationComponent,
+        PasswordRecoveryComponent,
+        NotifierComponent
     ],
     providers: [],
     bootstrap: [AppComponent],
@@ -95,7 +102,8 @@ const appRoutes:Routes = [
         RouterModule.forRoot(appRoutes),
         NoopAnimationsModule,
         MatDialogModule,
-        HttpClientModule
+        HttpClientModule,
+        MatSnackBarModule
     ]
 })
 export class AppModule { }

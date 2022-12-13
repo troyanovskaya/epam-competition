@@ -189,7 +189,7 @@ namespace LocalGoods.BLL.Services
                 throw new VendorNotFoundException(vendorId);
             }
 
-            if (vendor.Id == currentUserId)
+            if (vendor.User.Id == currentUserId)
             {
                 throw new OrderBadRequestException("Vendor can't buy their own products");
             }

@@ -2,6 +2,9 @@
 using LocalGoods.DAL.Entities;
 using LocalGoods.DAL.Repositories.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LocalGoods.DAL.Repositories
 {

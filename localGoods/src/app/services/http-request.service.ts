@@ -18,13 +18,7 @@ export class HttpRequestService {
     private localStorageService: LocalStorageService) { }
 
   getCategories():Observable<Category[]>{
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      })
-    };
-
-    return this.http.get<Category[]>(`https://localhost:5001/api/Categories`, httpOptions)
+    return this.http.get<Category[]>(`${this.URL}/Categories`)
   }
 
   post(url: string, value: Object) {

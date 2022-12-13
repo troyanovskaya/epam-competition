@@ -39,6 +39,7 @@ import { VendorOrdersComponent } from './components/vendor-orders/vendor-orders.
 import { VendorOrderItemComponent } from './components/vendor-order-item/vendor-order-item.component';
 import { VendorGoodItemComponent } from './components/vendor-good-item/vendor-good-item.component';
 import { BasketVendorPipe } from '../app/pipes/basket-vendor.pipe';
+import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 
 
 const appRoutes:Routes = [
@@ -49,7 +50,8 @@ const appRoutes:Routes = [
 {  path: 'basket', component: BasketPageComponent},
 {  path: 'product/:id', component: ProductPageComponent},
 {  path: 'vendor/goods', component: VendorGoodsComponent},
-{  path: 'vendor/orders', component: VendorOrdersComponent}
+{  path: 'vendor/orders', component: VendorOrdersComponent},
+{  path: 'auth/confirm-email', component: EmailConfirmationComponent}
 ]
 @NgModule({
     declarations: [
@@ -82,7 +84,8 @@ const appRoutes:Routes = [
         VendorGoodsComponent,
         VendorOrdersComponent,
         VendorOrderItemComponent,
-        VendorGoodItemComponent
+        VendorGoodItemComponent,
+        EmailConfirmationComponent
 
     ],
     providers: [],

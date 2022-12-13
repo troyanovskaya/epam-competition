@@ -107,7 +107,7 @@ namespace LocalGoods.BLL.Services
             
             var currentUserId = await GetCurrentUserIdAsync();
             
-            if (currentUserId != product.VendorId)
+            if (currentUserId != product.Vendor.UserId)
             {
                 throw new AuthException("This is not your product, you can not edit it");
             }
@@ -128,6 +128,7 @@ namespace LocalGoods.BLL.Services
 
             product.UnitTypeId = model.UnitTypeId;
             product.Categories.Clear();
+            product.Images.Clear();
 
             await AddProductCategories(product, model.CategoryIds);
             await AddProductImages(product, model.ImageIds);
@@ -175,7 +176,7 @@ namespace LocalGoods.BLL.Services
             
             var currentUserId = await GetCurrentUserIdAsync();
             
-            if (currentUserId != product.VendorId)
+            if (currentUserId != product.Vendor.UserId)
             {
                 throw new AuthException("This is not your product, you can not delete it");
             }

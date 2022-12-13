@@ -9,6 +9,7 @@ import { FullUser } from '../schema/fullUser.model';
 import jwt_decode from 'jwt-decode';
 import { Good } from '../schema/good.model';
 import { Vendor } from '../schema/vendor.model';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -78,6 +79,21 @@ export class HttpRequestService {
   getProduct(productId:string): Observable<Good>{
     return this.http.get<Good>(`${this.URL}/Products/${productId}`);
   }
+  confirmEmail(email: any, token: any){
+    var parameters = {email: '', token: ''};
+
+    if (email) parameters['email'] = email;
+    if (token) parameters['token'] = token;
+
+    return this.http.get(`${environment.apiUrl}/auth/confirmEmail`, {
+      params: parameters
+    });
+  }
+
+  resetPassword(model: any){
+    return this.http.post(`${environment.apiUrl}/auth/resetPassword`, model);
+  }
+
   checkUser(url: string, value: Object, dialogRef: any) {
     this.post(url, value).pipe(
       tap(token => {

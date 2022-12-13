@@ -1,4 +1,5 @@
 <div class="product-container">
+  
   <div class="product">
     <h3>{{item.name | titlecase}}</h3>
     <img class="product-img" src="{{item.poster}}" alt="{{item.name}}">
@@ -7,11 +8,13 @@
       <img src="assets/delivery.png" alt="delivery">
       <p>Delivery or take away</p>
     </div>
-
   </div>
+
   <div class="icons">
     <div class="price">{{item.price | currency:'GBP'}}/{{item.unitType.name}}</div>
     <div> {{item.amount}} {{item.unitType.name}} </div>
     <img class="edit" src="assets/edit.png" alt="edit">
     <img class="bin" (click)="deleteItem()" src="assets/bin.png" alt="bin">
   </div>
+
+</div>

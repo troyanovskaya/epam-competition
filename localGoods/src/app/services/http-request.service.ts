@@ -4,6 +4,8 @@ import { catchError, Observable, of, tap } from 'rxjs';
 import { LocalStorageService } from '../../app/local-storage.service';
 import { City, Country } from '../components/country.model';
 import { Category } from '../schema/category.model';
+import { Good } from '../schema/good.model';
+import { Vendor } from '../schema/vendor.model';
 
 
 @Injectable({
@@ -43,5 +45,13 @@ export class HttpRequestService {
         return of('');
       })
     ).subscribe()
+  }
+
+  getVendors(): Observable<Vendor[]> {
+    return this.http.get<Vendor[]>(`${this.URL}/Vendors`);
+  }
+
+  getProducts(vendorId: string): Observable<Good[]>{
+    return this.http.get<Good[]>(`${this.URL}/Vendors/${vendorId}/products`);
   }
 }

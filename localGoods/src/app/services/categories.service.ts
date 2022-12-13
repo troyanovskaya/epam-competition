@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CategoriesStatus } from '../schema/categoriesStatus.model';
 import { Category } from '../schema/category.model';

@@ -7,6 +7,7 @@ using LocalGoods.BLL.Models.Country;
 using LocalGoods.BLL.Models.Order;
 using LocalGoods.BLL.Services.Interfaces;
 using LocalGoods.PL.Models.Country;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,7 +35,7 @@ namespace LocalGoods.PL.Controllers
             var countries = await _countryService.GetAllAsync();
             return Ok(_mapper.Map<IEnumerable<CountryResponse>>(countries));
         }
-
+        
         [HttpGet("{id}/cities")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CityModel>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

@@ -41,7 +41,8 @@ namespace LocalGoods.BLL.Extensions
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddAuthentication(opt =>
+            services
+                .AddAuthentication(opt =>
                 {
                     opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                     opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;

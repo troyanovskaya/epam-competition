@@ -59,7 +59,7 @@ namespace LocalGoods.PL.Controllers
             return Ok(orderStatuses);
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

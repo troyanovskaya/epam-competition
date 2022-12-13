@@ -20,6 +20,7 @@ namespace LocalGoods.PL
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthorization();
             services.AddControllers();
             services.AddSwaggerGen();
 

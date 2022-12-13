@@ -8,6 +8,7 @@ using LocalGoods.DAL.Repositories.Interfaces;
 using LocalGoods.Shared.FilterModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LocalGoods.BLL.Services
@@ -65,7 +66,7 @@ namespace LocalGoods.BLL.Services
 
             var product = _mapper.Map<Product>(createProductModel);
             await _productRepository.AddAsync(product);
-            await AddProductImages(product.Id, createProductModel.Images);
+            await AddProductImages(product, createProductModel.Images);
             await AddProductCategories(product, createProductModel.CategoryIds);
 
             await _productRepository.SaveChangesAsync();
@@ -85,33 +86,33 @@ namespace LocalGoods.BLL.Services
             }
         }
 
-        private async Task AddProductImages(Guid productId, IEnumerable<string> images)
+        private async Task AddProductImages(
+            Product product,
+            IEnumerable<string> images)
         {
             foreach (var imageLink in images)
             {
-                var createImageModel = new CreateImageModel() { Link = imageLink, ProductId = productId };
+                var createImageModel = new CreateImageModel() { Link = imageLink, ProductId = product.Id };
 
                 var image = _mapper.Map<Image>(createImageModel);
 
-                await _imageRepository.AddAsync(image);
+                product.Images.Add(image);
             }
         }
 
         private async Task AddProductCategories(Product product, IEnumerable<Guid> categoryIds)
         {
             product.Categories = new List<Category>();
+            var categoryIdList = categoryIds.ToList();
 
-            foreach (var categoryId in categoryIds)
+            var categories = (await _categoryRepository.GetAllByIds(categoryIdList)).ToList();
+
+            if (categories.Count() != categoryIdList.Count)
             {
-                var category = await _categoryRepository.GetByIdAsync(categoryId);
-
-                if (category is null)
-                {
-                    throw new CategoryNotFoundException(categoryId);
-                }
-
-                product.Categories.Add(category);
+                throw new CategoryNotFoundException();
             }
+
+            product.Categories = categories;
         }
     }
 }

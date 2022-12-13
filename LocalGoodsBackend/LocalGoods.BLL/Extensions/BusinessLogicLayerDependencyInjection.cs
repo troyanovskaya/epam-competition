@@ -31,7 +31,6 @@ namespace LocalGoods.BLL.Extensions
                     {
                         ValidateIssuer = true,
                         ValidateAudience = true,
-                        ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = configuration.GetSection("JwtSettings")["Issuer"],
                         ValidAudience = configuration.GetSection("JwtSettings")["Audience"],
@@ -57,6 +56,7 @@ namespace LocalGoods.BLL.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPaymentMethodService, PaymentMethodService>();
             services.AddScoped<IDeliveryMethodService, DeliveryMethodService>();
+            services.AddScoped<IUnitTypeService, UnitTypeService>();
 
             return services;
         }

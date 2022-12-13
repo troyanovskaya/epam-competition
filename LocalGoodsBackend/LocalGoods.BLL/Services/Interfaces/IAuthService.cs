@@ -11,5 +11,6 @@ namespace LocalGoods.BLL.Services.Interfaces
         Task ConfirmEmailAsync(ConfirmEmailModel model);
         Task ForgotPasswordAsync(ForgotPasswordModel model);
         Task ResetPasswordAsync(ResetPasswordModel model);
+        Task SendEmailConfirmationLink(string email);
     }
 }

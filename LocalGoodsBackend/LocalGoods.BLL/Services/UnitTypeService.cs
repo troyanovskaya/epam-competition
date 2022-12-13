@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using LocalGoods.BLL.Exceptions.NotFoundException;
 using LocalGoods.BLL.Models.UnitType;
 using LocalGoods.BLL.Services.Interfaces;
 using LocalGoods.DAL.Repositories.Interfaces;
@@ -30,6 +31,12 @@ namespace LocalGoods.BLL.Services
         public async Task<UnitTypeModel> GetUnitTypeByIdAsync(Guid id)
         {
             var unitType = await _unitTypeRepository.GetByIdAsync(id);
+
+            if (unitType == null)
+            {
+                throw new UnitTypeNotFoundException(id);
+            }
+            
             return _mapper.Map<UnitTypeModel>(unitType);
         }
     }

@@ -66,7 +66,7 @@ namespace LocalGoods.BLL.Services
 
             var product = _mapper.Map<Product>(createProductModel);
             await _productRepository.AddAsync(product);
-            await AddProductImages(product, product.Id, createProductModel.Images);
+            await AddProductImages(product, createProductModel.Images);
             await AddProductCategories(product, createProductModel.CategoryIds);
 
             await _productRepository.SaveChangesAsync();
@@ -87,17 +87,15 @@ namespace LocalGoods.BLL.Services
         }
 
         private async Task AddProductImages(
-            Product product, 
-            Guid productId, 
+            Product product,
             IEnumerable<string> images)
         {
             foreach (var imageLink in images)
             {
-                var createImageModel = new CreateImageModel() { Link = imageLink, ProductId = productId };
+                var createImageModel = new CreateImageModel() { Link = imageLink, ProductId = product.Id };
 
                 var image = _mapper.Map<Image>(createImageModel);
 
-                await _imageRepository.AddAsync(image);
                 product.Images.Add(image);
             }
         }

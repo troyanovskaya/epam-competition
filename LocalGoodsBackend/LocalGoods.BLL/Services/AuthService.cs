@@ -30,6 +30,7 @@ namespace LocalGoods.BLL.Services
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IEmailService _emailService;
         private readonly IConfiguration _configuration;
+        private const string BuyerRole = "Buyer";
 
         public AuthService(
             UserManager<User> userManager,
@@ -68,7 +69,7 @@ namespace LocalGoods.BLL.Services
             }
 
             await SendEmailConfirmationLink(user.Email);
-            await _userManager.AddToRoleAsync(user, "Buyer");
+            await _userManager.AddToRoleAsync(user, BuyerRole);
         }
         
         public async Task SendEmailConfirmationLink(string email)

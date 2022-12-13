@@ -1,3 +1,6 @@
+using LocalGoods.BLL.Extensions;
+using LocalGoods.PL.Extensions;
+using LocalGoods.DAL.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -17,7 +20,13 @@ namespace LocalGoods.PL
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthorization();
             services.AddControllers();
+            services.AddSwaggerGen();
+
+            services.AddPresentationLayerServices(Configuration);
+            services.AddBusinessLogicLayerServices(Configuration);
+            services.AddDataAccessLayerServices(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -27,10 +36,17 @@ namespace LocalGoods.PL
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSwagger();
+            app.UseSwaggerUI();
+
+            app.UseExceptionHandlingMiddleware();
+
+            app.UseCors("AllowAll");
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

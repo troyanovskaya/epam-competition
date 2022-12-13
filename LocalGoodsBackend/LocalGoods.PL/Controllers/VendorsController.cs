@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using LocalGoods.PL.Models.Vendor;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LocalGoods.PL.Controllers
 {
@@ -63,6 +64,7 @@ namespace LocalGoods.PL.Controllers
             return Ok(vendor);
         }
 
+        [Authorize(Roles = "Vendor")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

@@ -3,6 +3,7 @@ using FluentValidation;
 using LocalGoods.BLL.Models.Order;
 using LocalGoods.BLL.Models.OrderStatus;
 using LocalGoods.BLL.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -27,6 +28,7 @@ namespace LocalGoods.PL.Controllers
             _createOrderValidator = createOrderValidator;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OrderModel>))]
         public async Task<ActionResult> GetAll()
@@ -36,6 +38,7 @@ namespace LocalGoods.PL.Controllers
             return Ok(orders);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OrderModel))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -46,6 +49,7 @@ namespace LocalGoods.PL.Controllers
             return Ok(order);
         }
 
+        [Authorize]
         [HttpGet("statuses")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OrderStatusModel>))]
         public async Task<ActionResult> GetOrderStatuses()
@@ -55,6 +59,7 @@ namespace LocalGoods.PL.Controllers
             return Ok(orderStatuses);
         }
 
+        [Authorize]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -68,6 +73,7 @@ namespace LocalGoods.PL.Controllers
             return CreatedAtAction(nameof(GetById), new { id = createdOrder.Id }, createdOrder);
         }
 
+        [Authorize(Roles = "Buyer, Vendor")]
         [HttpPut("{id}/status")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

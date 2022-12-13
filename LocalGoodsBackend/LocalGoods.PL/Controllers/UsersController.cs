@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using LocalGoods.BLL.Services.Interfaces;
 using LocalGoods.PL.Models.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LocalGoods.PL.Controllers
@@ -23,6 +24,7 @@ namespace LocalGoods.PL.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

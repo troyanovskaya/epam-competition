@@ -6,6 +6,7 @@ using LocalGoods.BLL.Models.Auth;
 using LocalGoods.BLL.Models.Auth.JWT;
 using LocalGoods.BLL.Services.Interfaces;
 using LocalGoods.PL.Models.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LocalGoods.PL.Controllers
@@ -91,6 +92,7 @@ namespace LocalGoods.PL.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpPost("resetPassword")]
         public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
         {

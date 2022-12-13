@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
 using LocalGoods.BLL.Models.Product;
+using FluentValidation;
 
 namespace LocalGoods.PL.Controllers
 {
@@ -14,10 +15,13 @@ namespace LocalGoods.PL.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
+        private readonly IValidator<CreateProductModel> _createProductValidator;
 
-        public ProductsController(IProductService productService)
+        public ProductsController(IProductService productService,
+            IValidator<CreateProductModel> createProductValidator)
         {
             _productService = productService;
+            _createProductValidator = createProductValidator;
         }
 
         [HttpGet]
@@ -44,6 +48,8 @@ namespace LocalGoods.PL.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> Add([FromBody] CreateProductModel createProductModel)
         {
+            await _createProductValidator.ValidateAndThrowAsync(createProductModel);
+
             var createdProduct = await _productService.CreateAsync(createProductModel);
 
             return CreatedAtAction(nameof(GetById), new { id = createdProduct.Id }, createdProduct);

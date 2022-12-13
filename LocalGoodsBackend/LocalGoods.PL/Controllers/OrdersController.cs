@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using LocalGoods.BLL.Models.Order;
 using LocalGoods.BLL.Models.OrderStatus;
 using LocalGoods.BLL.Services.Interfaces;
@@ -16,11 +17,14 @@ namespace LocalGoods.PL.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IOrderService _orderService;
+        private readonly IValidator<CreateOrderModel> _createOrderValidator;
 
-        public OrdersController(IMapper mapper, IOrderService orderService)
+        public OrdersController(IMapper mapper, IOrderService orderService,
+            IValidator<CreateOrderModel> createOrderValidator)
         {
             _orderService = orderService;
             _mapper = mapper;
+            _createOrderValidator = createOrderValidator;
         }
 
         [HttpGet]
@@ -57,6 +61,8 @@ namespace LocalGoods.PL.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> Add([FromBody] CreateOrderModel createOrderModel)
         {
+            await _createOrderValidator.ValidateAndThrowAsync(createOrderModel);
+
             var createdOrder = await _orderService.CreateAsync(createOrderModel);
 
             return CreatedAtAction(nameof(GetById), new { id = createdOrder.Id }, createdOrder);

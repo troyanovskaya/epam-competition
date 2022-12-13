@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using FluentValidation;
 using LocalGoods.BLL.Exceptions.BadRequestException;
 using LocalGoods.BLL.Exceptions.NotFoundException;
 using Microsoft.AspNetCore.Http;
@@ -35,6 +36,7 @@ namespace LocalGoods.PL.Middleware
             {
                 NotFoundException _ => StatusCodes.Status404NotFound,
                 BadRequestException _ => StatusCodes.Status400BadRequest,
+                ValidationException _ => StatusCodes.Status400BadRequest,
                 _ => StatusCodes.Status500InternalServerError
             };
 

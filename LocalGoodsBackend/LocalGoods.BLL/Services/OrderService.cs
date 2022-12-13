@@ -96,7 +96,7 @@ namespace LocalGoods.BLL.Services
 
             await _orderRepository.AddAsync(order);
 
-            await ValidateOrderDetailsAsync(createOrderModel.OrderDetails, currentUserId, order.Id);
+            await CreateOrderDetailsAsync(createOrderModel.OrderDetails, currentUserId, order.Id);
 
             await _orderRepository.AddAsync(order);
             await _orderRepository.SaveChangesAsync();
@@ -161,7 +161,7 @@ namespace LocalGoods.BLL.Services
             }
         }
 
-        private async Task ValidateOrderDetailsAsync(
+        private async Task CreateOrderDetailsAsync(
             IEnumerable<CreateOrderDetailsModel> orderDetails, 
             Guid currentUserId,
             Guid orderId)

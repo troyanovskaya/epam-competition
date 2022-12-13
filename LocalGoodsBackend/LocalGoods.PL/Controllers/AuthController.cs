@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation;
 using LocalGoods.BLL.Models.Auth;
@@ -7,6 +6,7 @@ using LocalGoods.BLL.Models.Auth.JWT;
 using LocalGoods.BLL.Services.Interfaces;
 using LocalGoods.PL.Models.Auth;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LocalGoods.PL.Controllers
@@ -42,6 +42,8 @@ namespace LocalGoods.PL.Controllers
         }
         
         [HttpGet("confirmEmail")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ConfirmEmail([FromQuery]ConfirmEmailRequest request)
         {
             var confirmEmailModel = _mapper.Map<ConfirmEmailModel>(request);
@@ -53,6 +55,8 @@ namespace LocalGoods.PL.Controllers
         }
 
         [HttpGet("sendEmailConfirmationLink")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> SendEmailConfirmation([FromQuery]string email)
         {
             await _authService.SendEmailConfirmationLink(email);
@@ -60,6 +64,8 @@ namespace LocalGoods.PL.Controllers
         }
 
         [HttpPost("login")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(JwtResponse))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Login(LoginRequest request)
         {
             var loginModel = _mapper.Map<LoginModel>(request);
@@ -71,6 +77,9 @@ namespace LocalGoods.PL.Controllers
         }
 
         [HttpPost("signup")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Signup(SignupRequest request)
         {
             var signupModel = _mapper.Map<SignupModel>(request);
@@ -82,6 +91,8 @@ namespace LocalGoods.PL.Controllers
         }
         
         [HttpPost("forgotPassword")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordRequest request)
         {
             var forgotPasswordModel = _mapper.Map<ForgotPasswordModel>(request);
@@ -94,6 +105,8 @@ namespace LocalGoods.PL.Controllers
 
         [Authorize]
         [HttpPost("resetPassword")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
         {
             var resetPasswordModel = _mapper.Map<ResetPasswordModel>(request);

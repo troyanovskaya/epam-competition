@@ -95,7 +95,7 @@ namespace LocalGoods.BLL.Services
                 var createImageModel = new CreateImageModel() { Link = imageLink, ProductId = product.Id };
 
                 var image = _mapper.Map<Image>(createImageModel);
-
+                await _imageRepository.AddAsync(image);
                 product.Images.Add(image);
             }
         }

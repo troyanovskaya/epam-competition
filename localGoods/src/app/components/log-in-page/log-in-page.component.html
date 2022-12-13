@@ -5,13 +5,25 @@
 
 <form (submit)="checkUser()" [formGroup]="validationForm">
     <div class="label-input-pair">
-        <label class="input-option" for="email">log In</label>
+        <label class="input-option" for="email">Log In
+            <span class="requirementsError"
+                *ngIf="!validationForm.controls['email'].valid  &&  validationForm.controls['email'].value">
+                please, write existing email
+            </span>
+        </label>
         <input type="email" id="email" formControlName="email" placeholder="enter your email" required />
     </div>
 
     <div class="label-input-pair">
-        <label class="input-option" for="password">password</label>
+        <label class="input-option" for="password">password
+            <span
+                [ngClass]="{ requirementsError: validationForm.controls['password'].invalid && !validationForm.controls['password'].pristine,
+                                       passwordRequirements: validationForm.controls['password'].pristine || validationForm.controls['password'].valid  }">should
+                contain min 8 characters, min 1 upper case letter and 1 number
+            </span>
+        </label>
         <input type="password" id="password" formControlName="password" placeholder="password" required minlength="8" />
+        <a class="forgot-password">Forgot password?</a>
     </div>
 
     <div class="confirm-part">

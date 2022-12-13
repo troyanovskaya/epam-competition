@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
+import { LocalStorageService } from '../../app/local-storage.service';
 import { City, Country } from '../components/country.model';
 import { Category } from '../schema/category.model';
 import { environment } from 'src/environments/environment';
+import { UserService } from './user.service';
 
 
 @Injectable({
@@ -12,7 +14,9 @@ import { environment } from 'src/environments/environment';
 export class HttpRequestService {
   URL:string = 'https://localgoodsapi.azurewebsites.net/api';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private localStorageService: LocalStorageService,
+    private userService:UserService) { }
 
   getCategories():Observable<Category[]>{
     return this.http.get<Category[]>(`${this.URL}/Categories`)
@@ -30,6 +34,7 @@ export class HttpRequestService {
     return this.http.get<Country[]>(`${this.URL}/Countries`);
   }
 
+
   confirmEmail(email: any, token: any){
     var parameters = {email: '', token: ''};
 
@@ -39,5 +44,19 @@ export class HttpRequestService {
     return this.http.get(`${environment.apiUrl}/auth/confirmEmail`, {
       params: parameters
     });
+
+  checkUser(url: string, value: Object, dialogRef: any) {
+    this.post(url, value).pipe(
+      tap(token => {
+        this.localStorageService.setItemToStorage('user', JSON.stringify(token));
+        this.userService.isAutorized = true;
+        dialogRef.close();
+        return;
+      }),
+      catchError(err => {
+        alert(err.error.message)
+        return of('');
+      })
+    ).subscribe()
   }
 }

@@ -9,18 +9,23 @@
         <div class="side-sections-part">
 
             <div class="label-input-pair">
-                <label for="name" class="input-option">First Name*</label>
+                <label for="name" class="input-option">First Name*
+                    <span class="requirementsError"
+                        *ngIf="!validationForm.controls['firstName'].valid  &&  validationForm.controls['firstName'].value">
+                        please, use only letters
+                    </span>
+                </label>
                 <input type="text" formControlName="firstName" id="name" placeholder="First Name" />
             </div>
 
             <div class="label-input-pair">
-                <label for="surname" class="input-option">Last Name*</label>
+                <label for="surname" class="input-option">Last Name*
+                    <span class="requirementsError"
+                        *ngIf="!validationForm.controls['lastName'].valid  && validationForm.controls['lastName'].value">
+                        please, use only letters
+                    </span>
+                </label>
                 <input type="text" formControlName="lastName" id="surname" placeholder="Last Name" />
-            </div>
-
-            <div class="label-input-pair">
-                <label for="date" class="input-option">Birth Date*</label>
-                <input type="date" formControlName="date" id="date" />
             </div>
 
             <div class="label-input-pair">
@@ -34,20 +39,23 @@
 
         <div class="side-sections-part">
             <div class="label-input-pair">
-                <label for="email" class="input-option">Email*</label>
+                <label for="email" class="input-option">Email*
+                    <span class="requirementsError"
+                        *ngIf="!validationForm.controls['email'].valid  &&  validationForm.controls['email'].value">
+                        please, write existing email
+                    </span>
+                </label>
                 <input type="email" formControlName="email" id="email" placeholder="email" />
             </div>
 
             <div class="label-input-pair">
                 <label for="phone" class="input-option">Phone number*
                     <span class="requirementsError"
-                        *ngIf="validationForm.controls['phone'].invalid && validationForm.controls['phone'].value">please,
-                        write existing
-                        number</span>
+                        *ngIf="validationForm.controls['phone'].invalid && validationForm.controls['phone'].value">
+                        please, write existing number
+                    </span>
                 </label>
-                <input type="text" formControlName="phone"
-                    pattern="^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$" id="phone"
-                    placeholder="phone number" />
+                <input type="text" formControlName="phone" id="phone" placeholder="phone number" />
             </div>
 
             <div class="label-input-pair">
@@ -55,11 +63,10 @@
                     <span
                         [ngClass]="{ requirementsError: validationForm.controls['password'].invalid && !validationForm.controls['password'].pristine,
                                        passwordRequirements: validationForm.controls['password'].pristine || validationForm.controls['password'].valid  }">should
-                        contain min 8 characters, min 1 upper case letter and 1 number</span>
+                        contain min 8 characters, min 1 upper case letter and 1 number
+                    </span>
                 </label>
-
-                <input type="password" formControlName="password" pattern="^(?=.*[0-9])(?=.*[A-Z])(?!.* ).{8,}$"
-                    id="password" placeholder="password" />
+                <input type="password" formControlName="password" id="password" placeholder="password" />
             </div>
 
             <div class="label-input-pair">
@@ -69,8 +76,8 @@
                         should match with password
                     </span>
                 </label>
-                <input type="password" formControlName="confirmation" pattern="^(?=.*[0-9])(?=.*[A-Z])(?!.* ).{8,}$"
-                    id="confirmation" placeholder="confirm your password" />
+                <input type="password" formControlName="confirmation" id="confirmation"
+                    placeholder="confirm your password" />
             </div>
         </div>
 

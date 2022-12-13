@@ -8,7 +8,7 @@ import { BasketService } from 'src/app/services/basket.service';
   templateUrl: './basket-item.component.html',
   styleUrls: ['./basket-item.component.css']
 })
-export class BasketItemComponent{
+export class BasketItemComponent implements OnInit{
   @Input() item:OrderItem = {good:{  id: '0', name: '', description: '',
   price: 0, poster: '', discount: 0, vendorId: '0', amount: 0,  unitType: {
     id: '0', name: ''}, categories: [], images: []}, quantity:0};
@@ -26,6 +26,14 @@ export class BasketItemComponent{
       this.deleteItem();
     }
   }
+
   constructor(public basketService: BasketService) { }
+  ngOnInit(){
+    let basketItem = this.basketService.basket.find(el => el.good.id === this.item.good.id);
+    if(basketItem){
+      this.number = basketItem.quantity;
+    }
+  }
+
 
 }

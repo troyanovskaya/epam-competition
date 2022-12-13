@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpRequestService } from 'src/app/services/http-request.service';
+import { NotifierService } from 'src/app/services/notifier.service';
 
 @Component({
   selector: 'app-password-recovery',
@@ -18,7 +19,8 @@ export class PasswordRecoveryComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
-    private httpRequestService: HttpRequestService) { }
+    private httpRequestService: HttpRequestService,
+    private notifier: NotifierService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -32,9 +34,9 @@ export class PasswordRecoveryComponent implements OnInit {
   createForm(){
     this.passwordRecoveryForm = this.fb.group({
       password: [null, [Validators.required, Validators.minLength(8),
-        Validators.pattern("^(?=.*[0-9])(?=.*[A-Z])(?!.* ).{8,}$")]],
+        Validators.pattern("(?=[A-Za-z0-9@#$%^&+!=]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+!=])(?=.{8,}).*$")]],
       confirmPassword: [null, [Validators.required, Validators.minLength(8),
-        Validators.pattern("^(?=.*[0-9])(?=.*[A-Z])(?!.* ).{8,}$")]]
+        Validators.pattern("(?=[A-Za-z0-9@#$%^&+!=]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+!=])(?=.{8,}).*$")]]
     })
   }
 
@@ -49,13 +51,18 @@ export class PasswordRecoveryComponent implements OnInit {
   onSubmit(){
     this.submitted = true;
 
-    if (this.password!.value != this.confirmPassword!.value) alert("Passwords don't match");
     if (this.passwordRecoveryForm.invalid) return;
+
+    if (this.password!.value != this.confirmPassword!.value){
+      this.notifier.showNotification("Password don't match", 'ERROR');
+      return;
+    }
 
     const model = {token: this.token, email: this.email, password: this.password!.value}
 
     this.httpRequestService.resetPassword(model).subscribe(p => {
       this.router.navigateByUrl('/');
-    }, err => console.log(err));
+      this.notifier.showNotification('Password was reset', 'SUCCESS')
+    }, err => this.notifier.showNotification(err.error.message, 'ERROR'));
   }
 }

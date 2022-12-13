@@ -1,0 +1,29 @@
+.container {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #FFF;
+}
+
+.data-type {
+    text-align: center;
+}
+
+.content {
+    border-radius: 2px;
+    margin: 5% 0;
+    text-align: center;
+}
+
+.btn {
+    text-align: center;
+}
+
+.btn>button {
+    font-size: 1em;
+    font-weight: bold;
+    padding: 2% 3%;
+    background-color: #FFF;
+    color: #000;
+    border: none;
+    cursor: pointer;
+}

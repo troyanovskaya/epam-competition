@@ -25,6 +25,7 @@ import { UserHistoryComponent } from './components/user-history/user-history.com
 import { UserNavigationComponent } from './components/user-navigation/user-navigation.component';
 import { LogInPageComponent } from './components/log-in-page/log-in-page.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { SignUpPageComponent } from './components/sign-up-page/sign-up-page.component';
@@ -40,6 +41,7 @@ import { VendorGoodItemComponent } from './components/vendor-good-item/vendor-go
 import { BasketVendorPipe } from '../app/pipes/basket-vendor.pipe';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
+import { NotifierComponent } from './components/notifier/notifier.component';
 
 
 const appRoutes:Routes = [
@@ -87,7 +89,8 @@ const appRoutes:Routes = [
         VendorOrderItemComponent,
         VendorGoodItemComponent,
         EmailConfirmationComponent,
-        PasswordRecoveryComponent
+        PasswordRecoveryComponent,
+        NotifierComponent
     ],
     providers: [],
     bootstrap: [AppComponent],
@@ -99,7 +102,8 @@ const appRoutes:Routes = [
         RouterModule.forRoot(appRoutes),
         NoopAnimationsModule,
         MatDialogModule,
-        HttpClientModule
+        HttpClientModule,
+        MatSnackBarModule
     ]
 })
 export class AppModule { }

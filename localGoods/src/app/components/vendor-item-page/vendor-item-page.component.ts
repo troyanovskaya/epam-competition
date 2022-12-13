@@ -27,7 +27,7 @@ export class VendorItemPageComponent implements OnInit {
   }
 
   getProducts() {
-    this.http.getProducts(this.vendorId).subscribe((productsList: Good[]) => {
+    this.http.getVendorProducts(this.vendorId).subscribe((productsList: Good[]) => {
       productsList.forEach((product) => {
         this.products.push(product);
       })
@@ -37,5 +37,4 @@ export class VendorItemPageComponent implements OnInit {
 }
 
 
-  
-  
+

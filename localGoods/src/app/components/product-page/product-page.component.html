@@ -13,7 +13,7 @@
     </div>
     <div class="right">
       <div class="vendor">
-        <h3>Vendor is {{vendor.companyName | titlecase}}</h3>
+        <h3>Vendor is {{vendor.name | titlecase}}</h3>
       </div>
       <div class="price">
         <div><span  *ngIf="false"></span> <span class="span-price">{{good.price | currency:'GBP'}}</span></div>
@@ -21,13 +21,13 @@
       <div class="delivery">
         <h3>Delivery methods:</h3>
         <div *ngFor="let del of vendor.deliveryMethods">
-          - {{del | titlecase}}
+          - {{del.name | titlecase}}
         </div>
       </div>
       <div class="payment">
         <h3>Payment methods:</h3>
         <div *ngFor="let pay of vendor.paymentMethods">
-          - {{pay | titlecase}}
+          - {{pay.name | titlecase}}
         </div>
     </div>
     <div class="buy">

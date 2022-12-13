@@ -1,2 +1,2 @@
-export type UserRole = 'VENDOR' | 'USER';
+export type UserRole = 'VENDOR' | 'Buyer' | 'None';
 

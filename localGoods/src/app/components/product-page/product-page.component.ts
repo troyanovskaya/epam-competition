@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Good } from 'src/app/schema/good.model';
+import { Vendor } from 'src/app/schema/vendor.model';
 import { BasketService } from 'src/app/services/basket.service';
+import { HttpRequestService } from 'src/app/services/http-request.service';
 
 @Component({
   selector: 'app-product-page',
@@ -9,18 +11,22 @@ import { BasketService } from 'src/app/services/basket.service';
   styleUrls: ['./product-page.component.css']
 })
 export class ProductPageComponent implements OnInit {
-  good:Good = {  id: '1', name: 'carrot', description: 'Sweet fresh carrot that can benefit your health.Sweet fresh carrot that can benefit your health.Sweet fresh carrot that can benefit your health. Sweet fresh carrot that can benefit your health',
-  price: 3, poster: 'assets/carrot.jpg', discount: 0, vendorId: '3',   amount: 66,  unitType: {
-  id: '0', name: 'kg'}, categories: [], images: ['assets/carrot.jpg']}
-  id:number = 0;
-  vendor = {id:'1', companyName:'Vendor1', deliveryMethods:['Take away', 'Delivery'],
-  paymentMethods:['Card', 'Cash']}
-  constructor(private route: ActivatedRoute, private basketService:BasketService) {
-    this.route.params.subscribe( params => this.id = params['id'])
+  good:Good = {  id: '0', name: '', description: '',
+  price: 0, poster: '', discount: 0, vendorId: '0',   amount: 0,  unitType: {
+  id: '0', name: ''}, categories: [], images: []}
+  id:string = '';
+  vendor:Vendor = {id:'', name:'', viberNumber:'', telegramName:'',
+    instagramName:'', userId:'', products: [], paymentMethods: [],
+    deliveryMethods: []}
+  constructor(private route: ActivatedRoute, private basketService:BasketService, public httprequestService:HttpRequestService) {
+    this.route.params.subscribe( params => this.id = params['id']);
   }
 
-  ngOnInit(): void {
-    console.log(this.basketService.basket);
+  ngOnInit() {
+    this.httprequestService.getProduct(this.id).subscribe(
+      data => {this.good = data;
+      this.httprequestService.getVendor(this.good.vendorId)
+    .subscribe( data => this.vendor = data)});
   }
   addToBasket(){
     this.basketService.basket

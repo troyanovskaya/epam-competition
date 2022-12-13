@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DiscountItemComponent } from './discount-item.component';
+import { NotifierComponent } from './notifier.component';
 
-describe('DiscountItemComponent', () => {
-  let component: DiscountItemComponent;
-  let fixture: ComponentFixture<DiscountItemComponent>;
+describe('NotifierComponent', () => {
+  let component: NotifierComponent;
+  let fixture: ComponentFixture<NotifierComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DiscountItemComponent ]
+      declarations: [ NotifierComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DiscountItemComponent);
+    fixture = TestBed.createComponent(NotifierComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

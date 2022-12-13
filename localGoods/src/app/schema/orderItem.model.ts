@@ -1,8 +1,6 @@
-import { Good } from "./good.model";
-
 export interface OrderItem{
-  good:Good,
-  quantity:number
+  paymentMethodId: string,
+  deliveryMethodId: string,
+  deliveryInformation: string,
+  orderDetails: {amount: number, productId: string}[]
 }
-
-

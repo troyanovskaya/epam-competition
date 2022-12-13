@@ -14,28 +14,30 @@
       <p>{{money | currency:'GBP'}}</p>
     </div>
     <div>
-      <form *ngIf="!orderFinished">
+      <form *ngIf="!orderFinished" [formGroup]="form" (ngSubmit)="sendOrder()">
         <div class="formQ">
           <p>Please select your delivery method:</p>
           <div *ngFor="let del of basketService.orderVendor.deliveryMethods; index as i ">
-            <input checked="{{i===0}}" type="radio" id={{del}} name="deliveryMethods" value={{del}}>
-            <label for={{del}}>{{del | titlecase}}</label><br>
+            <input checked="{{i===0}}"  type="radio" formControlName="del" value={{del}}>
+            <label>{{del | titlecase}}</label><br>
           </div>
         </div>
         <div class="formQ">
           <p>Please select your payment method:</p>
           <div *ngFor="let pay of basketService.orderVendor.paymentMethods; index as i ">
-            <input checked="{{i===0}}" type="radio" id={{pay}} name="paymentMethods" value={{pay}}>
-            <label for={{pay}}>{{pay | titlecase}}</label><br>
+            <input checked="{{i===0}}" type="radio" formControlName="pay" value={{pay}}>
+            <label>{{pay | titlecase}}</label><br>
           </div>
         </div>
-        <button (click)="sendOrder()">Сonfirm the order</button>
+        <div *ngIf="!userService.isAutorized" class="not-auth">
+          <p>Unauthorized user can't make an order, log in please</p>
+        </div>
+        <button [disabled]="!userService.isAutorized" type="submit">Сonfirm the order</button>
       </form>
 
       <div *ngIf="orderFinished" class="textAfterFinish">
         <p>Thank you for your order, view your order state in the user profile</p>
         <img class="chicken" src="assets/chicken.png" alt="cart">
-
       </div>
     </div>
     </div>

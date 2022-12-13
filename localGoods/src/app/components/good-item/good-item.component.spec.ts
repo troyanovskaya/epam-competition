@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RowOfDiscountsComponent } from './row-of-discounts.component';
+import { GoodItemComponent } from './good-item.component';
 
-describe('RowOfDiscountsComponent', () => {
-  let component: RowOfDiscountsComponent;
-  let fixture: ComponentFixture<RowOfDiscountsComponent>;
+describe('GoodItemComponent', () => {
+  let component: GoodItemComponent;
+  let fixture: ComponentFixture<GoodItemComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RowOfDiscountsComponent ]
+      declarations: [ GoodItemComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(RowOfDiscountsComponent);
+    fixture = TestBed.createComponent(GoodItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

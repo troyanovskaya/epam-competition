@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using LocalGoods.PL.Models.Vendor;
+using FluentValidation;
 
 namespace LocalGoods.PL.Controllers
 {
@@ -20,15 +21,18 @@ namespace LocalGoods.PL.Controllers
         private readonly IVendorService _vendorService;
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
+        private readonly IValidator<CreateVendorModel> _createVendorValidator;
 
         public VendorsController(
             IVendorService vendorService, 
             IProductService productService, 
-            IMapper mapper)
+            IMapper mapper,
+            IValidator<CreateVendorModel> createVendorValidator)
         {
             _vendorService = vendorService;
             _productService = productService;
             _mapper = mapper;
+            _createVendorValidator = createVendorValidator;
         }
 
         [HttpGet]
@@ -64,6 +68,8 @@ namespace LocalGoods.PL.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> Add([FromBody] CreateVendorModel createVendorModel)
         {
+            await _createVendorValidator.ValidateAndThrowAsync(createVendorModel);
+
             var createdVendor = await _vendorService.CreateAsync(createVendorModel);
 
             return CreatedAtAction(nameof(GetById), new { id = createdVendor.Id }, createdVendor);

@@ -103,7 +103,6 @@ namespace LocalGoods.PL.Controllers
             return Ok();
         }
 
-        [Authorize]
         [HttpPost("resetPassword")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

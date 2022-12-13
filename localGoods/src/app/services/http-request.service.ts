@@ -45,6 +45,10 @@ export class HttpRequestService {
     });
   }
 
+  resetPassword(model: any){
+    return this.http.post(`${environment.apiUrl}/auth/resetPassword`, model);
+  }
+
   checkUser(url: string, value: Object, dialogRef: any) {
     this.post(url, value).pipe(
       tap(token => {

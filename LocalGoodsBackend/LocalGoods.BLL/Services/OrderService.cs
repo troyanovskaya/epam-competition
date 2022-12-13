@@ -11,8 +11,6 @@ using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using LocalGoods.BLL.Models.OrderDetails;
 using LocalGoods.BLL.Exceptions.BadRequestException;
-using LocalGoods.DAL.Repositories;
-using System.Numerics;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using LocalGoods.Shared;
@@ -23,6 +21,7 @@ namespace LocalGoods.BLL.Services
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly IOrderDetailsRepository _orderDetailsRepository;
         private readonly IProductRepository _productRepository;
         private readonly IVendorRepository _vendorRepository;
         private readonly IPaymentMethodRepository _paymentMethodRepository;
@@ -32,13 +31,19 @@ namespace LocalGoods.BLL.Services
         private readonly UserManager<User> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public OrderService(IMapper mapper, IOrderRepository orderRepository,
-            IProductRepository productRepository, IVendorRepository vendorRepository,
-            IPaymentMethodRepository paymentMethodRepository, IDeliveryMethodRepository deliveryMethodRepository,
+        public OrderService(IMapper mapper, 
+            IOrderRepository orderRepository,
+            IOrderDetailsRepository orderDetailsRepository, 
+            IProductRepository productRepository,
+            IVendorRepository vendorRepository,
+            IPaymentMethodRepository paymentMethodRepository, 
+            IDeliveryMethodRepository deliveryMethodRepository,
             IOrderStatusRepository orderStatusRepository,
-            UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
+            UserManager<User> userManager, 
+            IHttpContextAccessor httpContextAccessor)
         {
             _orderRepository = orderRepository;
+            _orderDetailsRepository = orderDetailsRepository;
             _productRepository = productRepository;
             _vendorRepository = vendorRepository;
             _paymentMethodRepository = paymentMethodRepository;
@@ -80,13 +85,18 @@ namespace LocalGoods.BLL.Services
             var currentUserId = await GetCurrentUserId();
 
             await ValidateOrderAsync(createOrderModel);
-            await ValidateOrderDetailsAsync(createOrderModel.OrderDetails, currentUserId);
 
-            var orderId = Guid.NewGuid();
-            await ActualizeOrderInformation(createOrderModel, orderId);
-            var order = _mapper.Map<Order>(createOrderModel);
-            order.Id = orderId;
-            order.UserId = currentUserId;
+            var order = new Order
+            {
+                UserId = currentUserId,
+                PaymentMethodId = createOrderModel.PaymentMethodId,
+                DeliveryMethodId = createOrderModel.DeliveryMethodId,
+                DeliveryInformation = createOrderModel.DeliveryInformation
+            };
+
+            await _orderRepository.AddAsync(order);
+
+            await ValidateOrderDetailsAsync(createOrderModel.OrderDetails, currentUserId, order.Id);
 
             await _orderRepository.AddAsync(order);
             await _orderRepository.SaveChangesAsync();
@@ -151,40 +161,58 @@ namespace LocalGoods.BLL.Services
             }
         }
 
-        private async Task ValidateOrderDetailsAsync(IEnumerable<CreateOrderDetailsModel> orderDetails, Guid currentUserId)
+        private async Task ValidateOrderDetailsAsync(
+            IEnumerable<CreateOrderDetailsModel> orderDetails, 
+            Guid currentUserId,
+            Guid orderId)
         {
-            if (orderDetails is null || !orderDetails.Any())
+            var orderDetailsList = _mapper.Map<IEnumerable<OrderDetails>>(orderDetails).ToList();
+            
+            if (orderDetails is null || !orderDetailsList.Any())
             {
                 throw new OrderBadRequestException("Order has no products");
             }
 
-            var firstProductId = orderDetails.FirstOrDefault().ProductId;
-            var vendor = await _vendorRepository.GetByProductIdAsync(firstProductId);
+            var productIds = orderDetailsList.Select(od => od.ProductId).ToList();
+            var products = (await _productRepository.GetAllByIds(productIds)).ToList();
 
-            if (vendor.Products.Any(p => orderDetails.Select(codm => codm.ProductId).Contains(p.Id)))
+            if (productIds.Count != products.Count)
+            {
+                throw new ProductNotFoundException();
+            }
+
+            var vendorId = products.First().VendorId;
+            var vendor = await _vendorRepository.GetByIdAsync(vendorId);
+
+            if (vendor == null)
+            {
+                throw new VendorNotFoundException(vendorId);
+            }
+
+            if (vendor.Id == currentUserId)
             {
                 throw new OrderBadRequestException("Vendor can't buy their own products");
             }
 
-            foreach (var currentOrderDetails in orderDetails)
-            {
-                await CheckIsOneVendorInOrder(vendor.Id, currentOrderDetails.ProductId);
-                await CheckAndDecreaseProductAmount(currentOrderDetails.ProductId, currentOrderDetails.Amount);
-            }
-        }
+            var vendors = products.Select(p => p.VendorId).Distinct();
 
-        private async Task CheckIsOneVendorInOrder(Guid vendorId, Guid productId)
-        {
-            var currentVendor = await _vendorRepository.GetByProductIdAsync(productId);
-
-            if (currentVendor.Id != vendorId)
+            if (vendors.Count() > 1)
             {
                 throw new OrderBadRequestException("Order has different vendors");
             }
+            
+            foreach (var currentOrderDetails in orderDetailsList)
+            {
+                await CheckAndDecreaseProductAmount(currentOrderDetails, currentOrderDetails.Amount, orderId);
+            }
         }
 
-        private async Task CheckAndDecreaseProductAmount(Guid productId, double amount)
+        private async Task CheckAndDecreaseProductAmount(
+            OrderDetails orderDetails, 
+            double amount, 
+            Guid orderId)
         {
+            var productId = orderDetails.ProductId;
             var currentProduct = await _productRepository.GetByIdAsync(productId);
 
             if (currentProduct.Amount == 0.0)
@@ -196,21 +224,15 @@ namespace LocalGoods.BLL.Services
             {
                 throw new OrderBadRequestException($"Product with id {productId} doesn't have as many units");
             }
-
+            
             currentProduct.Amount -= amount;
             await _productRepository.UpdateAsync(currentProduct);
-        }
-
-        private async Task ActualizeOrderInformation(CreateOrderModel createOrderModel, Guid orderId)
-        {
-            foreach (var orderDetails in createOrderModel.OrderDetails)
-            {
-                var product = await _productRepository.GetByIdAsync(orderDetails.ProductId);
-                orderDetails.OrderId = orderId;
-                orderDetails.Price = product.Price;
-                orderDetails.Discount = product.Discount;
-                orderDetails.UnitTypeId = product.UnitTypeId;
-            }
+            
+            orderDetails.OrderId = orderId;
+            orderDetails.Price = currentProduct.Price;
+            orderDetails.Discount = currentProduct.Discount;
+            orderDetails.UnitTypeId = currentProduct.UnitTypeId;
+            await _orderDetailsRepository.AddAsync(orderDetails);
         }
     }
 }

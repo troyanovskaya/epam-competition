@@ -9,5 +9,6 @@ namespace LocalGoods.DAL.Repositories.Interfaces
     public interface IProductRepository : IRepository<Guid, Product>
     {
         Task<IEnumerable<Product>> GetByFilterAsync(ProductFilterModel productFilterModel);
+        Task<IEnumerable<Product>> GetAllByIds(IEnumerable<Guid> ids);
     }
 }

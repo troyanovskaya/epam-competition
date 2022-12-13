@@ -6,6 +6,7 @@ using LocalGoods.Shared.FilterModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LocalGoods.DAL.Repositories
@@ -21,6 +22,13 @@ namespace LocalGoods.DAL.Repositories
             return await ((LocalGoodsDbContext)_context).Products
                 .FilterByCity(productFilterModel.CityId)
                 .FilterByCategories(productFilterModel.CategoryIds)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Product>> GetAllByIds(IEnumerable<Guid> ids)
+        {
+            return await _dbSet
+                .Where(p => ids.Contains(p.Id))
                 .ToListAsync();
         }
     }

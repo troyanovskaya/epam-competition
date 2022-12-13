@@ -4,6 +4,7 @@ import { catchError, Observable, of, tap } from 'rxjs';
 import { LocalStorageService } from '../../app/local-storage.service';
 import { City, Country } from '../components/country.model';
 import { Category } from '../schema/category.model';
+import { environment } from 'src/environments/environment';
 import { UserService } from './user.service';
 
 
@@ -32,6 +33,17 @@ export class HttpRequestService {
   getCountries(): Observable<Country[]> {
     return this.http.get<Country[]>(`${this.URL}/Countries`);
   }
+
+
+  confirmEmail(email: any, token: any){
+    var parameters = {email: '', token: ''};
+
+    if (email) parameters['email'] = email;
+    if (token) parameters['token'] = token;
+
+    return this.http.get(`${environment.apiUrl}/auth/confirmEmail`, {
+      params: parameters
+    });
 
   checkUser(url: string, value: Object, dialogRef: any) {
     this.post(url, value).pipe(

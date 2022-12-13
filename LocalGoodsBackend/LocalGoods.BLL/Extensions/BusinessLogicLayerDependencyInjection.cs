@@ -30,24 +30,20 @@ namespace LocalGoods.BLL.Extensions
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddAuthentication(configuration);
+            //services.AddAuthentication(configuration);
             services.AddServices();
             services.AddValidators();
 
             return services;
         }
         
-        private static IServiceCollection AddAuthentication(
+        /*private static IServiceCollection AddAuthentication(
             this IServiceCollection services,
             IConfiguration configuration)
         {
+            services.AddAuthorization();
             services
-                .AddAuthentication(opt =>
-                {
-                    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                    opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters()
@@ -63,7 +59,7 @@ namespace LocalGoods.BLL.Extensions
                 });
 
             return services;
-        }
+        }*/
 
         private static IServiceCollection AddServices(
             this IServiceCollection services)

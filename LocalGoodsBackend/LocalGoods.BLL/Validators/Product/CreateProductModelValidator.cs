@@ -18,7 +18,6 @@ namespace LocalGoods.BLL.Validators.Product
 
             RuleFor(cpm => cpm.CategoryIds).NotNull();
             RuleForEach(cpm => cpm.CategoryIds).NotEmpty();
-            RuleFor(cpm => cpm.Images).NotNull();
             RuleForEach(cpm => cpm.Images).NotEmpty();
         }
     }

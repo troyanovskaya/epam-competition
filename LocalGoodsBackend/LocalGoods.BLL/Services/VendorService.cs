@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LocalGoods.BLL.Exceptions.BadRequestException;
 using LocalGoods.BLL.Exceptions.NotFoundException;
 using LocalGoods.BLL.Models.DeliveryMethod;
 using LocalGoods.BLL.Models.PaymentMethod;
@@ -67,6 +68,13 @@ namespace LocalGoods.BLL.Services
 
         public async Task<VendorModel> CreateAsync(CreateVendorModel createVendorModel)
         {
+            if (string.IsNullOrEmpty(createVendorModel.InstagramName)
+                && string.IsNullOrEmpty(createVendorModel.TelegramName)
+                && string.IsNullOrEmpty(createVendorModel.ViberNumber))
+            {
+                throw new VendorBadRequestException("The vendor must have at least one contact");
+            }
+
             var currentUser = await GetCurrentUser();
 
             var vendor = _mapper.Map<Vendor>(createVendorModel);

@@ -13,6 +13,6 @@
     <div class="price">{{(1-item.discount/100)*item.price | currency:'GBP'}}/{{item.unitType.name}} </div>
   </div>
   <div class="add-basket">
-    <button>Add to basket</button>
+    <button (click)="addToBasket()">Add to basket</button>
   </div>
 </div>

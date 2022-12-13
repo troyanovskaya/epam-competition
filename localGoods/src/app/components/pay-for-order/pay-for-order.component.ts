@@ -63,10 +63,10 @@ export class PayForOrderComponent implements OnInit, DoCheck {
   getVendorNames(){
     if (this.basketService.showVendor === 'all'){
       this.vendorIds = this.basketService.basket.map( el => el.good.vendorId);
-      this.vendorIds.map( el => this.vendorNames.add(this.basketService.getVendor(el).companyName));
+      this.vendorIds.map( el => this.vendorNames.add(this.basketService.getVendorName(el)));
       this.vendorNamesStr = Array.from(this.vendorNames).join(', ');
     } else{
-      this. vendorNamesStr = this.basketService.getVendor(this.basketService.showVendor).companyName;
+      this. vendorNamesStr = this.basketService.getVendorName(this.basketService.showVendor);
     }
 
   }

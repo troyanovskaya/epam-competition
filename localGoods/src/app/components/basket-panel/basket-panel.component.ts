@@ -10,7 +10,7 @@ export class BasketPanelComponent implements OnInit, DoCheck {
   activeVendor:string = 'all';
   showVendorGoods(id:string){
     this.basketService.showVendor=id;
-    this.activeVendor = this.basketService.getVendor(id).companyName;
+    this.activeVendor = this.basketService.getVendorName(id);
   }
 
   constructor(public basketService:BasketService) { }

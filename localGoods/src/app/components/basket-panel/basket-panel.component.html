@@ -9,9 +9,9 @@
     [ngClass]="{'active': activeVendor==='all'}">All vendors</p>
     <div *ngFor="let item of basketService.basket; index as i">
       <p (click)="showVendorGoods(item.good.vendorId)"
-      [ngClass]="{'active': activeVendor===basketService.getVendor(item.good.vendorId).companyName}"
+      [ngClass]="{'active': activeVendor===basketService.getVendorName(item.good.vendorId)}"
        *ngIf="i==0 || basketService.basket[i-1].good.vendorId!==item.good.vendorId ">
-        {{basketService.getVendor(item.good.vendorId).companyName | titlecase}}
+        {{basketService.getVendorName(item.good.vendorId) | titlecase}}
       </p>
     </div>
   </div>

@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { Vendor } from 'src/app/schema/vendor.model';
 import { GoodsService } from 'src/app/services/goods.service';
+import { HttpRequestService } from 'src/app/services/http-request.service';
 import { LocationService } from 'src/app/services/location.service';
+import { ShareDataService } from 'src/app/services/share-data.service';
+import { VendorItemPageComponent } from '../vendor-item-page/vendor-item-page.component';
 
 @Component({
   selector: 'app-vendors-search',
@@ -11,14 +16,23 @@ import { LocationService } from 'src/app/services/location.service';
 export class VendorsSearchComponent{
   country = new FormControl('');
   city = new FormControl('');
-  disabled:boolean = true;
-  vendors: string[] = ['Vendor1', 'Vendor2', 'Vendor3', 'Vendor4', 'Vendor5',
-  'Vendor6', 'Vendor7', 'Vendor8', 'Vendor9', 'Vendor10', 'Vendor11'];
-
+  vendors: Vendor[] = [];
+  vendorId!: string;
 
   constructor(public countriesService: LocationService,
-    public goods: GoodsService) {
+    public goods: GoodsService,
+    private shareDataService: ShareDataService,
+    private http: HttpRequestService) {
   }
+
+  ngOnInit(){
+    this.http.getVendors().subscribe((vendorsList: Array<Vendor>) => {
+      vendorsList.forEach((vendor) => {
+        this.vendors.push(vendor);
+      })
+    });
+  }
+
   getCountry(){
     this.countriesService.choosenCountry = this.countriesService.countries.find(el => el.name===this.country.value)?? {id:'', name:'', cities:[{id:'0', name:'Choose country first!', countryId:'0'}]};
     if(this.countriesService.choosenCountry.id){
@@ -26,6 +40,7 @@ export class VendorsSearchComponent{
     }
 
   }
+
   getCity(){
     if(this.countriesService.choosenCountry.cities.filter( el => el.name===this.city.value)[0]){
       this.countriesService.choosenCity = this.countriesService.choosenCountry.cities.filter( el => el.name===this.city.value)[0];
@@ -43,6 +58,8 @@ export class VendorsSearchComponent{
     return this.goods.findGoods('none', []);
   }
 
-
+  selectVendor(vendor:Vendor){
+    this.shareDataService.setVendor(vendor);
+  }
 
 }

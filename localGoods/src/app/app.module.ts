@@ -42,6 +42,8 @@ import { EmailConfirmationComponent } from './components/email-confirmation/emai
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { NotifierComponent } from './components/notifier/notifier.component';
 // import { JwtModule } from "@auth0/angular-jwt";
+import { VendorItemPageComponent } from './components/vendor-item-page/vendor-item-page.component';
+import { GoodComponent } from './components/good/good.component';
 
 const appRoutes:Routes = [
 {  path: '', component: MainPageComponent},
@@ -97,7 +99,9 @@ const appRoutes:Routes = [
         GoodsByKeywordPipe,
         EmailConfirmationComponent,
         PasswordRecoveryComponent,
-        NotifierComponent
+        NotifierComponent,
+        VendorItemPageComponent,
+        GoodComponent,
     ],
     providers: [],
     bootstrap: [AppComponent],

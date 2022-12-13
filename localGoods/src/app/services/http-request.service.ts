@@ -4,17 +4,15 @@ import { catchError, Observable, of, tap } from 'rxjs';
 import { LocalStorageService } from '../../app/local-storage.service';
 import { City, Country } from '../components/country.model';
 import { Category } from '../schema/category.model';
-import { UserService } from './user.service';
-import { FullUser } from '../schema/fullUser.model';
-import jwt_decode from 'jwt-decode';
-import { Good } from '../schema/good.model';
-import { Vendor } from '../schema/vendor.model';
 import { environment } from 'src/environments/environment';
-import { OrderItem } from '../schema/orderItem.model';
 import { DeliveryMethod } from '../schema/deliveryMethod.model';
+import { FullUser } from '../schema/fullUser.model';
+import { Good } from '../schema/good.model';
+import { OrderItem } from '../schema/orderItem.model';
 import { PaymentMethod } from '../schema/paymentMethod.model';
-
-
+import { Vendor } from '../schema/vendor.model';
+import { UserService } from './user.service';
+import jwt_decode from 'jwt-decode';
 
 
 @Injectable({
@@ -147,6 +145,10 @@ export class HttpRequestService {
         return of('');
       })
     ).subscribe()
+  }
+
+  getVendorProducts(vendorId: string): Observable<Good[]>{
+    return this.http.get<Good[]>(`${this.URL}/Vendors/${vendorId}/products`);
   }
 }
 

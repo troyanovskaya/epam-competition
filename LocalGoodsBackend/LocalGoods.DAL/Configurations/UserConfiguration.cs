@@ -20,7 +20,7 @@ namespace LocalGoods.DAL.Configurations
                 .HasMaxLength(400)
                 .IsRequired();
 
-            builder.Property(u => u.BirthDate)
+            builder.Property(u => u.AddressInformation)
                 .IsRequired();
 
             builder

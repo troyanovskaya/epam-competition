@@ -21,7 +21,7 @@ namespace LocalGoods.DAL.Initializers
                 new User()
                 {
                     Id = new Guid("3470262F-7571-ED11-B214-D41B81B14CB3"),
-                    BirthDate = new DateTime(1978, 10, 19),
+                    AddressInformation = "Some address",
                     FirstName = "John",
                     LastName = "Smith",
                     UserName = "JohnSmith", 
@@ -38,7 +38,7 @@ namespace LocalGoods.DAL.Initializers
                 new User()
                 {
                     Id = new Guid("4483ab90-887a-ed11-b7a9-0003aa002c50"),
-                    BirthDate = new DateTime(1978, 10, 19),
+                    AddressInformation = "Some address",
                     FirstName = "Admin",
                     LastName = "Admin",
                     UserName = "Admin",

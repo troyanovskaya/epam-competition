@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using LocalGoods.BLL.Services.Interfaces;
+using LocalGoods.PL.Models.PaymentMethod;
 using LocalGoods.PL.Models.UnitType;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LocalGoods.PL.Controllers
@@ -25,6 +27,7 @@ namespace LocalGoods.PL.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UnitTypeResponse>))]
         public async Task<IActionResult> GetAll()
         {
             var unitTypes = await _unitTypeService.GetAllUnitTypesAsync();
@@ -32,6 +35,8 @@ namespace LocalGoods.PL.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UnitTypeResponse))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(Guid id)
         {
             var unitType = await _unitTypeService.GetUnitTypeByIdAsync(id);

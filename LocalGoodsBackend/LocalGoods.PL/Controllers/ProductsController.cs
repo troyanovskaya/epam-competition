@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System;
 using LocalGoods.BLL.Models.Product;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LocalGoods.PL.Controllers
 {
@@ -43,6 +44,7 @@ namespace LocalGoods.PL.Controllers
             return Ok(product);
         }
 
+        [Authorize(Roles = "Buyer, Vendor")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using LocalGoods.BLL.Services.Interfaces;
+using LocalGoods.PL.Models.Category;
 using LocalGoods.PL.Models.DeliveryMethod;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LocalGoods.PL.Controllers
@@ -25,6 +27,7 @@ namespace LocalGoods.PL.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<DeliveryMethodResponse>))]
         public async Task<IActionResult> GetAll()
         {
             var deliveryMethods = await _deliveryMethodService.GetAllDeliveryMethodsAsync();
@@ -32,6 +35,8 @@ namespace LocalGoods.PL.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeliveryMethodResponse))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(Guid id)
         {
             var deliveryMethod = await _deliveryMethodService.GetDeliveryMethodByIdAsync(id);

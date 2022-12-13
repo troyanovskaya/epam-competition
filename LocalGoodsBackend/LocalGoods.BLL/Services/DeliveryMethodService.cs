@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using LocalGoods.BLL.Exceptions.NotFoundException;
 using LocalGoods.BLL.Models.DeliveryMethod;
 using LocalGoods.BLL.Services.Interfaces;
 using LocalGoods.DAL.Repositories.Interfaces;
@@ -31,6 +32,12 @@ namespace LocalGoods.BLL.Services
         public async Task<DeliveryMethodModel> GetDeliveryMethodByIdAsync(Guid id)
         {
             var deliveryMethod = await _deliveryMethodRepository.GetByIdAsync(id);
+
+            if (deliveryMethod is null)
+            {
+                throw new DeliveryMethodNotFoundException(id);
+            }
+
             return _mapper.Map<DeliveryMethodModel>(deliveryMethod);
         }
     }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using LocalGoods.BLL.Services.Interfaces;
 using LocalGoods.PL.Models.Category;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LocalGoods.PL.Controllers
@@ -23,6 +24,7 @@ namespace LocalGoods.PL.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CategoryResponse>))]
         public async Task<IActionResult> GetAll()
         {
             var categories = await _categoryService.GetAllAsync();

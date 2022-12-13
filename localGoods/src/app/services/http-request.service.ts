@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, of, tap } from 'rxjs';
 import { LocalStorageService } from '../../app/local-storage.service';
 import { City, Country } from '../components/country.model';
@@ -10,6 +10,11 @@ import jwt_decode from 'jwt-decode';
 import { Good } from '../schema/good.model';
 import { Vendor } from '../schema/vendor.model';
 import { environment } from 'src/environments/environment';
+import { OrderItem } from '../schema/orderItem.model';
+import { DeliveryMethod } from '../schema/deliveryMethod.model';
+import { PaymentMethod } from '../schema/paymentMethod.model';
+
+
 
 
 @Injectable({
@@ -17,6 +22,28 @@ import { environment } from 'src/environments/environment';
 })
 export class HttpRequestService {
   URL:string = 'https://localgoodsapi.azurewebsites.net/api';
+
+  postOrder(order: OrderItem) {
+    let user1:{token:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none'}));
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + user1.token);
+    //console.log(httpOptions);
+    return this.http.post<OrderItem>(`${this.URL}/Orders`, order, {headers:headers}).subscribe(
+      (data) => console.log(data),
+      (err) => console.log(err)
+    );
+  }
+
+  getVendors(): Observable<Vendor[]>{
+    return this.http.get<Vendor[]>(`${this.URL}/Vendors`)
+  }
+
+  getDelMeth(): Observable<DeliveryMethod[]>{
+    return this.http.get<DeliveryMethod[]>(`${this.URL}/DeliveryMethods`)
+  }
+  getPayMeth(): Observable<PaymentMethod[]>{
+    return this.http.get<PaymentMethod[]>(`${this.URL}/PaymentMethods`)
+  }
 
   constructor(private http: HttpClient,
     private localStorageService: LocalStorageService,
@@ -72,6 +99,8 @@ export class HttpRequestService {
       return this.http.get<Good[]>(`${this.URL}/Products?${url}`);
   }
 
+
+
   getVendor(vendorId:string): Observable<Vendor>{
     return this.http.get<Vendor>(`${this.URL}/Vendors/${vendorId}`);
 
@@ -103,6 +132,7 @@ export class HttpRequestService {
         let user = localStorage.getItem('user');
         if(user){
           let user1:{token:string, validTo:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none', validTo:'none'}));
+          console.log(user1.token);
           if(this.getDecodedAccessToken(user1.token)){
             let userId = this.getDecodedAccessToken(user1.token).sub;
             this.userService.userRole = this.getDecodedAccessToken(user1.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];

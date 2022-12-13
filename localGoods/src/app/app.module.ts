@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthPannelComponent } from './components/auth-pannel/auth-pannel.component';
@@ -24,7 +23,6 @@ import { UserNavigationComponent } from './components/user-navigation/user-navig
 import { LogInPageComponent } from './components/log-in-page/log-in-page.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-
 import { MatDialogModule } from '@angular/material/dialog';
 import { SignUpPageComponent } from './components/sign-up-page/sign-up-page.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -43,7 +41,7 @@ import { GoodsByKeywordPipe } from './pipes/goods-by-keyword.pipe';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { NotifierComponent } from './components/notifier/notifier.component';
-
+// import { JwtModule } from "@auth0/angular-jwt";
 
 const appRoutes:Routes = [
 {  path: '', component: MainPageComponent},
@@ -57,6 +55,13 @@ const appRoutes:Routes = [
 {  path: 'auth/confirm-email', component: EmailConfirmationComponent},
 {  path: 'auth/password-recovery', component: PasswordRecoveryComponent}
 ]
+
+// export function tokenGetter() {
+//   // let user1:{token:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none'}));
+//   console.log('!!!!!!!!!!1');
+//   console.log(localStorage.getItem('token'));
+//   return localStorage.getItem('token');
+// }
 @NgModule({
     declarations: [
         AppComponent,
@@ -105,7 +110,13 @@ const appRoutes:Routes = [
         NoopAnimationsModule,
         MatDialogModule,
         HttpClientModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        // JwtModule.forRoot({
+        //   config: {
+        //     tokenGetter: tokenGetter,
+        //     allowedDomains: ["https://localgoodsapi.azurewebsites.net"]
+        //   },
+        // }),
     ]
 })
 export class AppModule { }

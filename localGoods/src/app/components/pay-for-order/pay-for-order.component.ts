@@ -1,6 +1,13 @@
 import { Component, DoCheck, OnChanges, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { BasketService } from 'src/app/services/basket.service';
+import { UserService } from 'src/app/services/user.service';
 import { VisibilityService } from 'src/app/services/visibility.service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DeliveryMethod } from 'src/app/schema/deliveryMethod.model';
+import { PaymentMethod } from 'src/app/schema/paymentMethod.model';
+import { HttpRequestService } from 'src/app/services/http-request.service';
+import { OrderItem } from 'src/app/schema/orderItem.model';
 
 @Component({
   selector: 'app-pay-for-order',
@@ -9,19 +16,41 @@ import { VisibilityService } from 'src/app/services/visibility.service';
 })
 export class PayForOrderComponent implements OnInit, DoCheck {
   money:number = 0;
+  form = new FormGroup({
+    del: new FormControl<string>('Delivery'),
+    pay: new FormControl<string>('Cash')
+  });
+  delMeth:DeliveryMethod[] = [];
+  payMeth:PaymentMethod[] = [];
   sendOrder(){
+    let arr:{amount:number, productId:string}[] = [];
     if (this.basketService.showVendor === 'all'){
+      this.basketService.basket.map( el => arr.push({amount:el.quantity, productId:el.good.id}));
       this.basketService.basket = [];
     } else{
-      this.basketService.basket = this.basketService.basket.filter( el => el.good.vendorId!==this.basketService.showVendor)
+      this.basketService.basket.filter( el => el.good.vendorId===this.basketService.showVendor)
+      .map( el => arr.push({amount:el.quantity, productId:el.good.id}))
+      this.basketService.basket = this.basketService.basket.filter( el => el.good.vendorId!==this.basketService.showVendor);
     }
     this.basketService.onTotalChange();
     this.orderFinished = true;
     this.basketService.showVendor = 'all';
+    let pay:PaymentMethod = this.payMeth.find( el => el.name===this.form.controls.pay.value) ?? {id:'0', name:''};
+    let del:DeliveryMethod = this.delMeth.find( el => el.name===this.form.controls.del.value) ?? {id:'0', name:''};
+    let order:OrderItem = {paymentMethodId: pay.id,
+      deliveryMethodId: del.id,
+      deliveryInformation: '',
+      orderDetails: arr
+    }
+    console.log(order);
+    this.httpRequestService.postOrder(order);
   }
   vendorIds:string[] = [];
   vendorNames:Set<string> = new Set();
   vendorNamesStr:string = '';
+  onSubmit() {
+    console.log(this.form.controls);
+}
 
   countPrice(){
     if (this.basketService.showVendor === 'all'){
@@ -31,7 +60,6 @@ export class PayForOrderComponent implements OnInit, DoCheck {
       this.money = arr.reduce( (past, curr) => past + curr.quantity*curr.good.price, 0 )
     }
   }
-
   getVendorNames(){
     if (this.basketService.showVendor === 'all'){
       this.vendorIds = this.basketService.basket.map( el => el.good.vendorId);
@@ -44,7 +72,11 @@ export class PayForOrderComponent implements OnInit, DoCheck {
   }
   price:number = 0;
   orderFinished:boolean = false;
-  constructor(public visibility: VisibilityService, public basketService:BasketService){}
+  constructor(public visibility: VisibilityService, public basketService:BasketService,
+    public userService:UserService, private httpRequestService: HttpRequestService){
+      httpRequestService.getDelMeth().subscribe( res => this.delMeth = res);
+      httpRequestService.getPayMeth().subscribe( res => this.payMeth = res);
+    }
 
   ngOnInit(): void {
     this.getVendorNames();

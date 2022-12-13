@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Category } from '../schema/category.model'
 import { Good } from '../schema/good.model';
-import { OrderItem } from '../schema/orderItem.model';
+import { BasketItem } from '../schema/basketItem.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BasketService {
-  basket:OrderItem[] = [];
+  basket:BasketItem[] = [];
 
   showVendor:string = 'all';
   total:number = this.basket.reduce((pastVal, currentEl) => pastVal+currentEl.good.price*currentEl.quantity, 0);

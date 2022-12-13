@@ -40,12 +40,13 @@
 }
 
 .log-in,
-.sign-up {
+.sign-up, .sign-out {
   transition: transform .5s;
 }
 
 .log-in:hover,
-.sign-up:hover {
+.sign-up:hover,
+.sign-out:hover {
   transform: scale(1.2);
 }
 

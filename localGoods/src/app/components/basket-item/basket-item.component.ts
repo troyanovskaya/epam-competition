@@ -1,5 +1,6 @@
 
 import { Component, Input, OnInit } from '@angular/core';
+import { BasketItem } from 'src/app/schema/basketItem.model';
 import { OrderItem } from 'src/app/schema/orderItem.model';
 import { BasketService } from 'src/app/services/basket.service';
 import { ShareDataService } from 'src/app/services/share-data.service';
@@ -10,7 +11,7 @@ import { ShareDataService } from 'src/app/services/share-data.service';
   styleUrls: ['./basket-item.component.css']
 })
 export class BasketItemComponent implements OnInit {
-  @Input() item: OrderItem = {
+  @Input() item: BasketItem = {
     good: {
       id: '0', name: '', description: '',
       price: 0, poster: '', discount: 0, vendorId: '0', amount: 0, unitType: {

@@ -1,21 +1,17 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthPannelComponent } from './components/auth-pannel/auth-pannel.component';
 import { LocalVendorsSearchAdverbComponent } from './components/local-vendors-search-adverb/local-vendors-search-adverb.component';
 import { VendorsSearchComponent } from './components/vendors-search/vendors-search.component';
 import { VendorsAdverbComponent } from './components/vendors-adverb/vendors-adverb.component';
-import { RowOfDiscountsComponent } from './components/row-of-discounts/row-of-discounts.component';
-import { DiscountItemComponent } from './components/discount-item/discount-item.component';
 import { FooterComponent } from "./components/footer/footer.component";
 import { AboutUsContainerComponent } from './components/about-us-container/about-us-container.component';
 import { MenyLeftPanelComponent } from './components/meny-left-panel/meny-left-panel.component';
 import { MenyOptionComponent } from './components/meny-option/meny-option.component';
 import { SearchInputComponent } from './components/search-input/search-input.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BasketItemComponent } from './components/basket-item/basket-item.component';
 import { PayForOrderComponent } from './components/pay-for-order/pay-for-order.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
@@ -26,7 +22,7 @@ import { UserHistoryComponent } from './components/user-history/user-history.com
 import { UserNavigationComponent } from './components/user-navigation/user-navigation.component';
 import { LogInPageComponent } from './components/log-in-page/log-in-page.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
-
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SignUpPageComponent } from './components/sign-up-page/sign-up-page.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -39,6 +35,13 @@ import { VendorOrdersComponent } from './components/vendor-orders/vendor-orders.
 import { VendorOrderItemComponent } from './components/vendor-order-item/vendor-order-item.component';
 import { VendorGoodItemComponent } from './components/vendor-good-item/vendor-good-item.component';
 import { BasketVendorPipe } from '../app/pipes/basket-vendor.pipe';
+import { GoodsComponent } from './components/goods/goods.component';
+import { GoodItemComponent } from './components/good-item/good-item.component';
+import { GoodsByKeywordPipe } from './pipes/goods-by-keyword.pipe';
+import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
+import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
+import { NotifierComponent } from './components/notifier/notifier.component';
+// import { JwtModule } from "@auth0/angular-jwt";
 import { VendorItemPageComponent } from './components/vendor-item-page/vendor-item-page.component';
 import { GoodComponent } from './components/good/good.component';
 
@@ -50,8 +53,17 @@ const appRoutes:Routes = [
 {  path: 'basket', component: BasketPageComponent},
 {  path: 'product/:id', component: ProductPageComponent},
 {  path: 'vendor/goods', component: VendorGoodsComponent},
-{  path: 'vendor/orders', component: VendorOrdersComponent}
+{  path: 'vendor/orders', component: VendorOrdersComponent},
+{  path: 'auth/confirm-email', component: EmailConfirmationComponent},
+{  path: 'auth/password-recovery', component: PasswordRecoveryComponent}
 ]
+
+// export function tokenGetter() {
+//   // let user1:{token:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none'}));
+//   console.log('!!!!!!!!!!1');
+//   console.log(localStorage.getItem('token'));
+//   return localStorage.getItem('token');
+// }
 @NgModule({
     declarations: [
         AppComponent,
@@ -59,8 +71,6 @@ const appRoutes:Routes = [
         LocalVendorsSearchAdverbComponent,
         VendorsSearchComponent,
         VendorsAdverbComponent,
-        RowOfDiscountsComponent,
-        DiscountItemComponent,
         FooterComponent,
         AboutUsContainerComponent,
         MenyLeftPanelComponent,
@@ -84,6 +94,12 @@ const appRoutes:Routes = [
         VendorOrdersComponent,
         VendorOrderItemComponent,
         VendorGoodItemComponent,
+        GoodsComponent,
+        GoodItemComponent,
+        GoodsByKeywordPipe,
+        EmailConfirmationComponent,
+        PasswordRecoveryComponent,
+        NotifierComponent,
         VendorItemPageComponent,
         GoodComponent,
     ],
@@ -97,7 +113,14 @@ const appRoutes:Routes = [
         RouterModule.forRoot(appRoutes),
         NoopAnimationsModule,
         MatDialogModule,
-        HttpClientModule
+        HttpClientModule,
+        MatSnackBarModule,
+        // JwtModule.forRoot({
+        //   config: {
+        //     tokenGetter: tokenGetter,
+        //     allowedDomains: ["https://localgoodsapi.azurewebsites.net"]
+        //   },
+        // }),
     ]
 })
 export class AppModule { }

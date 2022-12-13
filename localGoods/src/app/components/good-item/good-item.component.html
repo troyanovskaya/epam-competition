@@ -1,0 +1,18 @@
+<div class="flex-container">
+  <div class="product" routerLink="/product/{{item.id}}">
+    <h3 >{{item.name | titlecase}}</h3>
+    <img class="product-img" src="{{item.poster}}" alt="{{item.name}}">
+
+    <div class="delivery">
+      <img src="assets/delivery.png" alt="delivery">
+      <p>Delivery or take away</p>
+    </div>
+
+  </div>
+  <div class="icons">
+    <div class="price">{{(1-item.discount/100)*item.price | currency:'GBP'}}/{{item.unitType.name}} </div>
+  </div>
+  <div class="add-basket">
+    <button>Add to basket</button>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-.product-container{
+.flex-container{
   border-radius: 10px;
   background-color: white;
   padding:10px;
@@ -8,6 +8,16 @@
   flex-direction: row;
   align-items: center;
   gap:10px;
+}
+button{
+  background-color: #162e50;
+  color:white;
+  text-align: center;
+  padding:10px;
+  width:200px;
+  height:50px;
+  border-radius: 10px;
+  margin: 0 auto;
 }
 
 .product-img{
@@ -21,23 +31,11 @@ h3{
   padding-left: 10px;
 }
 
-input{
-  width:50px;
-}
-
 .price{
   font-size: 1.2em;
+  margin-bottom: 10px;
 }
 
-.bin{
-  transition: .5s;
-  width:30px;
-  height:30px;
-}
-
-.bin:hover{
-  transform: scale(1.2);
-}
 
 .delivery img{
   width:30px;
@@ -49,4 +47,3 @@ input{
   flex-direction:column;
   justify-items: center;
 }
-

@@ -36,4 +36,9 @@ export class AuthPannelComponent {
     );
   }
 
+  signOut(){
+    localStorage.removeItem('user');
+    this.userService.isAutorized = false;
+  }
+
 }

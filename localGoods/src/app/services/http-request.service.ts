@@ -5,6 +5,10 @@ import { LocalStorageService } from '../../app/local-storage.service';
 import { City, Country } from '../components/country.model';
 import { Category } from '../schema/category.model';
 import { UserService } from './user.service';
+import { FullUser } from '../schema/fullUser.model';
+import jwt_decode from 'jwt-decode';
+import { Good } from '../schema/good.model';
+import { Vendor } from '../schema/vendor.model';
 
 
 @Injectable({
@@ -32,13 +36,64 @@ export class HttpRequestService {
   getCountries(): Observable<Country[]> {
     return this.http.get<Country[]>(`${this.URL}/Countries`);
   }
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    } catch(Error) {
+      return null;
+    }
+  }
+  getUser(id:string): Observable<FullUser> {
+    return this.http.get<FullUser>(`${this.URL}/Users/${id}`);
+  }
+  getProducts(cityId:string, categoryIds:string[]): Observable<Good[]>{
+    if(cityId==='none'&&categoryIds.length===0){
+      return this.http.get<Good[]>(`${this.URL}/Products`);
+    } else if(cityId!=='none'&& categoryIds.length===0){
+      return this.http.get<Good[]>(`${this.URL}/Products?CityId=${cityId}`);
+    } else if (cityId!=='none'&& categoryIds.length!==0){
+      let url = '';
+      for (let i=0; i<categoryIds.length; i++){
+        url += `CategoryIds=${categoryIds[i]}`;
+        if(categoryIds.length!=i-1){
+          url+='&';
+        }
+      }
+      return this.http.get<Good[]>(`${this.URL}/Products?CityId=${cityId}&${url}`);
+    }
+    let url = '';
+      for (let i=0; i<categoryIds.length; i++){
+        url += `CategoryIds=${categoryIds[i]}`;
+        if(categoryIds.length!=i-1){
+          url+='&';
+        }
+      }
+      return this.http.get<Good[]>(`${this.URL}/Products?${url}`);
+  }
 
+  getVendor(vendorId:string): Observable<Vendor>{
+    return this.http.get<Vendor>(`${this.URL}/Vendors/${vendorId}`);
+
+  }
+  getProduct(productId:string): Observable<Good>{
+    return this.http.get<Good>(`${this.URL}/Products/${productId}`);
+  }
   checkUser(url: string, value: Object, dialogRef: any) {
     this.post(url, value).pipe(
       tap(token => {
         this.localStorageService.setItemToStorage('user', JSON.stringify(token));
         this.userService.isAutorized = true;
         dialogRef.close();
+        let user = localStorage.getItem('user');
+        if(user){
+          let user1:{token:string, validTo:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none', validTo:'none'}));
+          if(this.getDecodedAccessToken(user1.token)){
+            let userId = this.getDecodedAccessToken(user1.token).sub;
+            this.userService.userRole = this.getDecodedAccessToken(user1.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+            this.getUser(userId).subscribe(
+              data => this.userService.user = data);
+          };
+        }
         return;
       }),
       catchError(err => {
@@ -48,3 +103,4 @@ export class HttpRequestService {
     ).subscribe()
   }
 }
+

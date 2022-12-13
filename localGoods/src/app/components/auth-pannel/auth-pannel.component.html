@@ -9,6 +9,7 @@
         <span *ngIf="!userService.isAutorized" class="log-in" (click)="openLogInPage()">Log in </span>
         <div *ngIf="!userService.isAutorized">|</div>
         <span *ngIf="!userService.isAutorized" class="sign-up" (click)="openSignUpPage()"> Sign up</span>
+        <span *ngIf="userService.isAutorized" class="sign-out" (click)="signOut()"> Sign out</span>
         <img routerLink="/basket" class="basket" src="assets/brown-basket.png" alt="basket">
         <p>{{basketService.total | currency: 'GBP'}}</p>
     </div>

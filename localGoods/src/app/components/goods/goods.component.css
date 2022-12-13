@@ -1,10 +1,7 @@
 .flex-container{
-  padding:40px 0px;
   display:flex;
   flex-direction: row;
   flex-wrap: wrap;
+  padding: 20px;
   gap:20px;
-  justify-content: space-around;
-  width:80%;
-  margin: 0 auto;
 }

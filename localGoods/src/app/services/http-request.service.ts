@@ -13,6 +13,7 @@ import { PaymentMethod } from '../schema/paymentMethod.model';
 import { Vendor } from '../schema/vendor.model';
 import { UserService } from './user.service';
 import jwt_decode from 'jwt-decode';
+import { Unit } from '../schema/unit.model';
 
 
 @Injectable({
@@ -179,6 +180,14 @@ export class HttpRequestService {
   getVendorProducts(vendorId: string): Observable<Good[]>{
     console.log('Vendor id: ', vendorId)
     return this.http.get<Good[]>(`${this.URL}/Vendors/${vendorId}/products`);
+  }
+
+  getUnitTypes(): Observable<Unit[]> {
+    return this.http.get<Unit[]>(`${this.URL}/UnitTypes`);
+  }
+
+  getCategory():Observable<Category[]>{
+    return this.http.get<Category[]>(`${this.URL}/Categories`);
   }
 }
 

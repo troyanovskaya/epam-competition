@@ -17,7 +17,7 @@ export class VendorGoodsComponent{
 
  openCreationPage(){
   this.dialogRef.open(VendorGoodCraeationComponent, {
-    height: '60%',
+    height: '70%',
     width: '50%',
     panelClass: 'custom-dialog-container'
   },

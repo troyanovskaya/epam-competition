@@ -17,7 +17,7 @@ export class GoodsService {
     this.httpRequestService.getProducts('none', []).subscribe( data => {this.goods = data;
       this.goods.map( el => this.vendorIds.add(el.vendorId));
       this.vendorIds.forEach( el => {
-        this.httpRequestService.getVendor(el).subscribe( data => this.vendors.push(data))
+        this.httpRequestService.getVendorById(el).subscribe( data => this.vendors.push(data))
         return el});
       });
       this.vendorIds= new Set();
@@ -28,7 +28,7 @@ export class GoodsService {
     this.goods.map( el => this.vendorIds.add(el.vendorId));
     this.vendors = [];
     this.vendorIds.forEach( el => {
-      this.httpRequestService.getVendor(el).subscribe( data => this.vendors.push(data))
+      this.httpRequestService.getVendorById(el).subscribe( data => this.vendors.push(data))
       return el;
     })});
     this.vendorIds= new Set();

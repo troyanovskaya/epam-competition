@@ -108,7 +108,11 @@ export class HttpRequestService {
 
 
 
-  getVendor(vendorId:string): Observable<Vendor>{
+  getVendor(userId:string): Observable<Vendor>{
+    return this.http.get<Vendor>(`${this.URL}/users/${userId}/vendor`);
+
+  }
+  getVendorById(vendorId:string): Observable<Vendor>{
     return this.http.get<Vendor>(`${this.URL}/Vendors/${vendorId}`);
 
   }

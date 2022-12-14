@@ -17,16 +17,11 @@ export class PublishedGoodsService implements OnInit {
       return null;
     }
   }
-  GetVendorId(userId:string){
-    this.httpRequestService.getVendors()
-    .subscribe( data => data.map( el => {
-      console.log(el.userId);
-      if(el.userId===userId){
-        this.vendorId = el.id;
-        console.log('in');
-
-      }}));
-    console.log(this.vendorId);
+  GetVendor(userId:string){
+    let vendor;
+    this.httpRequestService.getVendor(userId)
+    .subscribe( data => {this.vendorId = data.id;
+      this.GetVendorProducts();});
   }
   GetVendorProducts(){
     this.httpRequestService.getVendorProducts(this.vendorId).subscribe(
@@ -40,8 +35,7 @@ export class PublishedGoodsService implements OnInit {
         let user1:{token:string, validTo:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none', validTo:'none'}));
         if(this.getDecodedAccessToken(user1.token)){
           let userId = this.getDecodedAccessToken(user1.token).sub;
-          this.GetVendorId(userId);
-          this.GetVendorProducts();
+          this.GetVendor(userId);
         };
       }
      }

@@ -23,8 +23,9 @@
     </select>
 
   <div class="vendors-flex-container">
-    <div class="vendor-item" *ngFor="let vendor of vendors; let i = index" (click)="selectVendor(vendor)" routerLink="/vendor.name/products">
+    <div class="vendor-item" *ngFor="let vendor of goodService.vendors; let i = index" (click)="selectVendor(vendor)" routerLink="/vendor.name/products">
       <p>{{vendor.name}}</p>
     </div>
   </div>
 </form>
+<div >Lorem ipsum dolor sit amet consectetur, adipisicing elit. In, quas!</div>

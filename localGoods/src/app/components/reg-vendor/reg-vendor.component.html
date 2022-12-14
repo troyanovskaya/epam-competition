@@ -1,63 +1,45 @@
 <div *ngIf="visibilityService.isVendorRegVisible" (click)="visibilityService.isVendorRegVisible = false" class="black-container">
   <div class="vendor-reg" (click)="$event.stopPropagation()">
     <div class="header"> Become a vendor now!</div>
-    <form >
+    <form #Form="ngForm" (ngSubmit)="Show(Form)">
       <div class="flex-container">
         <div class="item-container col-1">
           <label for="company">Company name:</label>
-          <input placeholder="company" type="text" name="company">
+          <h6 *ngIf="errs.companyEr">Company name is too short, it should be at least 5 symbols</h6>
+          <input ngModel placeholder="company" type="text" name="company">
           <p>Payment Methods:</p>
-          <div>
-            <input type="checkbox" id="card" name="card" value="Card">
-            <label for="card"> Card </label>
+          <h6 *ngIf="errs.paymentEr">Choose at least one payment method</h6>
+          <div *ngFor="let pay of paymentMethods">
+            <input ngModel type="checkbox" id={{pay.name}} name={{pay.name}} value={{pay.name}}>
+            <label for={{pay.name}}> {{pay.name | titlecase}} </label>
           </div>
-          <div>
-            <input type="checkbox" id="cash" name="cash" value="Cash">
-            <label for="cash"> Cash </label>
-          </div>
-
           <p>Delivery Methods:</p>
-          <div>
-            <input type="checkbox" id="takeaway" name="takeaway" value="Takeaway">
-            <label for="takeaway"> Takeaway </label>
+          <h6 *ngIf="errs.deliveryEr">Choose at least one delivery method</h6>
+          <div *ngFor="let del of deliveryMethods">
+            <input ngModel type="checkbox" id={{del.name}} name={{del.name}} value={{del.name}}>
+            <label for={{del.name}}> {{del.name | titlecase}} </label>
           </div>
-          <div>
-            <input type="checkbox" id="delivery" name="delivery" value="Delivery">
-            <label for="Deliveryash"> Delivery </label>
-          </div>
-
         </div>
         <div class="item-container col-2">
-          <label for="email">Your email:</label>
-          <input placeholder="email" type="text" name="email">
+          <h6 *ngIf="errs.phoneEr">It should be from 11 to 15 numbers length</h6>
+          <h6 *ngIf="phoneDigitsEr">Phone number must contain only digits and +</h6>
           <label for="phone">Phone number:</label>
-          <input placeholder="phone" type="text" name="phone">
+          <input ngModel placeholder="phone" type="text" name="phone">
           <p>Messengers:</p>
-          <div>
-            <input type="checkbox" id="viber" name="Viber" value="Viber">
-            <label for="viber"> Viber </label>
-          </div>
-          <div>
-            <input type="checkbox" id="whatsapp" name="whatsapp" value="Whatsapp">
-            <label for="whatsapp"> WhatsApp</label>
-          </div>
-          <div>
-            <input type="checkbox" id="telegram" name="telegram" value="Telegram">
-            <label for="telegram"> Telegram</label>
+          <h6 *ngIf="errs.messengerEr">Choose at least one messenger</h6>
+          <div *ngFor="let mes of messengers">
+            <input ngModel type="checkbox" id={{mes}} name={{mes}} value={{mes}}>
+            <label for={{mes}}> {{mes | titlecase}} </label>
           </div>
           <p>Social media:</p>
-          <div>
-            <input type="checkbox" id="facebook" name="facebook" value="Facebook">
-            <label for="facebook"> Facebook</label>
+          <h6 *ngIf="errs.mediaEr">Choose at least one social network</h6>
+          <div *ngFor="let social of media">
+            <input ngModel type="checkbox" id={{social}} name={{social}} value={{social}} ngModel>
+            <label for={{social}}> {{social | titlecase}}</label>
           </div>
-          <div>
-            <input type="checkbox" id="instagram" name="instagram" value="Instagram">
-            <label for="instagram"> Instagram</label>
-          </div>
-
         </div>
       </div>
-      <button (click)="userService.userRole = 'VENDOR'; visibilityService.isVendorRegVisible = false"> Create a vendor </button>
+      <button type="submit"> Create a vendor </button>
     </form>
   </div>
 </div>

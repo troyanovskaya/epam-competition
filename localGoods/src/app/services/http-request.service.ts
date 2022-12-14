@@ -21,11 +21,18 @@ import jwt_decode from 'jwt-decode';
 export class HttpRequestService {
   URL:string = 'https://localgoodsapi.azurewebsites.net/api';
 
+  postVendor(vendor:Vendor){
+    let user1:{token:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none'}));
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + user1.token);
+    return this.http.post(`${this.URL}/Vendors`, vendor, {headers:headers});
+  }
+
   postOrder(order: OrderItem) {
     let user1:{token:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none'}));
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', 'Bearer ' + user1.token);
-    //console.log(httpOptions);
+    console.log(headers);
     return this.http.post<OrderItem>(`${this.URL}/Orders`, order, {headers:headers}).subscribe(
       (data) => console.log(data),
       (err) => console.log(err)

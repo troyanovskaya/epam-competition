@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpRequestService } from '../../services/http-request.service';
 import { LocalStorageService } from 'src/app/local-storage.service';
 import { Observable, catchError, of , tap } from 'rxjs';
 import { City, Country } from '../country.model';
 import { User } from 'src/app/schema/user.model';
+import { SendEmailConfirmationComponent } from '../send-email-confirmation/send-email-confirmation.component';
 
 @Component({
   selector: 'app-sign-up-page',
@@ -65,7 +67,8 @@ export class SignUpPageComponent {
   constructor(
     private dialogRef: MatDialogRef<SignUpPageComponent>,
     private http: HttpRequestService,
-    private localStorageService: LocalStorageService) { }
+    private localStorageService: LocalStorageService,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
     this.http.getCountries().subscribe((countriesList: Array<Country>) => {
@@ -113,5 +116,9 @@ export class SignUpPageComponent {
   viewConfirm() {
     this.visibleConfirm = !this.visibleConfirm;
     this.changeConfirmType = !this.changeConfirmType;
+  }
+
+  onSendEmailConfirmationLink(){
+    this.dialog.open(SendEmailConfirmationComponent);
   }
 }

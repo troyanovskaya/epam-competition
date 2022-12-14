@@ -42,6 +42,8 @@ import { EmailConfirmationComponent } from './components/email-confirmation/emai
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { NotifierComponent } from './components/notifier/notifier.component';
 import { VendorItemPageComponent } from './components/vendor-item-page/vendor-item-page.component';
+import { SendEmailConfirmationComponent } from './components/send-email-confirmation/send-email-confirmation.component';
+import { UserForgotPasswordComponent } from './components/user-forgot-password/user-forgot-password.component';
 
 const appRoutes:Routes = [
 ]
@@ -89,6 +91,8 @@ const appRoutes:Routes = [
         PasswordRecoveryComponent,
         NotifierComponent,
         VendorItemPageComponent,
+        SendEmailConfirmationComponent,
+        UserForgotPasswordComponent,
     ],
     providers: [],
     bootstrap: [AppComponent],

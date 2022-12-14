@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { UserRole } from '../schema/userRole.model';
 import jwt_decode from 'jwt-decode';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpRequestService } from './http-request.service';
 import { FullUser } from '../schema/fullUser.model';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class UserService {
   user:FullUser = {  id:'',  email:'', firstName:'', lastName: '',
   addressInformation:'', cityId: ''};
   userRole: UserRole = 'None';
+  getRole: BehaviorSubject<string> = new BehaviorSubject<string>('None');
   isAutorized:boolean = false;
   userId:string = '';
   getDecodedAccessToken(token: string): any {
@@ -29,17 +31,34 @@ export class UserService {
 
   constructor(private http: HttpClient) {
     let user = localStorage.getItem('user');
-    console.log(user == null)
+
     if(user){
       let user1:{token:string, validTo:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none', validTo:'none'}));
       this.isAutorized = true;
       if(this.getDecodedAccessToken(user1.token)){
-        this.userRole = this.getDecodedAccessToken(user1.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+        //this.userRole = this.getDecodedAccessToken(user1.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
         let userId = this.getDecodedAccessToken(user1.token).sub;
+
+        this.getRolesByUserId(userId).subscribe(r => {
+          if (r){
+            if (r.includes('Vendor')){
+              this.userRole = 'VENDOR';
+            }
+            else{
+              this.userRole = 'Buyer';
+            }
+          }
+
+          console.log(this.userRole);
+        })
         this.getUser(userId).subscribe(
           data => {this.user = data})
       };
     }
+  }
+
+  getRolesByUserId(id: string){
+    return this.http.get<string[]>(`${this.URL}/users/${id}/roles`);
   }
 }
 

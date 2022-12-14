@@ -9,6 +9,8 @@ namespace LocalGoods.DAL.Repositories.Interfaces
     public interface IVendorRepository : IRepository<Guid, Vendor>
     {
         Task<IEnumerable<Vendor>> GetByFilterAsync(VendorFilterModel vendorFilterModel);
+        Task<Vendor> GetByUserIdAsync(Guid id);
+        Task<Vendor> GetByNameAsync(string name);
         Task<Vendor> GetByProductIdAsync(Guid id);
     }
 }

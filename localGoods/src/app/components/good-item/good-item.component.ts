@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Good } from 'src/app/schema/good.model';
 import { BasketService } from 'src/app/services/basket.service';
+import { NotifierService } from 'src/app/services/notifier.service';
 import { LogInPageComponent } from '../log-in-page/log-in-page.component';
 
 @Component({
@@ -14,7 +15,10 @@ export class GoodItemComponent implements OnInit {
     price: 0, poster: '', discount: 0, vendorId: '0', amount: 0,  unitType: {
     id: '0', name: ''}, categories: [], images: []};
 
-  constructor(private basketService: BasketService,private dialogRef: MatDialog,) { }
+  constructor(private basketService: BasketService,
+    private dialogRef: MatDialog,
+    private notifier: NotifierService) { }
+
   addToBasket(){
     if(!localStorage.getItem('user')){
       this.dialogRef.open(LogInPageComponent, {
@@ -39,6 +43,7 @@ export class GoodItemComponent implements OnInit {
          deliveryMethods:[], paymentMethods:[], viberNumber:'', telegramName:'', instagramName:'', userId:'', products:[]});
       }
       this.basketService.onTotalChange();
+      this.notifier.showNotification(`${this.item!.name} was added to basket`, 'SUCCESS');
     }
   }
 

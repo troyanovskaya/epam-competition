@@ -13,6 +13,7 @@ import { PaymentMethod } from '../schema/paymentMethod.model';
 import { Vendor } from '../schema/vendor.model';
 import { UserService } from './user.service';
 import jwt_decode from 'jwt-decode';
+import { NotifierService } from './notifier.service';
 
 
 @Injectable({
@@ -52,7 +53,8 @@ export class HttpRequestService {
 
   constructor(private http: HttpClient,
     private localStorageService: LocalStorageService,
-    private userService:UserService) { }
+    private userService:UserService,
+    private notifier: NotifierService) { }
 
   getCategories():Observable<Category[]>{
     return this.http.get<Category[]>(`${this.URL}/Categories`)
@@ -139,6 +141,16 @@ export class HttpRequestService {
     });
   }
 
+  createVendor(model: any){
+    let user1:{token:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none'}));
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + user1.token);
+
+    return this.http.post(`${environment.apiUrl}/vendors`, model, {
+      headers: headers
+    });
+  }
+
   checkUser(url: string, value: Object, dialogRef: any) {
     this.post(url, value).pipe(
       tap(token => {
@@ -152,7 +164,9 @@ export class HttpRequestService {
           console.log(user1.token);
           if(this.getDecodedAccessToken(user1.token)){
             let userId = this.getDecodedAccessToken(user1.token).sub;
-            this.userService.userRole = this.getDecodedAccessToken(user1.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+            //this.userService.userRole = this.getDecodedAccessToken(user1.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+
+            this.userService.getRolesByUserId(userId);
             this.getUser(userId).subscribe(
               data => this.userService.user = data);
           };
@@ -160,7 +174,7 @@ export class HttpRequestService {
         return;
       }),
       catchError(err => {
-        alert(err.error.message)
+        this.notifier.showNotification(err.error.message, 'ERROR');
         return of('');
       })
     ).subscribe()

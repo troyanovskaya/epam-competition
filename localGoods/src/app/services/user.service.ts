@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { UserRole } from '../schema/userRole.model';
 import jwt_decode from 'jwt-decode';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpRequestService } from './http-request.service';
 import { FullUser } from '../schema/fullUser.model';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { Good } from '../schema/good.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,6 @@ export class UserService {
   user:FullUser = {  id:'',  email:'', firstName:'', lastName: '',
   addressInformation:'', cityId: ''};
   userRole: UserRole = 'None';
-  getRole: BehaviorSubject<string> = new BehaviorSubject<string>('None');
   isAutorized:boolean = false;
   userId:string = '';
   getDecodedAccessToken(token: string): any {

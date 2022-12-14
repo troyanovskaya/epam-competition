@@ -60,11 +60,18 @@
 }
 
 .avatar{
-  background-color: cadetblue;
+  background-color: white;
   width: 40px;
   height: 40px;
   border-radius: 20px;
   position:relative;
+}
+
+.avatar-img{
+  position:absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
 }
 
 app-user-info{

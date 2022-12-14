@@ -14,10 +14,10 @@ export class BasketService {
   vendorsInBasket:Vendor[] = [];
 
   showVendor:string = 'all';
-  total:number = this.basket.reduce((pastVal, currentEl) => pastVal+currentEl.good.price*currentEl.quantity, 0);
+  total:number = this.basket.reduce((pastVal, currentEl) => pastVal+(1 - currentEl.good.discount/100)*currentEl.good.price*currentEl.quantity, 0);
   orderPrice:number = 0;
   onTotalChange(){
-    this.total = this.basket.reduce((pastVal, currentEl) => pastVal+currentEl.good.price*currentEl.quantity, 0);
+    this.total = this.basket.reduce((pastVal, currentEl) => pastVal+(1 - currentEl.good.discount/100)*currentEl.good.price*currentEl.quantity, 0);
   }
 
   vendors:Vendor[]=[];

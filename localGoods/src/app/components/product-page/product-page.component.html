@@ -16,7 +16,7 @@
         <h3>Vendor is {{vendor.name | titlecase}}</h3>
       </div>
       <div class="price">
-        <div><span  *ngIf="false"></span> <span class="span-price">{{good.price | currency:'GBP'}}</span></div>
+        <div><span  *ngIf="false"></span> <span class="span-price">{{(1-good.discount/100)*good.price | currency:'GBP'}}</span></div>
       </div>
       <div class="delivery">
         <h3>Delivery methods:</h3>

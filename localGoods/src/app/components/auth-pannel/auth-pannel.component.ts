@@ -41,8 +41,6 @@ export class AuthPannelComponent {
   signOut(){
     localStorage.removeItem('user');
     this.userService.isAutorized = false;
-    this._location.back();
-
   }
 
 }

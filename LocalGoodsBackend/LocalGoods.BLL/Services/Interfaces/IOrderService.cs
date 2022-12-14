@@ -9,6 +9,7 @@ namespace LocalGoods.BLL.Services.Interfaces
     public interface IOrderService
     {
         Task<IEnumerable<OrderModel>> GetAllAsync();
+        Task<IEnumerable<OrderModel>> GetAllCurrentUserOrdersByOrderStatusIdsAsync(IEnumerable<Guid> orderStatusIds);
         Task<IEnumerable<OrderModel>> GetByUserIdAsync(Guid userId);
         Task<IEnumerable<OrderModel>> GetByVendorIdAsync(Guid vendorId);
         Task<OrderModel> GetByIdAsync(Guid id);

@@ -13,5 +13,7 @@ namespace LocalGoods.BLL.Services.Interfaces
         Task<IEnumerable<ProductModel>> GetByCountryIdAsync(Guid countryId);
         Task<ProductModel> GetByIdAsync(Guid id);
         Task<ProductModel> CreateAsync(CreateProductModel createProductModel);
+        Task<ProductModel> EditProductAsync(EditProductModel model);
+        Task DeleteProductAsync(Guid id);
     }
 }

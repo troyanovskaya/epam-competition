@@ -5,21 +5,15 @@ using System.Threading.Tasks;
 using LocalGoods.DAL.Configurations;
 using LocalGoods.DAL.Entities;
 using LocalGoods.DAL.Initializers;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace LocalGoods.DAL.Contexts
 {
     public class LocalGoodsDbContext: IdentityDbContext<User, Role, Guid>
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        public LocalGoodsDbContext(
-            DbContextOptions<LocalGoodsDbContext> options,
-            IHttpContextAccessor httpContextAccessor): base(options)
+        public LocalGoodsDbContext(DbContextOptions<LocalGoodsDbContext> options): base(options)
         {
-            _httpContextAccessor = httpContextAccessor;
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -33,7 +27,8 @@ namespace LocalGoods.DAL.Contexts
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             AddAuditEntityProperties();
-            
+            HandleProductDelete();
+
             return base.SaveChangesAsync(cancellationToken);
         }
 
@@ -45,26 +40,32 @@ namespace LocalGoods.DAL.Contexts
                             (e.State == EntityState.Added ||
                              e.State == EntityState.Modified));
 
-            
-            // TODO - must be checked, not sure if it works
-            /*var currentUser =
-                _httpContextAccessor.HttpContext.User.Claims
-                    .Where(c => c.ValueType == JwtRegisteredClaimNames.Sub)
-                    .Select(c => c.Value)
-                    .FirstOrDefault()
-                ?? Guid.Empty.ToString();*/
-
             foreach (var entityEntry in entries)
             {
                 var auditEntity = (AuditEntity<Guid>)entityEntry.Entity;
                 auditEntity.ModifiedAt = DateTime.UtcNow;
-                //auditEntity.ModifiedBy = new Guid(currentUser);
 
                 if (entityEntry.State == EntityState.Added)
                 {
                     auditEntity.CreatedAt = DateTime.UtcNow;
-                    //auditEntity.CreatedBy = new Guid(currentUser);
                 }
+            }
+        }
+
+        private void HandleProductDelete()
+        {
+            var entitiesToDelete = ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Deleted);
+
+            foreach (var entity in entitiesToDelete)
+            {
+                if ((Type)entity.Entity != typeof(Product))
+                {
+                    continue;
+                }
+
+                entity.State = EntityState.Modified;
+                entity.CurrentValues["IsDeleted"] = true;
             }
         }
 

@@ -12,6 +12,7 @@ namespace LocalGoods.BLL.MappingProfiles
             CreateMap<CreateProductModel, Product>()
                 .ForMember(p => p.Images, cfg => cfg.Ignore())
                 .ForMember(p => p.UnitType, cfg => cfg.Ignore());
+            CreateMap<EditProductModel, Product>();
             CreateMap<Product, ProductModel>()
                 .ForMember(pm => pm.Images, cfg => cfg.MapFrom(p => p.Images.Select(i => i.Link)));
         }

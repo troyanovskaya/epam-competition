@@ -1,20 +1,65 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { Vendor } from 'src/app/schema/vendor.model';
+import { GoodsService } from 'src/app/services/goods.service';
+import { HttpRequestService } from 'src/app/services/http-request.service';
+import { LocationService } from 'src/app/services/location.service';
+import { ShareDataService } from 'src/app/services/share-data.service';
+import { VendorItemPageComponent } from '../vendor-item-page/vendor-item-page.component';
 
 @Component({
   selector: 'app-vendors-search',
   templateUrl: './vendors-search.component.html',
   styleUrls: ['./vendors-search.component.css']
 })
-export class VendorsSearchComponent implements OnInit {
-  country = new FormControl('uk');
-  city = new FormControl('London');
-  vendors: string[] = ['Vendor1', 'Vendor2', 'Vendor3', 'Vendor4', 'Vendor5',
-  'Vendor6', 'Vendor7', 'Vendor8', 'Vendor9', 'Vendor10', 'Vendor11']
+export class VendorsSearchComponent{
+  country = new FormControl('');
+  city = new FormControl('');
+  vendors: Vendor[] = [];
+  vendorId!: string;
 
-  constructor() { }
+  constructor(public countriesService: LocationService,
+    public goodService: GoodsService,
+    private shareDataService: ShareDataService,
+    private http: HttpRequestService) {
 
-  ngOnInit(): void {
+  }
+
+  ngOnInit(){
+  }
+
+  log(){
+    console.log(this.goodService.vendors)
+  }
+
+  getCountry(){
+    this.countriesService.choosenCountry = this.countriesService.countries.find(el => el.name===this.country.value)?? {id:'', name:'', cities:[{id:'0', name:'Choose country first!', countryId:'0'}]};
+    if(this.countriesService.choosenCountry.id){
+      this.getCity();
+    }
+
+  }
+
+  getCity(){
+    if(this.countriesService.choosenCountry.cities.filter( el => el.name===this.city.value)[0]){
+      this.countriesService.choosenCity = this.countriesService.choosenCountry.cities.filter( el => el.name===this.city.value)[0];
+    }
+    if(this.city.value!=='None'&&this.city.value!==''){
+      this.findGoods();
+    }
+
+  }
+  findGoods(){
+    console.log(this.countriesService.choosenCity);
+    if(this.countriesService.choosenCity.id){
+      return this.goodService.findGoods(this.countriesService.choosenCity.id, []);
+    }
+    return this.goodService.findGoods('none', []);
+  }
+
+  selectVendor(vendor:Vendor){
+    this.shareDataService.setVendor(vendor);
   }
 
 }

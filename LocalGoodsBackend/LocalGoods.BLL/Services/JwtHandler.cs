@@ -57,6 +57,7 @@ namespace LocalGoods.BLL.Services
                 issuer: _jwtSettings.Issuer,
                 audience: _jwtSettings.Audience,
                 claims: claims,
+                expires: DateTime.Now.AddMonths(2),
                 signingCredentials: signingCredentials);
 
             return token;

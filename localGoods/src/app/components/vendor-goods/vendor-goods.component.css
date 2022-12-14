@@ -1,0 +1,24 @@
+.flex-container{
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap:20px;
+  padding:20px;
+}
+
+.add-item{
+  width:150px;
+  height:150px;
+  background-color: white;
+  border-radius: 10px;
+  font-size: 1.5em;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+p{
+  margin:0px;
+}

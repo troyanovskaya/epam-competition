@@ -1,0 +1,111 @@
+.header-div {
+    display: flex;
+    width: inherit;
+    background-color: #162e50;
+    color: white;
+    font-size: 1.2em;
+    line-height: 40px;
+    padding-top: 0;
+}
+
+.header {
+    text-align: center;
+    margin: auto;
+}
+
+.cross {
+    cursor: pointer;
+    margin-right: 2%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 80%;
+    height: 80%;
+    margin: auto;
+    font-size: small;
+}
+
+.label-input-pair {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-option {
+    cursor: pointer;
+}
+
+button {
+    width: 20%;
+    height: 150%;
+    margin-right: 5%;
+    border: none;
+    border-radius: 10px;
+    transition: 1s;
+    cursor: pointer;
+}
+
+button:hover {
+    color: white;
+    background-color: #162e50;
+}
+
+.confirm-part {
+    display: flex;
+    align-items: center;
+}
+
+.sign-up,
+.forgot-password {
+    color: #162e50;
+    margin-left: 3%;
+    transition: transform .5s;
+    cursor: pointer;
+}
+
+.sign-up:hover {
+    transform: scale(1.2);
+}
+
+input {
+    padding: 2%;
+    border-radius: 5px;
+    border: 0.5px solid gray;
+    margin-top: 2%;
+}
+
+.forgot-password {
+    font-size: smaller;
+    text-align: end;
+    padding: 2%;
+}
+
+.forgot-password:hover {
+    transform: scale(1.1)
+}
+
+.requirementsError {
+    font-size: 7px;
+    color: red;
+}
+
+.passwordRequirements {
+    font-size: 7px;
+    color: green;
+}
+
+.password {
+    position: relative;
+    z-index: 1;
+}
+
+.eyeicone img {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    z-index: 2;
+    top: 30px;
+    right: 10px;
+}

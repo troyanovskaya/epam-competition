@@ -31,6 +31,14 @@ namespace LocalGoods.BLL.Services
         private readonly UserManager<User> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
+        private readonly List<Guid> _orderStatusIdsChain = new List<Guid>()
+        {
+            GlobalValues.NewOrderStatusId,
+            GlobalValues.PendingOrderStatusId,
+            GlobalValues.PaidOrderStatusId,
+            GlobalValues.CompletedOrderStatusId
+        };
+
         public OrderService(IMapper mapper, 
             IOrderRepository orderRepository,
             IOrderDetailsRepository orderDetailsRepository, 
@@ -57,6 +65,28 @@ namespace LocalGoods.BLL.Services
         public async Task<IEnumerable<OrderModel>> GetAllAsync()
         {
             var orders = await _orderRepository.GetAllAsync();
+
+            return _mapper.Map<IEnumerable<OrderModel>>(orders);
+        }
+
+        public async Task<IEnumerable<OrderModel>> GetAllCurrentUserOrdersByOrderStatusIdsAsync(IEnumerable<Guid> orderStatusIds)
+        {
+            var currentUserId = await GetCurrentUserId();
+
+            var orders = await _orderRepository.GetByFilterAsync(o => o.UserId == currentUserId && orderStatusIds.Contains(o.OrderStatusId));
+            return _mapper.Map<IEnumerable<OrderModel>>(orders);
+        }
+
+        public async Task<IEnumerable<OrderModel>> GetByUserIdAsync(Guid userId)
+        {
+            var orders = await _orderRepository.GetByFilterAsync(o => o.UserId == userId);
+
+            return _mapper.Map<IEnumerable<OrderModel>>(orders);
+        }
+
+        public async Task<IEnumerable<OrderModel>> GetByVendorIdAsync(Guid vendorId)
+        {
+            var orders = await _orderRepository.GetByFilterAsync(o => o.OrderDetails.Select(od => od.Product.VendorId).Contains(vendorId));
 
             return _mapper.Map<IEnumerable<OrderModel>>(orders);
         }
@@ -96,7 +126,7 @@ namespace LocalGoods.BLL.Services
 
             await _orderRepository.AddAsync(order);
 
-            await CreateOrderDetailsAsync(createOrderModel.OrderDetails, currentUserId, order.Id);
+            await CreateOrderDetailsAsync(createOrderModel, currentUserId, order.Id);
 
             await _orderRepository.AddAsync(order);
             await _orderRepository.SaveChangesAsync();
@@ -104,8 +134,45 @@ namespace LocalGoods.BLL.Services
             return _mapper.Map<OrderModel>(order);
         }
 
-        public async Task ChangeStatusAsync(Guid orderId, Guid orderStatusId)
+        public async Task ChangeStatusAsync(Guid orderId)
         {
+            var order = await GetAndValidateOrderForStatusChanging(orderId);
+            var orderStatusIndex = GetOrderStatusIndex(order);
+
+            if (orderStatusIndex + 1 >= _orderStatusIdsChain.Count)
+            {
+                throw new OrderBadRequestException("Order status can't be changed from Completed");
+            }
+
+            order.OrderStatusId = _orderStatusIdsChain[orderStatusIndex + 1];
+            await _orderRepository.UpdateAsync(order);
+            await _orderRepository.SaveChangesAsync();
+        }
+
+        public async Task CancelAsync(Guid orderId)
+        {
+            var order = await GetAndValidateOrderForStatusChanging(orderId);
+
+            if (order.OrderStatusId == GlobalValues.CanceledOrderStatusId)
+            {
+                throw new OrderBadRequestException("Order status is already canceled");
+            }
+
+            var orderStatusIndex = GetOrderStatusIndex(order);
+
+            if (orderStatusIndex >= _orderStatusIdsChain.IndexOf(GlobalValues.PaidOrderStatusId))
+            {
+                throw new OrderBadRequestException("Order status can't be changed after \"Paid\" status");
+            }
+
+            order.OrderStatusId = GlobalValues.CanceledOrderStatusId;
+            await _orderRepository.UpdateAsync(order);
+            await _orderRepository.SaveChangesAsync();
+        }
+
+        private async Task<Order> GetAndValidateOrderForStatusChanging(Guid orderId)
+        {
+            var currentUserId = await GetCurrentUserId();
             var order = await _orderRepository.GetByIdAsync(orderId);
 
             if (order is null)
@@ -113,26 +180,24 @@ namespace LocalGoods.BLL.Services
                 throw new OrderNotFoundException(orderId);
             }
 
-            if (orderStatusId == GlobalValues.NewOrderStatusId)
+            if (order.OrderDetails.Select(od => od.Product.Vendor.UserId).FirstOrDefault() != currentUserId)
             {
-                throw new OrderBadRequestException("Order status can't be changed to New");
+                throw new OrderBadRequestException("Order status can be changed only by product vendor of the current order");
             }
 
-            if (order.OrderStatus.Id == GlobalValues.CompletedOrderStatusId)
+            return order;
+        }
+
+        private int GetOrderStatusIndex(Order order)
+        {
+            var orderStatusIndex = _orderStatusIdsChain.IndexOf(order.OrderStatusId);
+
+            if (orderStatusIndex == -1)
             {
-                throw new OrderBadRequestException("Order status can't be changed from Completed");
+                throw new OrderBadRequestException("Order status can't be changed");
             }
 
-            var orderStatus = await _orderStatusRepository.GetByIdAsync(orderStatusId);
-
-            if (orderStatus is null)
-            {
-                throw new OrderStatusNotFoundException(orderStatusId);
-            }
-
-            order.OrderStatus = orderStatus;
-            await _orderRepository.UpdateAsync(order);
-            await _orderRepository.SaveChangesAsync();
+            return orderStatusIndex;
         }
 
         private async Task<Guid> GetCurrentUserId()
@@ -162,13 +227,13 @@ namespace LocalGoods.BLL.Services
         }
 
         private async Task CreateOrderDetailsAsync(
-            IEnumerable<CreateOrderDetailsModel> orderDetails, 
+            CreateOrderModel createOrderModel, 
             Guid currentUserId,
             Guid orderId)
         {
-            var orderDetailsList = _mapper.Map<IEnumerable<OrderDetails>>(orderDetails).ToList();
+            var orderDetailsList = _mapper.Map<IEnumerable<OrderDetails>>(createOrderModel.OrderDetails).ToList();
             
-            if (orderDetails is null || !orderDetailsList.Any())
+            if (createOrderModel.OrderDetails is null || !orderDetailsList.Any())
             {
                 throw new OrderBadRequestException("Order has no products");
             }
@@ -192,6 +257,16 @@ namespace LocalGoods.BLL.Services
             if (vendor.User.Id == currentUserId)
             {
                 throw new OrderBadRequestException("Vendor can't buy their own products");
+            }
+
+            if (!vendor.VendorDeliveryMethods.Select(vdm => vdm.DeliveryMethodId).Contains(createOrderModel.DeliveryMethodId))
+            {
+                throw new OrderBadRequestException("Vendor doesn't have this delivery method");
+            }
+
+            if (!vendor.VendorPaymentMethods.Select(vpm => vpm.PaymentMethodId).Contains(createOrderModel.PaymentMethodId))
+            {
+                throw new OrderBadRequestException("Vendor doesn't have this payment method");
             }
 
             var vendors = products.Select(p => p.VendorId).Distinct();

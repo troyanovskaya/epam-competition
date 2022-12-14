@@ -1,6 +1,7 @@
 #main-part {
     background-color: #7382a1;
     padding: 5% 8%;
+    margin-top:20px;
 }
 
 h3 {
@@ -31,5 +32,9 @@ h3 {
 img {
     display: block;
     margin-bottom: 5%;
-    background-color: cadetblue;
+}
+
+.basket-img{
+  width: 100px;
+  height: 100px;
 }

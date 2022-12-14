@@ -44,9 +44,10 @@ namespace LocalGoods.PL.Controllers
             return Ok(product);
         }
 
-        [Authorize(Roles = "Buyer, Vendor")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Vendor")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> Add([FromBody] CreateProductModel createProductModel)
         {
@@ -55,6 +56,26 @@ namespace LocalGoods.PL.Controllers
             var createdProduct = await _productService.CreateAsync(createProductModel);
 
             return CreatedAtAction(nameof(GetById), new { id = createdProduct.Id }, createdProduct);
+        }
+        
+        [Authorize(Roles = "Vendor")]
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Put(EditProductModel model)
+        {
+            await _productService.EditProductAsync(model);
+            return NoContent();
+        }
+
+        [Authorize(Roles = "Vendor")]
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _productService.DeleteProductAsync(id);
+            return NoContent();
         }
     }
 }

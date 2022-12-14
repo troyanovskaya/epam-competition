@@ -9,7 +9,11 @@ using LocalGoods.Shared.FilterModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using LocalGoods.BLL.Exceptions.BadRequestException;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace LocalGoods.BLL.Services
 {
@@ -21,10 +25,13 @@ namespace LocalGoods.BLL.Services
         private readonly IUnitTypeRepository _unitTypeRepository;
         private readonly IImageRepository _imageRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly UserManager<User> _userManager;
 
         public ProductService(IMapper mapper, IProductRepository productRepository,
             IVendorRepository vendorRepository, IUnitTypeRepository unitTypeRepository,
-            IImageRepository imageRepository, ICategoryRepository categoryRepository)
+            IImageRepository imageRepository, ICategoryRepository categoryRepository,
+            IHttpContextAccessor httpContextAccessor, UserManager<User> userManager)
         {
             _mapper = mapper;
             _productRepository = productRepository;
@@ -32,6 +39,8 @@ namespace LocalGoods.BLL.Services
             _unitTypeRepository = unitTypeRepository;
             _imageRepository = imageRepository;
             _categoryRepository = categoryRepository;
+            _httpContextAccessor = httpContextAccessor;
+            _userManager = userManager;
         }
 
         public async Task<IEnumerable<ProductModel>> GetAllByFilterAsync(ProductFilterModel productFilterModel)
@@ -44,6 +53,13 @@ namespace LocalGoods.BLL.Services
         public async Task<IEnumerable<ProductModel>> GetByVendorIdAsync(Guid vendorId)
         {
             var products = await _productRepository.GetByFilterAsync(p => p.VendorId == vendorId);
+
+            return _mapper.Map<IEnumerable<ProductModel>>(products);
+        }
+
+        public async Task<IEnumerable<ProductModel>> GetByCountryIdAsync(Guid countryId)
+        {
+            var products = await _productRepository.GetByFilterAsync(p => p.Vendor.User.City.CountryId == countryId);
 
             return _mapper.Map<IEnumerable<ProductModel>>(products);
         }
@@ -66,6 +82,7 @@ namespace LocalGoods.BLL.Services
 
             var product = _mapper.Map<Product>(createProductModel);
             await _productRepository.AddAsync(product);
+            
             await AddProductImages(product, createProductModel.Images);
             await AddProductCategories(product, createProductModel.CategoryIds);
 
@@ -75,15 +92,68 @@ namespace LocalGoods.BLL.Services
 
         private async Task ValidateModel(CreateProductModel createProductModel)
         {
-            if (!await _vendorRepository.CheckIfEntityExistsByIdAsync(createProductModel.VendorId))
+            if ((decimal) createProductModel.Discount >= createProductModel.Price)
             {
-                throw new VendorNotFoundException(createProductModel.VendorId);
+                throw new ProductBadRequestException("Product discount must be less than the price");
             }
 
             if (!await _unitTypeRepository.CheckIfEntityExistsByIdAsync(createProductModel.UnitTypeId))
             {
                 throw new UnitTypeNotFoundException(createProductModel.UnitTypeId);
             }
+
+            var currentUserId = await GetCurrentUserIdAsync();
+            var createProductVendor = await _vendorRepository.GetByIdAsync(createProductModel.VendorId);
+
+            if (createProductVendor is null)
+            {
+                throw new VendorNotFoundException(createProductModel.VendorId);
+            }
+
+            if (createProductVendor.UserId != currentUserId)
+            {
+                throw new ProductBadRequestException("Product can be created only from current vendor");
+            }
+        }
+        
+        public async Task<ProductModel> EditProductAsync(EditProductModel model)
+        {
+            var product = await _productRepository.GetByIdAsync(model.Id);
+
+            if (product == null)
+            {
+                throw new ProductNotFoundException(model.Id);
+            }
+            
+            var currentUserId = await GetCurrentUserIdAsync();
+            
+            if (currentUserId != product.Vendor.UserId)
+            {
+                throw new AuthException("This is not your product, you can not edit it");
+            }
+            
+            product.Name = model.Name;
+            product.Description = model.Description;
+            product.Price = model.Price;
+            product.Poster = model.Poster;
+            product.Discount = model.Discount;
+            product.Amount = model.Amount;
+
+            var unitType = await _unitTypeRepository.GetByIdAsync(model.UnitTypeId);
+
+            if (unitType == null)
+            {
+                throw new UnitTypeNotFoundException(model.UnitTypeId);
+            }
+
+            product.UnitTypeId = model.UnitTypeId;
+            product.Categories.Clear();
+            product.Images.Clear();
+
+            await AddProductCategories(product, model.CategoryIds);
+            await AddProductImages(product, model.Images);
+
+            return _mapper.Map<ProductModel>(product);
         }
 
         private async Task AddProductImages(
@@ -93,8 +163,8 @@ namespace LocalGoods.BLL.Services
             foreach (var imageLink in images)
             {
                 var createImageModel = new CreateImageModel() { Link = imageLink, ProductId = product.Id };
-
                 var image = _mapper.Map<Image>(createImageModel);
+                
                 await _imageRepository.AddAsync(image);
                 product.Images.Add(image);
             }
@@ -113,6 +183,39 @@ namespace LocalGoods.BLL.Services
             }
 
             product.Categories = categories;
+        }
+
+        public async Task DeleteProductAsync(Guid id)
+        {
+            var product = await _productRepository.GetByIdAsync(id);
+
+            if (product == null)
+            {
+                throw new ProductNotFoundException(id);
+            }
+            
+            var currentUserId = await GetCurrentUserIdAsync();
+            
+            if (currentUserId != product.Vendor.UserId)
+            {
+                throw new AuthException("This is not your product, you can not delete it");
+            }
+
+            await _productRepository.DeleteByIdAsync(id);
+            await _productRepository.SaveChangesAsync();
+        }
+        
+        private async Task<Guid> GetCurrentUserIdAsync()
+        {
+            var currentUserId = _httpContextAccessor?.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var currentUser = await _userManager.FindByIdAsync(currentUserId);
+
+            if (currentUser is null)
+            {
+                throw new UserNotFoundException();
+            }
+
+            return Guid.Parse(currentUserId);
         }
     }
 }

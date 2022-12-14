@@ -1,0 +1,20 @@
+<div class="product-container">
+  <div class="product">
+    <h3 routerLink="/product/{{item.good.id}}">{{item.good.name | titlecase}}</h3>
+    <img class="product-img" src="{{item.good.poster}}" alt="{{item.good.name}}">
+
+    <div class="delivery">
+      <img src="assets/delivery.png" alt="delivery">
+      <p>Delivery or take away</p>
+    </div>
+
+  </div>
+  <div class="icons">
+    <div class="price">{{item.good.price * item.quantity | currency:'GBP'}} </div>
+    <input (change)="changeTotal()" type="number" min="1" max="100" [value]=item.quantity [(ngModel)]="number" >
+    <div>{{item.good.unitType.name}}</div>
+    <img class="bin" (click)="deleteItem()" src="assets/bin.png" alt="bin">
+  </div>
+</div>
+
+

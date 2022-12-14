@@ -3,6 +3,7 @@ using FluentValidation;
 using LocalGoods.BLL.Models.Order;
 using LocalGoods.BLL.Models.OrderStatus;
 using LocalGoods.BLL.Services.Interfaces;
+using LocalGoods.PL.Models.Order;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +29,7 @@ namespace LocalGoods.PL.Controllers
             _createOrderValidator = createOrderValidator;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OrderModel>))]
         public async Task<ActionResult> GetAll()
@@ -38,7 +39,17 @@ namespace LocalGoods.PL.Controllers
             return Ok(orders);
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Buyer, Vendor")]
+        [HttpGet("current-user")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OrderModel>))]
+        public async Task<ActionResult> GetAllCurrentUserOrdersByOrderStatusIds([FromBody] OrderRequest orderRequest)
+        {
+            var orders = await _orderService.GetAllCurrentUserOrdersByOrderStatusIdsAsync(orderRequest.OrderStatusIds);
+
+            return Ok(orders);
+        }
+
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OrderModel))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -49,7 +60,7 @@ namespace LocalGoods.PL.Controllers
             return Ok(order);
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("statuses")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OrderStatusModel>))]
         public async Task<ActionResult> GetOrderStatuses()
@@ -59,7 +70,7 @@ namespace LocalGoods.PL.Controllers
             return Ok(orderStatuses);
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -73,14 +84,26 @@ namespace LocalGoods.PL.Controllers
             return CreatedAtAction(nameof(GetById), new { id = createdOrder.Id }, createdOrder);
         }
 
-        [Authorize(Roles = "Buyer, Vendor")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Vendor")]
         [HttpPut("{id}/status")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> ChangeOrderStatus(Guid id, [FromQuery] Guid orderStatusId)
+        public async Task<ActionResult> ChangeOrderStatus(Guid id)
         {
-            await _orderService.ChangeStatusAsync(id, orderStatusId);
+            await _orderService.ChangeStatusAsync(id);
+
+            return Ok();
+        }
+
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Vendor")]
+        [HttpPut("{id}/cancel")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> CancelOrder(Guid id)
+        {
+            await _orderService.CancelAsync(id);
 
             return Ok();
         }

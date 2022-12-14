@@ -1,0 +1,47 @@
+<div  class="black-container" *ngIf="visibility.isOrderFinishVisible" (click)="orderFinished=false; visibility.isOrderFinishVisible = false">
+  <div class="order" (click)="$event.stopPropagation()">
+    <div class="header"> Pay for your goods now!</div>
+    <p *ngIf="!orderFinished" class="text">Verify your order from {{vendorNamesStr}}</p>
+    <div *ngIf="!orderFinished" class="items-container">
+      <div class="item" *ngFor="let item of basketService.basket | basketVendor:basketService.showVendor">
+        <div class="name">{{item.good.name |titlecase}}</div>
+        <div class="amount"> Amount {{item.quantity}}</div>
+        <div class="product-price">{{item.good.price * item.quantity | currency: 'GBP'}}</div>
+      </div>
+    </div>
+    <div *ngIf="!orderFinished" class="total">
+      <p>Total price</p>
+      <p>{{money | currency:'GBP'}}</p>
+    </div>
+    <div>
+      <form *ngIf="!orderFinished" [formGroup]="form" (ngSubmit)="sendOrder()">
+        <div class="formQ">
+          <p>Please select your delivery method:</p>
+          <div *ngFor="let del of basketService.vendors[0].deliveryMethods; index as i ">
+            <input   type="radio" formControlName="del" value={{del.name}}>
+            <label>{{del.name | titlecase}}</label><br>
+          </div>
+        </div>
+        <div class="formQ">
+          <p>Please select your payment method:</p>
+          <div *ngFor="let pay of basketService.vendors[0].paymentMethods; index as i ">
+            <input type="radio" formControlName="pay" value={{pay.name}}>
+            <label>{{pay.name | titlecase}}</label><br>
+          </div>
+        </div>
+        <div *ngIf="!userService.isAutorized" class="not-auth">
+          <p>Unauthorized user can't make an order, log in please</p>
+        </div>
+        <button [disabled]="!userService.isAutorized" type="submit">Сonfirm the order</button>
+      </form>
+
+      <div *ngIf="orderFinished" class="textAfterFinish">
+        <p>Thank you for your order, view your order state in the user profile</p>
+        <img class="chicken" src="assets/chicken.png" alt="cart">
+      </div>
+    </div>
+    </div>
+
+</div>
+
+

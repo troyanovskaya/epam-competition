@@ -62,7 +62,7 @@ namespace LocalGoods.PL.Controllers
             await _authService.SendEmailConfirmationLink(email);
             return NoContent();
         }
-
+        
         [HttpPost("login")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(JwtResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -445,6 +445,9 @@ namespace LocalGoods.DAL.Migrations
                     b.Property<double>("Discount")
                         .HasColumnType("float");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
 

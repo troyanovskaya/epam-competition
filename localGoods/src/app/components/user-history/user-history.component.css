@@ -1,0 +1,38 @@
+.profile-menu{
+  background-color: cadetblue;
+  padding:10px;
+  height: 50px;
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.profile-menu > *{
+  padding:10px;
+  width:100px;
+  margin: 5px;
+  border:1px solid white;
+}
+
+.profile-menu a{
+  color:white;
+}
+
+.active-menu{
+  background-color: #7382a1;
+}
+
+.history{
+  display: flex;
+  flex-direction:row;
+  flex-wrap: wrap;
+  padding:20px;
+  gap:20px;
+}
+
+.history-item{
+  background-color: white;
+  border-radius: 10px;
+  padding:10px;
+  width:200px;
+}

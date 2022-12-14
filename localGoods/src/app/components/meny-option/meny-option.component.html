@@ -1,0 +1,9 @@
+<div class="option">
+  <div class="container" (click)="activate()">
+    <div *ngIf="!isActive" class="square"></div>
+    <img class="check" [ngClass]="{'hidden': !isActive}" src="assets/check.png" alt="check">
+    <p >{{option.name | titlecase}}</p>
+  </div>
+  <hr>
+</div>
+

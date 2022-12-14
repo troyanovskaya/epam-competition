@@ -30,7 +30,7 @@ export class UserService {
 
   constructor(private http: HttpClient) {
     let user = localStorage.getItem('user');
-
+    console.log(user == null)
     if(user){
       let user1:{token:string, validTo:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none', validTo:'none'}));
       this.isAutorized = true;

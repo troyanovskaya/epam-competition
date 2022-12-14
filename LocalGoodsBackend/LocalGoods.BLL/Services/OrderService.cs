@@ -118,7 +118,7 @@ namespace LocalGoods.BLL.Services
 
             await _orderRepository.AddAsync(order);
 
-            await CreateOrderDetailsAsync(createOrderModel.OrderDetails, currentUserId, order.Id);
+            await CreateOrderDetailsAsync(createOrderModel, currentUserId, order.Id);
 
             await _orderRepository.AddAsync(order);
             await _orderRepository.SaveChangesAsync();
@@ -219,13 +219,13 @@ namespace LocalGoods.BLL.Services
         }
 
         private async Task CreateOrderDetailsAsync(
-            IEnumerable<CreateOrderDetailsModel> orderDetails, 
+            CreateOrderModel createOrderModel, 
             Guid currentUserId,
             Guid orderId)
         {
-            var orderDetailsList = _mapper.Map<IEnumerable<OrderDetails>>(orderDetails).ToList();
+            var orderDetailsList = _mapper.Map<IEnumerable<OrderDetails>>(createOrderModel.OrderDetails).ToList();
             
-            if (orderDetails is null || !orderDetailsList.Any())
+            if (createOrderModel.OrderDetails is null || !orderDetailsList.Any())
             {
                 throw new OrderBadRequestException("Order has no products");
             }
@@ -249,6 +249,16 @@ namespace LocalGoods.BLL.Services
             if (vendor.User.Id == currentUserId)
             {
                 throw new OrderBadRequestException("Vendor can't buy their own products");
+            }
+
+            if (!vendor.VendorDeliveryMethods.Select(vdm => vdm.Id).Contains(createOrderModel.DeliveryMethodId))
+            {
+                throw new OrderBadRequestException("Vendor doesn't have this delivery method");
+            }
+
+            if (!vendor.VendorPaymentMethods.Select(vpm => vpm.Id).Contains(createOrderModel.PaymentMethodId))
+            {
+                throw new OrderBadRequestException("Vendor doesn't have this payment method");
             }
 
             var vendors = products.Select(p => p.VendorId).Distinct();

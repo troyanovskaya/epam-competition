@@ -73,14 +73,26 @@ namespace LocalGoods.PL.Controllers
             return CreatedAtAction(nameof(GetById), new { id = createdOrder.Id }, createdOrder);
         }
 
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Buyer, Vendor")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Vendor")]
         [HttpPut("{id}/status")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> ChangeOrderStatus(Guid id, [FromQuery] Guid orderStatusId)
+        public async Task<ActionResult> ChangeOrderStatus(Guid id)
         {
-            await _orderService.ChangeStatusAsync(id, orderStatusId);
+            await _orderService.ChangeStatusAsync(id);
+
+            return Ok();
+        }
+
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Vendor")]
+        [HttpPut("{id}/cancel")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> CancelOrder(Guid id)
+        {
+            await _orderService.CancelAsync(id);
 
             return Ok();
         }

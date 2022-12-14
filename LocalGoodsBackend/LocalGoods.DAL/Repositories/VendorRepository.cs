@@ -27,7 +27,6 @@ namespace LocalGoods.DAL.Repositories
 
         public async Task<Vendor> GetByProductIdAsync(Guid id)
         {
-            var vendors = await _dbSet.ToListAsync();
             return await _dbSet
                 .FirstOrDefaultAsync(v => v.Products.Any(p => p.Id == id));
         }

@@ -128,6 +128,17 @@ export class HttpRequestService {
     return this.http.post(`${environment.apiUrl}/auth/resetPassword`, model);
   }
 
+  forgotPassword(model: any){
+    return this.http.post(`${environment.apiUrl}/auth/forgotPassword`, model);
+  }
+
+  sendEmailConfirmationLink(email: string){
+    var parameters = {email: email};
+    return this.http.get(`${environment.apiUrl}/auth/sendEmailConfirmationLink`,{
+      params: parameters
+    });
+  }
+
   checkUser(url: string, value: Object, dialogRef: any) {
     this.post(url, value).pipe(
       tap(token => {

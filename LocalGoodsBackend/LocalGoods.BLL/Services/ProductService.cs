@@ -92,14 +92,27 @@ namespace LocalGoods.BLL.Services
 
         private async Task ValidateModel(CreateProductModel createProductModel)
         {
-            if (!await _vendorRepository.CheckIfEntityExistsByIdAsync(createProductModel.VendorId))
+            if ((decimal) createProductModel.Discount >= createProductModel.Price)
             {
-                throw new VendorNotFoundException(createProductModel.VendorId);
+                throw new ProductBadRequestException("Product discount must be less than the price");
             }
 
             if (!await _unitTypeRepository.CheckIfEntityExistsByIdAsync(createProductModel.UnitTypeId))
             {
                 throw new UnitTypeNotFoundException(createProductModel.UnitTypeId);
+            }
+
+            var currentUserId = await GetCurrentUserIdAsync();
+            var createProductVendor = await _vendorRepository.GetByIdAsync(createProductModel.VendorId);
+
+            if (createProductVendor is null)
+            {
+                throw new VendorNotFoundException(createProductModel.VendorId);
+            }
+
+            if (createProductVendor.UserId != currentUserId)
+            {
+                throw new ProductBadRequestException("Product can be created only from current vendor");
             }
         }
         

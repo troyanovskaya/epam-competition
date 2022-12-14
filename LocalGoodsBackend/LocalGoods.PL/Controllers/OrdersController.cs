@@ -3,6 +3,7 @@ using FluentValidation;
 using LocalGoods.BLL.Models.Order;
 using LocalGoods.BLL.Models.OrderStatus;
 using LocalGoods.BLL.Services.Interfaces;
+using LocalGoods.PL.Models.Order;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -34,6 +35,16 @@ namespace LocalGoods.PL.Controllers
         public async Task<ActionResult> GetAll()
         {
             var orders = await _orderService.GetAllAsync();
+
+            return Ok(orders);
+        }
+
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Buyer, Vendor")]
+        [HttpGet("current-user")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OrderModel>))]
+        public async Task<ActionResult> GetAllCurrentUserOrdersByOrderStatusIds([FromBody] OrderRequest orderRequest)
+        {
+            var orders = await _orderService.GetAllCurrentUserOrdersByOrderStatusIdsAsync(orderRequest.OrderStatusIds);
 
             return Ok(orders);
         }

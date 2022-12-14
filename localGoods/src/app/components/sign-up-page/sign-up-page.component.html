@@ -35,6 +35,16 @@
                 </select>
             </div>
 
+            <div class="label-input-pair">
+                <label for="address" class="input-option">Address information*
+                    <span class="requirementsError"
+                        *ngIf="!validationForm.controls['addressInfo'].valid  && validationForm.controls['addressInfo'].value">
+                        should contain minimum 5 characters
+                    </span>
+                </label>
+                <input type="text" formControlName="addressInfo" id="address" placeholder="address information" />
+            </div>
+
         </div>
 
         <div class="side-sections-part">
@@ -52,13 +62,13 @@
                 <label for="phone" class="input-option">Phone number*
                     <span class="requirementsError"
                         *ngIf="validationForm.controls['phone'].invalid && validationForm.controls['phone'].value">
-                        please, write existing number
+                        please, write existing number (length 11-15)
                     </span>
                 </label>
                 <input type="text" formControlName="phone" id="phone" placeholder="phone number" />
             </div>
 
-            <div class="label-input-pair">
+            <div class="label-input-pair password">
                 <label for="password" class="input-option">Password*
                     <span
                         [ngClass]="{ requirementsError: validationForm.controls['password'].invalid && !validationForm.controls['password'].pristine,
@@ -66,18 +76,27 @@
                         contain min 8 characters, min 1 upper case letter and 1 number
                     </span>
                 </label>
-                <input type="password" formControlName="password" id="password" placeholder="password" />
+                <input [type]="changetype? 'password' : 'text' " formControlName="password" id="password"
+                    placeholder="password" />
+                <span class="eyeicone"><img
+                        [src]='visible? "../../../assets/eyeicon.png" : "../../../assets/eyeiconSlash.png"'
+                        (click)="viewPassword()"></span>
             </div>
 
-            <div class="label-input-pair">
+            <div class="label-input-pair password">
                 <label for="confirmation" class="input-option">Confirm your password*
                     <span class="requirementsError"
-                        *ngIf="!validationForm.controls['confirmation'].valid && validationForm.controls['confirmation'].dirty">
+                        *ngIf="!validationForm.controls['confirmation'].valid && validationForm.controls['confirmation'].dirty 
+                        || validationForm.controls['confirmation'].value !== validationForm.controls['password'].value">
                         should match with password
                     </span>
                 </label>
-                <input type="password" formControlName="confirmation" id="confirmation"
+                <input [type]="changeConfirmType? 'password' : 'text'" formControlName="confirmation" id="confirmation"
                     placeholder="confirm your password" />
+                <span class="eyeicone"><img
+                        [src]='visibleConfirm? "../../../assets/eyeicon.png" : "../../../assets/eyeiconSlash.png"'
+                        (click)="viewConfirm()"></span>
+
             </div>
         </div>
 

@@ -57,7 +57,8 @@ button:hover {
     align-items: center;
 }
 
-.sign-up , .forgot-password{
+.sign-up,
+.forgot-password {
     color: #162e50;
     margin-left: 3%;
     transition: transform .5s;
@@ -68,29 +69,43 @@ button:hover {
     transform: scale(1.2);
 }
 
-input{
+input {
     padding: 2%;
     border-radius: 5px;
     border: 0.5px solid gray;
     margin-top: 2%;
 }
 
-.forgot-password{
+.forgot-password {
     font-size: smaller;
     text-align: end;
     padding: 2%;
 }
 
-.forgot-password:hover{
+.forgot-password:hover {
     transform: scale(1.1)
 }
 
-.requirementsError{
+.requirementsError {
     font-size: 7px;
     color: red;
 }
 
-.passwordRequirements{
+.passwordRequirements {
     font-size: 7px;
     color: green;
+}
+
+.password {
+    position: relative;
+    z-index: 1;
+}
+
+.eyeicone img {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    z-index: 2;
+    top: 30px;
+    right: 10px;
 }

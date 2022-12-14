@@ -132,6 +132,7 @@ export class HttpRequestService {
     this.post(url, value).pipe(
       tap(token => {
         this.localStorageService.setItemToStorage('user', JSON.stringify(token));
+
         this.userService.isAutorized = true;
         dialogRef.close();
         let user = localStorage.getItem('user');

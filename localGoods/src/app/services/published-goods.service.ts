@@ -1,24 +1,51 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Good } from '../schema/good.model';
+import { HttpRequestService } from './http-request.service';
+import { UserService } from './user.service';
+import jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PublishedGoodsService {
-  vendorGoods:Good[] = [{  id: '1', name: 'carrot', description: 'Sweet fresh carrot that can benefit your health',
-  price: 3, poster: 'assets/carrot.jpg', discount: 0, vendorId: '3',   amount: 66,  unitType: {
-  id: '0', name: 'kg'}, categories: [], images: ['assets/carrot.jpg']}, {  id: '2', name: 'carrot', description: 'Sweet fresh carrot that can benefit your health',
-  price: 3, poster: 'assets/carrot.jpg', discount: 0, vendorId: '3',   amount: 66,  unitType: {
-  id: '0', name: 'kg'}, categories: [], images: ['assets/carrot.jpg']}, {  id: '3', name: 'carrot', description: 'Sweet fresh carrot that can benefit your health',
-  price: 3, poster: 'assets/carrot.jpg', discount: 0, vendorId: '3',   amount: 66,  unitType: {
-  id: '0', name: 'kg'}, categories: [], images: ['assets/carrot.jpg']}, {  id: '4', name: 'carrot', description: 'Sweet fresh carrot that can benefit your health',
-  price: 3, poster: 'assets/carrot.jpg', discount: 0, vendorId: '3',   amount: 66,  unitType: {
-  id: '0', name: 'kg'}, categories: [], images: ['assets/carrot.jpg']}, {  id: '5', name: 'carrot', description: 'Sweet fresh carrot that can benefit your health',
-  price: 3, poster: 'assets/carrot.jpg', discount: 0, vendorId: '3',   amount: 66,  unitType: {
-  id: '0', name: 'kg'}, categories: [], images: ['assets/carrot.jpg']},
-  {  id: '6', name: 'carrot', description: 'Sweet fresh carrot that can benefit your health',
-  price: 3, poster: 'assets/carrot.jpg', discount: 0, vendorId: '3',   amount: 66,  unitType: {
-  id: '0', name: 'kg'}, categories: [], images: ['assets/carrot.jpg']}]
+export class PublishedGoodsService implements OnInit {
+  vendorGoods:Good[] = [];
+  vendorId:string = '';
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    } catch(Error) {
+      return null;
+    }
+  }
+  GetVendorId(userId:string){
+    this.httpRequestService.getVendors()
+    .subscribe( data => data.map( el => {
+      console.log(el.userId);
+      if(el.userId===userId){
+        this.vendorId = el.id;
+        console.log('in');
 
-  constructor() { }
+      }}));
+    console.log(this.vendorId);
+  }
+  GetVendorProducts(){
+    this.httpRequestService.getVendorProducts(this.vendorId).subscribe(
+      data => {this.vendorGoods = data;
+      console.log(data)})
+  }
+  constructor(private httpRequestService: HttpRequestService,
+    private userService: UserService) {
+      let user = localStorage.getItem('user');
+      if(user){
+        let user1:{token:string, validTo:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none', validTo:'none'}));
+        if(this.getDecodedAccessToken(user1.token)){
+          let userId = this.getDecodedAccessToken(user1.token).sub;
+          this.GetVendorId(userId);
+          this.GetVendorProducts();
+        };
+      }
+     }
+  ngOnInit(): void {
+
+  }
 }

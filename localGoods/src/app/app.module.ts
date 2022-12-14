@@ -44,6 +44,8 @@ import { NotifierComponent } from './components/notifier/notifier.component';
 // import { JwtModule } from "@auth0/angular-jwt";
 import { VendorItemPageComponent } from './components/vendor-item-page/vendor-item-page.component';
 import { GoodComponent } from './components/good/good.component';
+import { SendEmailConfirmationComponent } from './components/send-email-confirmation/send-email-confirmation.component';
+import { UserForgotPasswordComponent } from './components/user-forgot-password/user-forgot-password.component';
 
 const appRoutes:Routes = [
 {  path: '', component: MainPageComponent},
@@ -102,6 +104,8 @@ const appRoutes:Routes = [
         NotifierComponent,
         VendorItemPageComponent,
         GoodComponent,
+        SendEmailConfirmationComponent,
+        UserForgotPasswordComponent,
     ],
     providers: [],
     bootstrap: [AppComponent],

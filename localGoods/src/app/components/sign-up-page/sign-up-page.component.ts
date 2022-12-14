@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpRequestService } from '../../services/http-request.service';
 import { LocalStorageService } from 'src/app/local-storage.service';
 import { Observable, catchError, of , tap } from 'rxjs';
 import { City, Country } from '../country.model';
 import { User } from 'src/app/schema/user.model';
+import { SendEmailConfirmationComponent } from '../send-email-confirmation/send-email-confirmation.component';
 
 @Component({
   selector: 'app-sign-up-page',
@@ -54,7 +55,8 @@ export class SignUpPageComponent {
   constructor(
     private dialogRef: MatDialogRef<SignUpPageComponent>,
     private http: HttpRequestService,
-    private localStorageService: LocalStorageService) { }
+    private localStorageService: LocalStorageService,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
     this.http.getCountries().subscribe((countriesList: Array<Country>) => {
@@ -81,7 +83,7 @@ export class SignUpPageComponent {
       tap(token =>{
         this.localStorageService.setItemToStorage('user', token.toString());
         this.dialogRef.close();
-        return; 
+        return;
       }),
       catchError(err => {
         alert(err.error.message)
@@ -92,5 +94,9 @@ export class SignUpPageComponent {
 
   selectCity() {
     this.selectedCityId = this.cities.find(city => city.name == this.validationForm.value.city)!.id;
+  }
+
+  onSendEmailConfirmationLink(){
+    this.dialog.open(SendEmailConfirmationComponent);
   }
 }

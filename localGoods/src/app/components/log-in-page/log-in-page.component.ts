@@ -4,6 +4,7 @@ import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { SignUpPageComponent } from '../sign-up-page/sign-up-page.component';
 import { HttpRequestService } from '../../services/http-request.service';
 import { catchError, of} from 'rxjs';
+import { UserForgotPasswordComponent } from '../user-forgot-password/user-forgot-password.component';
 
 @Component({
   selector: 'app-log-in-page',
@@ -14,7 +15,7 @@ import { catchError, of} from 'rxjs';
 export class LogInPageComponent {
 
   constructor(private dialogRef: MatDialogRef<LogInPageComponent>,
-              private signUpDialogRef: MatDialog,
+              private dialog: MatDialog,
               private http:HttpRequestService) { }
 
   validationForm = new FormGroup({
@@ -45,11 +46,15 @@ export class LogInPageComponent {
 
   openSignUp(){
     this.dialogRef.close()
-    this.signUpDialogRef.open(SignUpPageComponent, {
+    this.dialog.open(SignUpPageComponent, {
       height: '60%',
       width: '50%',
-      panelClass: 'custom-dialog-container' 
+      panelClass: 'custom-dialog-container'
     },
     );
+  }
+
+  onForgotPassword(){
+    this.dialog.open(UserForgotPasswordComponent);
   }
 }

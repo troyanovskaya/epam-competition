@@ -24,24 +24,24 @@ form {
     font-size: smaller;
 }
 
-label{
+label {
     font-size: smaller;
 }
 
-.side-sections{
+.side-sections {
     display: flex;
     justify-content: space-around;
     margin: auto;
 }
 
-.side-sections-part{
-    width:50%;
+.side-sections-part {
+    width: 50%;
     height: inherit;
     display: flex;
     flex-direction: column;
 }
 
-.side-sections-part:first-child{
+.side-sections-part:first-child {
     width: 35%;
 }
 
@@ -55,7 +55,7 @@ label{
     cursor: pointer;
 }
 
-.button-line{
+.button-line {
     width: 100%;
     margin-top: 4%;
     display: flex;
@@ -71,8 +71,9 @@ button {
     cursor: pointer;
 }
 
-button:valid{
-    background-color: #d9e6f6;;
+button:valid {
+    background-color: #d9e6f6;
+    ;
 }
 
 button:valid:hover {
@@ -80,19 +81,25 @@ button:valid:hover {
     background-color: #162e50;
 }
 
-input, select{
+input,
+select {
     padding: 5px;
     border-radius: 5px;
     border: 0.5px solid gray;
     margin-top: 5px;
 }
 
-.requirementsError{
+.requirementsError {
     font-size: 7px;
     color: red;
 }
 
-.passwordRequirements{
+.passwordRequirements {
     font-size: 7px;
     color: green;
+}
+
+.confirm-email {
+    text-align: center;
+    margin-top: 2%;
 }

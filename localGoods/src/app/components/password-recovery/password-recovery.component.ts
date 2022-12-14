@@ -34,9 +34,9 @@ export class PasswordRecoveryComponent implements OnInit {
   createForm(){
     this.passwordRecoveryForm = this.fb.group({
       password: [null, [Validators.required, Validators.minLength(8),
-        Validators.pattern("(?=[A-Za-z0-9@#$%^&+!=]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+!=])(?=.{8,}).*$")]],
+        Validators.pattern("^(?=.*[0-9])(?=.*[A-Z])(?!.* ).{8,}$")]],
       confirmPassword: [null, [Validators.required, Validators.minLength(8),
-        Validators.pattern("(?=[A-Za-z0-9@#$%^&+!=]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+!=])(?=.{8,}).*$")]]
+        Validators.pattern("^(?=.*[0-9])(?=.*[A-Z])(?!.* ).{8,}$")]]
     })
   }
 

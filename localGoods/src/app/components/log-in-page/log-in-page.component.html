@@ -23,7 +23,7 @@
             </span>
         </label>
         <input type="password" id="password" formControlName="password" placeholder="password" required minlength="8" />
-        <a class="forgot-password">Forgot password?</a>
+        <a (click)="onForgotPassword()" class="forgot-password">Forgot password?</a>
     </div>
 
     <div class="confirm-part">

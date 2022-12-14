@@ -11,6 +11,9 @@ import { HttpRequestService } from '../../services/http-request.service'
 })
 
 export class LogInPageComponent {
+  
+  visible: boolean= true;
+  changetype: boolean = true;
 
   constructor(private dialogRef: MatDialogRef<LogInPageComponent>, 
               private signUpDialogRef: MatDialog,
@@ -51,4 +54,10 @@ export class LogInPageComponent {
     },
     );
   }
+
+  viewPassword(){
+    this.visible=!this.visible;
+    this.changetype=!this.changetype;
+  }
+
 }

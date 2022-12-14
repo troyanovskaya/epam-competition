@@ -14,6 +14,7 @@ namespace LocalGoods.BLL.Services.Interfaces
         Task<OrderModel> GetByIdAsync(Guid id);
         Task<OrderModel> CreateAsync(CreateOrderModel createOrderModel);
         Task<IEnumerable<OrderStatusModel>> GetAllOrderStatusesAsync();
-        Task ChangeStatusAsync(Guid orderId, Guid orderStatusId);
+        Task ChangeStatusAsync(Guid orderId);
+        Task CancelAsync(Guid orderId);
     }
 }

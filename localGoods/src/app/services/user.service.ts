@@ -1,13 +1,45 @@
 import { Injectable } from '@angular/core';
 import { UserRole } from '../schema/userRole.model';
+import jwt_decode from 'jwt-decode';
+import { Observable } from 'rxjs';
+import { HttpRequestService } from './http-request.service';
+import { FullUser } from '../schema/fullUser.model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  user = {name:'UserName', surname:'UserSurname', dateOfBirth:'16/03/2000', country:'Ukraine', city:'Kyiv',
-  adress: 'Green street, 16B, 74221', phoneNumber:'0951232168', email:'user@gmail.com'};
-  userRole: UserRole = 'USER';
+  URL:string = 'https://localgoodsapi.azurewebsites.net/api';
+  user:FullUser = {  id:'',  email:'', firstName:'', lastName: '',
+  addressInformation:'', cityId: ''};
+  userRole: UserRole = 'None';
+  isAutorized:boolean = false;
+  userId:string = '';
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    } catch(Error) {
+      return null;
+    }
+  }
+  getUser(id:string): Observable<FullUser> {
+    return this.http.get<FullUser>(`${this.URL}/Users/${id}`);
+  }
 
-  constructor() { }
+
+  constructor(private http: HttpClient) {
+    let user = localStorage.getItem('user');
+    if(user){
+      let user1:{token:string, validTo:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none', validTo:'none'}));
+      this.isAutorized = true;
+      if(this.getDecodedAccessToken(user1.token)){
+        this.userRole = this.getDecodedAccessToken(user1.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+        let userId = this.getDecodedAccessToken(user1.token).sub;
+        this.getUser(userId).subscribe(
+          data => {this.user = data})
+      };
+    }
+  }
 }
+

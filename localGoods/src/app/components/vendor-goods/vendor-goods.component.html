@@ -1,0 +1,8 @@
+<app-user-navigation [active]="5"></app-user-navigation>
+<div class="flex-container">
+  <div class="add-item">
+    <p>+</p>
+    <p>Add item</p>
+  </div>
+  <app-vendor-good-item *ngFor="let item of publishedGoodsService.vendorGoods" [item]="item"></app-vendor-good-item>
+</div>

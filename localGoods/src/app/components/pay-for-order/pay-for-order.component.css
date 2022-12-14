@@ -76,6 +76,17 @@ button{
   margin:20px 40px;
 }
 
+.not-auth{
+  font-style: italic;
+  color:red;
+  width:100%;
+}
+
+.not-auth p{
+  margin:0px;
+}
+
+
 form{
   display:flex;
   flex-direction: row;

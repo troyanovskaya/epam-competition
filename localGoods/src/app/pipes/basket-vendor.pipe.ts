@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Good } from '../schema/good.model';
-import { OrderItem } from '../schema/orderItem.model';
+import { BasketItem } from '../schema/basketItem.model';
 import { GoodsService } from '../services/goods.service';
 
 
@@ -10,7 +10,7 @@ import { GoodsService } from '../services/goods.service';
 })
 export class BasketVendorPipe implements PipeTransform {
 
-  transform(orders:OrderItem[], search:string): OrderItem[] {
+  transform(orders:BasketItem[], search:string): BasketItem[] {
     if (search==='all'){
       return orders;
     }

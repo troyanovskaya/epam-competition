@@ -57,7 +57,7 @@ export class PayForOrderComponent implements OnInit, DoCheck {
       this.money = this.basketService.total;
     } else{
       let arr = this.basketService.basket.filter( el => el.good.vendorId === this.basketService.showVendor)
-      this.money = arr.reduce( (past, curr) => past + curr.quantity*curr.good.price, 0 )
+      this.money = arr.reduce( (past, curr) => past + curr.quantity*curr.good.price*(1 - curr.good.discount/100), 0 )
     }
   }
   getVendorNames(){

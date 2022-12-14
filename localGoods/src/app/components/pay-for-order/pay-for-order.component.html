@@ -5,8 +5,8 @@
     <div *ngIf="!orderFinished" class="items-container">
       <div class="item" *ngFor="let item of basketService.basket | basketVendor:basketService.showVendor">
         <div class="name">{{item.good.name |titlecase}}</div>
-        <div class="amount"> Amount {{item.quantity}}</div>
-        <div class="product-price">{{item.good.price * item.quantity | currency: 'GBP'}}</div>
+        <div class="amount"> amount {{item.quantity}}</div>
+        <div class="product-price">{{(1 - item.good.discount/100)*item.good.price * item.quantity | currency: 'GBP'}}</div>
       </div>
     </div>
     <div *ngIf="!orderFinished" class="total">

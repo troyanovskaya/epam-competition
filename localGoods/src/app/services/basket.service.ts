@@ -11,6 +11,7 @@ import { Vendor } from '../schema/vendor.model';
 })
 export class BasketService {
   basket:BasketItem[] = [];
+  vendorsInBasket:Vendor[] = [];
 
   showVendor:string = 'all';
   total:number = this.basket.reduce((pastVal, currentEl) => pastVal+currentEl.good.price*currentEl.quantity, 0);
@@ -21,10 +22,8 @@ export class BasketService {
 
   vendors:Vendor[]=[];
 
-  orderArr:{id:number, name:string, vendor:string, src:string, price:number, delivery:string, amount:number}[] = [];
-  orderVendor: {id:number, companyName:string, deliveryMethods:string[],
-    paymentMethods:string[] } = {id:1, companyName:'Vendor1', deliveryMethods:['Take away', 'Delivery'],
-    paymentMethods:['Card', 'Cash']};
+  // orderVendor: Vendor = {id:'1', name:'', deliveryMethods:[],
+  //   paymentMethods:['Card', 'Cash']};
   getVendorName(id:string):string{
     let vendor = this.vendors.filter( el => el.id === id)[0];
     return vendor.name ?? 'None';

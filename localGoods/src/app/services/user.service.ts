@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 export class UserService {
   URL:string = 'https://localgoodsapi.azurewebsites.net/api';
   user:FullUser = {  id:'',  email:'', firstName:'', lastName: '',
-    birthDate:'', cityId: ''};
+  addressInformation:'', cityId: ''};
   userRole: UserRole = 'None';
   isAutorized:boolean = false;
   userId:string = '';
@@ -37,7 +37,7 @@ export class UserService {
         this.userRole = this.getDecodedAccessToken(user1.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
         let userId = this.getDecodedAccessToken(user1.token).sub;
         this.getUser(userId).subscribe(
-          data => this.user = data)
+          data => {this.user = data})
       };
     }
   }

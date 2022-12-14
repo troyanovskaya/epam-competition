@@ -41,23 +41,11 @@ import { GoodsByKeywordPipe } from './pipes/goods-by-keyword.pipe';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { NotifierComponent } from './components/notifier/notifier.component';
-// import { JwtModule } from "@auth0/angular-jwt";
 import { VendorItemPageComponent } from './components/vendor-item-page/vendor-item-page.component';
-import { GoodComponent } from './components/good/good.component';
 import { SendEmailConfirmationComponent } from './components/send-email-confirmation/send-email-confirmation.component';
 import { UserForgotPasswordComponent } from './components/user-forgot-password/user-forgot-password.component';
 
 const appRoutes:Routes = [
-{  path: '', component: MainPageComponent},
-{  path: 'user/info', component: UserInfoComponent},
-{  path: 'user/status', component: UserStatusComponent},
-{  path: 'user/history', component: UserHistoryComponent},
-{  path: 'basket', component: BasketPageComponent},
-{  path: 'product/:id', component: ProductPageComponent},
-{  path: 'vendor/goods', component: VendorGoodsComponent},
-{  path: 'vendor/orders', component: VendorOrdersComponent},
-{  path: 'auth/confirm-email', component: EmailConfirmationComponent},
-{  path: 'auth/password-recovery', component: PasswordRecoveryComponent}
 ]
 
 // export function tokenGetter() {
@@ -103,7 +91,6 @@ const appRoutes:Routes = [
         PasswordRecoveryComponent,
         NotifierComponent,
         VendorItemPageComponent,
-        GoodComponent,
         SendEmailConfirmationComponent,
         UserForgotPasswordComponent,
     ],

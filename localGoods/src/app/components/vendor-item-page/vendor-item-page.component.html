@@ -1,6 +1,17 @@
-<div class="page">
+<div class="page" *ngIf="products.length">
     <h2>{{vendor.name}}</h2>
+    <div class="contacts">
+        <div class="contacts-item">
+            <span>Telegram nickname</span><a href='https://web.telegram.org/k/#@{{vendor.telegramName}}' target="_blank">{{vendor.telegramName}}</a>
+        </div>
+        <div class="contacts-item">
+            <span>Instagram nickname</span><a href='https://www.instagram.com/{{vendor.instagramName}}/' target="_blank">{{vendor.instagramName}}</a>
+        </div>
+        <div class="contacts-item">
+            <span>Viber number</span><a href="https://www.viber.com/{{vendor.telegramName}}" target="_blank">{{vendor.viberNumber}}</a>
+        </div>
+    </div>
     <div class="page-block">
-        <app-good class='page-block-item' *ngFor="let product of products" [item]="product"></app-good>
+        <app-good-item class='page-block-item' *ngFor="let product of products" [item]="product"></app-good-item>
     </div>
 </div>

@@ -86,7 +86,7 @@
             <div class="label-input-pair password">
                 <label for="confirmation" class="input-option">Confirm your password*
                     <span class="requirementsError"
-                        *ngIf="!validationForm.controls['confirmation'].valid && validationForm.controls['confirmation'].dirty 
+                        *ngIf="!validationForm.controls['confirmation'].valid && validationForm.controls['confirmation'].dirty
                         || validationForm.controls['confirmation'].value !== validationForm.controls['password'].value">
                         should match with password
                     </span>
@@ -107,6 +107,9 @@
             [disabled]="!(validationForm.valid && (validationForm.value.password === validationForm.value.confirmation))">
             Create an account
         </button>
+    </div>
+    <div class="confirm-email">
+        <button (click)="onSendEmailConfirmationLink()" class="confirm-email-btn" type="button">Send email confirmation link</button>
     </div>
 
 </form>

@@ -8,7 +8,7 @@ namespace LocalGoods.BLL.Validators.User
         public LoginModelValidator()
         {
             RuleFor(lm => lm.Email).NotEmpty().EmailAddress();
-            RuleFor(lm => lm.Password).NotEmpty().Length(8, 100);
+            RuleFor(lm => lm.Password).NotEmpty().Length(8, 100).Matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d@?&\\/]{8,}$");
         }
     }
 }

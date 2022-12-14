@@ -39,6 +39,8 @@ namespace LocalGoods.DAL.Extensions
                 {
                     opt.Password.RequiredLength = 8;
                     opt.Password.RequireLowercase = false;
+                    opt.Password.RequireUppercase = true;
+                    opt.Password.RequireDigit = true;
                     opt.Password.RequireNonAlphanumeric = false;
                     opt.User.RequireUniqueEmail = true;
                     opt.SignIn.RequireConfirmedEmail = true;

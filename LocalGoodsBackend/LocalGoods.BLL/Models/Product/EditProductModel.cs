@@ -15,6 +15,6 @@ namespace LocalGoods.BLL.Models.Product
         public Guid UnitTypeId { get; set; }
 
         public IEnumerable<Guid> CategoryIds { get; set; }
-        public IEnumerable<string> ImageIds { get; set; }
+        public IEnumerable<string> Images { get; set; }
     }
 }

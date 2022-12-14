@@ -111,7 +111,7 @@ namespace LocalGoods.BLL.Services
             {
                 throw new AuthException("This is not your product, you can not edit it");
             }
-
+            
             product.Name = model.Name;
             product.Description = model.Description;
             product.Price = model.Price;
@@ -131,7 +131,7 @@ namespace LocalGoods.BLL.Services
             product.Images.Clear();
 
             await AddProductCategories(product, model.CategoryIds);
-            await AddProductImages(product, model.ImageIds);
+            await AddProductImages(product, model.Images);
 
             return _mapper.Map<ProductModel>(product);
         }

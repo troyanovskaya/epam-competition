@@ -9,11 +9,13 @@ import { VisibilityService } from 'src/app/services/visibility.service';
 })
 export class UserNavigationComponent implements OnInit {
   @Input() active:number = 1;
+  role!: string;
 
   constructor(public userService: UserService, public visibilityService:VisibilityService) { }
 
   ngOnInit(): void {
   }
+
   openVendorReg(){
     this.visibilityService.isVendorRegVisible = true;
   }

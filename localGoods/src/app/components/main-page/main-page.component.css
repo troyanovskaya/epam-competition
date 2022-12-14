@@ -12,3 +12,9 @@
 .flex-container app-local-vendors-search-adverb{
   width:80%;
 }
+
+@media screen and (max-device-width: 700px) {
+  div.flex-container > * {
+    width:100%;
+  }
+}

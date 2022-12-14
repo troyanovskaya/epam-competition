@@ -3,7 +3,7 @@ export interface FullUser{
   email:string,
   firstName:string,
   lastName: string,
-  birthDate:string;
+  addressInformation:string;
   cityId: string;
 }
 

@@ -20,17 +20,17 @@ export class VendorsSearchComponent{
   vendorId!: string;
 
   constructor(public countriesService: LocationService,
-    public goods: GoodsService,
+    public goodService: GoodsService,
     private shareDataService: ShareDataService,
     private http: HttpRequestService) {
+
   }
 
   ngOnInit(){
-    this.http.getVendors().subscribe((vendorsList: Array<Vendor>) => {
-      vendorsList.forEach((vendor) => {
-        this.vendors.push(vendor);
-      })
-    });
+  }
+
+  log(){
+    console.log(this.goodService.vendors)
   }
 
   getCountry(){
@@ -53,9 +53,9 @@ export class VendorsSearchComponent{
   findGoods(){
     console.log(this.countriesService.choosenCity);
     if(this.countriesService.choosenCity.id){
-      return this.goods.findGoods(this.countriesService.choosenCity.id, []);
+      return this.goodService.findGoods(this.countriesService.choosenCity.id, []);
     }
-    return this.goods.findGoods('none', []);
+    return this.goodService.findGoods('none', []);
   }
 
   selectVendor(vendor:Vendor){

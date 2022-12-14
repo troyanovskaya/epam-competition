@@ -6,6 +6,7 @@
     font-size: 1.2em;
     line-height: 40px;
     padding-top: 0;
+    position: relative;
 }
 
 .header {
@@ -73,7 +74,6 @@ button {
 
 button:valid {
     background-color: #d9e6f6;
-    ;
 }
 
 button:valid:hover {
@@ -97,6 +97,26 @@ select {
 .passwordRequirements {
     font-size: 7px;
     color: green;
+}
+
+
+.password {
+    position: relative;
+    z-index: 1;
+}
+
+.password input {
+    position: relative;
+    z-index: 2;
+}
+
+.eyeicone img {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    z-index: 3;
+    top: 22px;
+    right: 5px;
 }
 
 .confirm-email {

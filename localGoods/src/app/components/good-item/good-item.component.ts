@@ -22,6 +22,11 @@ export class GoodItemComponent implements OnInit {
     } else{
       this.basketService.basket.push({good:this.item, quantity:1});
     }
+    let vendor = this.basketService.vendors.find( el => el.id === this.item.vendorId);
+    if(!this.basketService.vendorsInBasket.find( el => el.id === this.item.vendorId)){
+      this.basketService.vendorsInBasket.push(vendor ?? {id:'0', name:'',
+       deliveryMethods:[], paymentMethods:[], viberNumber:'', telegramName:'', instagramName:'', userId:'', products:[]});
+    }
     this.basketService.onTotalChange();
   }
 

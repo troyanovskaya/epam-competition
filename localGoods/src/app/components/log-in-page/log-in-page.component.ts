@@ -14,6 +14,9 @@ import { UserForgotPasswordComponent } from '../user-forgot-password/user-forgot
 
 export class LogInPageComponent {
 
+  visible: boolean= true;
+  changetype: boolean = true;
+
   constructor(private dialogRef: MatDialogRef<LogInPageComponent>,
               private dialog: MatDialog,
               private http:HttpRequestService) { }
@@ -56,5 +59,10 @@ export class LogInPageComponent {
 
   onForgotPassword(){
     this.dialog.open(UserForgotPasswordComponent);
+  }
+
+  viewPassword(){
+    this.visible=!this.visible;
+    this.changetype=!this.changetype;
   }
 }

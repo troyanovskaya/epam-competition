@@ -5,7 +5,9 @@
 
 .page-block {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
+    padding: 20px 0px;
 }
 
 .page-block-item{
@@ -19,20 +21,21 @@ h2{
 
 .contacts{
     display: flex;
-    justify-content: space-between;
+    flex-direction:column;
+    gap:10px;
+    flex-wrap:wrap;
     width: 80%;
 }
 
 .contacts-item {
-    width: 25%;
     display: flex;
-    justify-content: space-between;
 }
 
 .contacts-item a {
     cursor: pointer;
     transition: transform .5s;
     color: #000000;
+    margin-left: 20px;
 }
 
 .contacts-item a:hover {

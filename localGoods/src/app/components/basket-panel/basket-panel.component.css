@@ -39,7 +39,7 @@
 }
 .basket-menu{
   padding:10px;
-  height: 50px;
+  min-height: 50px;
   display:flex;
   flex-wrap:wrap;
   flex-direction: row;
@@ -65,4 +65,11 @@
 
 p{
   cursor: pointer;
+}
+
+@media screen and (max-width: 700px) {
+  .logo{
+    margin:5px;
+    font-size: 0.8em;
+  }
 }

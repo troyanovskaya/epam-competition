@@ -48,6 +48,13 @@ namespace LocalGoods.BLL.Services
             return _mapper.Map<IEnumerable<ProductModel>>(products);
         }
 
+        public async Task<IEnumerable<ProductModel>> GetByCountryIdAsync(Guid countryId)
+        {
+            var products = await _productRepository.GetByFilterAsync(p => p.Vendor.User.City.CountryId == countryId);
+
+            return _mapper.Map<IEnumerable<ProductModel>>(products);
+        }
+
         public async Task<ProductModel> GetByIdAsync(Guid id)
         {
             var product = await _productRepository.GetByIdAsync(id);

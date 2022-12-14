@@ -61,6 +61,20 @@ namespace LocalGoods.BLL.Services
             return _mapper.Map<IEnumerable<OrderModel>>(orders);
         }
 
+        public async Task<IEnumerable<OrderModel>> GetByUserIdAsync(Guid userId)
+        {
+            var orders = await _orderRepository.GetByFilterAsync(o => o.UserId == userId);
+
+            return _mapper.Map<IEnumerable<OrderModel>>(orders);
+        }
+
+        public async Task<IEnumerable<OrderModel>> GetByVendorIdAsync(Guid vendorId)
+        {
+            var orders = await _orderRepository.GetByFilterAsync(o => o.OrderDetails.Select(od => od.Product.VendorId).Contains(vendorId));
+
+            return _mapper.Map<IEnumerable<OrderModel>>(orders);
+        }
+
         public async Task<OrderModel> GetByIdAsync(Guid id)
         {
             var order = await _orderRepository.GetByIdAsync(id);

@@ -12,6 +12,8 @@ using AutoMapper;
 using LocalGoods.PL.Models.Vendor;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
+using LocalGoods.BLL.Services;
+using LocalGoods.BLL.Models.Order;
 
 namespace LocalGoods.PL.Controllers
 {
@@ -21,17 +23,20 @@ namespace LocalGoods.PL.Controllers
     {
         private readonly IVendorService _vendorService;
         private readonly IProductService _productService;
+        private readonly IOrderService _orderService;
         private readonly IMapper _mapper;
         private readonly IValidator<CreateVendorModel> _createVendorValidator;
 
         public VendorsController(
             IVendorService vendorService, 
-            IProductService productService, 
+            IProductService productService,
+            IOrderService orderService,
             IMapper mapper,
             IValidator<CreateVendorModel> createVendorValidator)
         {
             _vendorService = vendorService;
             _productService = productService;
+            _orderService = orderService;
             _mapper = mapper;
             _createVendorValidator = createVendorValidator;
         }
@@ -50,6 +55,15 @@ namespace LocalGoods.PL.Controllers
         public async Task<ActionResult> GetProductsByVendorId(Guid id)
         {
             var products = await _productService.GetByVendorIdAsync(id);
+
+            return Ok(products);
+        }
+
+        [HttpGet("{id}/orders")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OrderModel>))]
+        public async Task<ActionResult> GetOrdersByVendorId(Guid id)
+        {
+            var products = await _orderService.GetByVendorIdAsync(id);
 
             return Ok(products);
         }

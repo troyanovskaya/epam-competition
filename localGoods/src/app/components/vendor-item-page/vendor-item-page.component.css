@@ -1,6 +1,8 @@
-.page{
+.page {
     margin: 2%;
+    min-height: 100%;
 }
+
 .page-block {
     display: flex;
     flex-wrap: wrap;
@@ -13,4 +15,27 @@
 h2{
     color:  #162e50;;
     font-size: xx-large;
+}
+
+.contacts{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.contacts-item {
+    width: 25%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.contacts-item a {
+    cursor: pointer;
+    transition: transform .5s;
+    color: #000000;
+}
+
+.contacts-item a:hover {
+    transform: scale(1.2);
+    color: #162e50;
 }

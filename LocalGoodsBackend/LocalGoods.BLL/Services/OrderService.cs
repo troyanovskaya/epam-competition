@@ -69,6 +69,14 @@ namespace LocalGoods.BLL.Services
             return _mapper.Map<IEnumerable<OrderModel>>(orders);
         }
 
+        public async Task<IEnumerable<OrderModel>> GetAllCurrentUserOrdersByOrderStatusIdsAsync(IEnumerable<Guid> orderStatusIds)
+        {
+            var currentUserId = await GetCurrentUserId();
+
+            var orders = await _orderRepository.GetByFilterAsync(o => o.UserId == currentUserId && orderStatusIds.Contains(o.OrderStatusId));
+            return _mapper.Map<IEnumerable<OrderModel>>(orders);
+        }
+
         public async Task<IEnumerable<OrderModel>> GetByUserIdAsync(Guid userId)
         {
             var orders = await _orderRepository.GetByFilterAsync(o => o.UserId == userId);
@@ -249,16 +257,6 @@ namespace LocalGoods.BLL.Services
             if (vendor.User.Id == currentUserId)
             {
                 throw new OrderBadRequestException("Vendor can't buy their own products");
-            }
-
-            if (!vendor.VendorDeliveryMethods.Select(vdm => vdm.Id).Contains(createOrderModel.DeliveryMethodId))
-            {
-                throw new OrderBadRequestException("Vendor doesn't have this delivery method");
-            }
-
-            if (!vendor.VendorPaymentMethods.Select(vpm => vpm.Id).Contains(createOrderModel.PaymentMethodId))
-            {
-                throw new OrderBadRequestException("Vendor doesn't have this payment method");
             }
 
             var vendors = products.Select(p => p.VendorId).Distinct();

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Good } from 'src/app/schema/good.model';
 import { BasketService } from 'src/app/services/basket.service';
+import { NotifierService } from 'src/app/services/notifier.service';
 import { LogInPageComponent } from '../log-in-page/log-in-page.component';
 
 @Component({
@@ -17,7 +18,7 @@ export class GoodItemComponent implements OnInit {
     }, categories: [], images: []
   };
 
-  constructor(private basketService: BasketService, private dialogRef: MatDialog,) { }
+  constructor(private basketService: BasketService, private dialogRef: MatDialog,private notifier: NotifierService) { }
   addToBasket() {
     let basketItem = this.basketService.basket.find(el => el.good.id === this.item.id);
     if (basketItem) {
@@ -35,7 +36,7 @@ export class GoodItemComponent implements OnInit {
       });
     }
     this.basketService.onTotalChange();
-
+    this.notifier.showNotification(`${this.item!.name} was added to basket`, 'SUCCESS');
   }
 
   ngOnInit(): void {

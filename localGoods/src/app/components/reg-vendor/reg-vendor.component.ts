@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { DeliveryMethod } from 'src/app/schema/deliveryMethod.model';
 import { PaymentMethod } from 'src/app/schema/paymentMethod.model';
-import { VendorRegister } from 'src/app/schema/vendorRegister.model';
 import { HttpRequestService } from 'src/app/services/http-request.service';
+import { NotifierService } from 'src/app/services/notifier.service';
 import { UserService } from 'src/app/services/user.service';
 import { VisibilityService } from 'src/app/services/visibility.service';
 
@@ -13,100 +15,130 @@ import { VisibilityService } from 'src/app/services/visibility.service';
   styleUrls: ['./reg-vendor.component.css']
 })
 export class RegVendorComponent implements OnInit {
-  startErrs = {companyEr:false, paymentEr:false, deliveryEr:false, phoneEr:false, messengerEr:false, mediaEr:false};
-  errs = {companyEr:false, paymentEr:false, deliveryEr:false, phoneEr:false, messengerEr:false, mediaEr:false};
-  deliveryMethods:DeliveryMethod[] = [];
-  paymentMethods: PaymentMethod[] = [];
-  messengers:string[] = ['viber', 'whatsapp', 'telegram'];
-  media:string[] = ['facebook', 'instagram'];
-  phoneDigitsEr:boolean = false;
-  // form:FormGroup = new FormGroup({payment: new FormControl<string>('', [
-  //   Validators.required]),
-  //   company: new FormControl<string>('', [
-  //     Validators.required]),
-  //   delivery: new FormControl<string>('', [
-  //     Validators.required]),
-  //   email: new FormControl<string>('', [
-  //     Validators.required]),
-  //   phone: new FormControl<string>('', [
-  //     Validators.required]),
-  //   messenger: new FormControl<string>('', [
-  //     Validators.required]),
-  //   media: new FormControl<string[]>([], [
-  //     Validators.required]),
-  // });
-  digits_only(str:string){
-    return [...str].every(c => '0123456789+'.includes(c));
-  }
-  Show(Form: NgForm): void {
-    this.phoneDigitsEr = false;
-    if(this.errs.companyEr) this.errs.companyEr = false;
-    if(this.errs.paymentEr) this.errs.paymentEr = false;
-    if(this.errs.deliveryEr) this.errs.deliveryEr = false;
-    if(this.errs.phoneEr) this.errs.phoneEr = false;
-    if(this.errs.messengerEr) this.errs.messengerEr = false;
-    if(this.errs.mediaEr) this.errs.mediaEr = false;
-    if(Form.value.company.length<5){
-      this.errs.companyEr = true;
-    }
-    if(Form.value.phone.length<11 || Form.value.phone.length>15){
-      this.errs.phoneEr = true;
-    }
-    if(!this.digits_only(Form.value.phone)) this.phoneDigitsEr = true;
-    let del = 0;
-    let pay = 0;
-    let mes = 0;
-    let social = 0;
-    for (let i =0; i<this.deliveryMethods.length; i++){
-      if(Form.value[this.deliveryMethods[i].name]===true){
-        del++;
-      }
-    }
-    if(del===0){
-      this.errs.deliveryEr = true;
-    }
-    for (let i =0; i<this.paymentMethods.length; i++){
-      if(Form.value[this.paymentMethods[i].name]===true){
-        pay++;
-      }
-    }
-    if(pay===0){
-      this.errs.paymentEr = true;
-    }
-    for (let i =0; i<this.media.length; i++){
-      if(Form.value[this.media[i]]===true){
-        social++;
-      }
-    }
-    if(social===0){
-      this.errs.mediaEr = true;
-    }
-    for (let i =0; i<this.messengers.length; i++){
-      if(Form.value[this.messengers[i]]===true){
-        mes++;
-      }
-    }
-    if(mes===0){
-      this.errs.messengerEr = true;
-    }
-    if(Object.values(this.errs).reduce((past, cur) => past&&!cur, true)&&!this.phoneDigitsEr){
-      this.createVendor();
-    }
+  form!: FormGroup;
+  submitted: boolean = false;
 
-  }
+  allPaymentMethods!: PaymentMethod[];
+  chosenPaymentMethodIds: any = [];
+
+  allDeliveryMethods!: DeliveryMethod[];
+  chosenDeliveryMethodIds: any = [];
+
   createVendor(){
     this.userService.userRole = 'VENDOR';
     this.visibilityService.isVendorRegVisible = false;
-    // let vendor: VendorRegister =
-    //console.log(this.form.controls);
   }
 
-  constructor(public visibilityService:VisibilityService, public userService:UserService,
-    public httpRequestService: HttpRequestService) { }
+  constructor(public visibilityService:VisibilityService,
+    public userService:UserService,
+    public httpRequestService: HttpRequestService,
+    private fb: FormBuilder,
+    private notifier: NotifierService,
+    private router: Router) { }
 
   ngOnInit(): void {
-    this.httpRequestService.getDelMeth().subscribe( res => this.deliveryMethods = res);
-    this.httpRequestService.getPayMeth().subscribe( res => this.paymentMethods = res);
+    this.httpRequestService.getPayMeth().subscribe(pm => {
+      this.allPaymentMethods = pm;
+    }, err => console.log(err));
+
+    this.httpRequestService.getDelMeth().subscribe(dm => {
+      this.allDeliveryMethods = dm;
+    }, err => console.log(err));
+
+    this.createForm();
   }
 
+  createForm(){
+    this.form = this.fb.group({
+      name: [null, [Validators.required,
+        Validators.pattern('[A-Za-z]{1,32}'),
+        Validators.minLength(5)]],
+      viberNumber: [null, [Validators.required,
+        Validators.pattern("^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$")]],
+      telegramName: [null, [Validators.required]],
+      instagramName: [null, [Validators.required]]
+    })
+  }
+
+  get name(){
+    return this.form.get('name');
+  }
+
+  get viberNumber(){
+    return this.form.get('viberNumber');
+  }
+
+  get telegramName(){
+    return this.form.get('telegramName');
+  }
+
+  get instagramName(){
+    return this.form.get('instagramName');
+  }
+
+  get paymentMethods(){
+    return this.form.get('paymentMethods');
+  }
+
+  get deliveryMethods(){
+    return this.form.get('deliveryMethods');
+  }
+
+  onPaymentMethodChange(event: any, id: string){
+    if (event.currentTarget.checked){
+      this.chosenPaymentMethodIds.push({paymentMethodId: id});
+    }
+    else{
+      const index = this.chosenPaymentMethodIds.map((pm: { paymentMethodId: any; }) => pm.paymentMethodId).indexOf(id);
+      if (index > -1){
+        this.chosenPaymentMethodIds.splice(index, 1);
+      }
+    }
+  }
+
+  onDeliveryMethodChange(event: any, id: string){
+    if (event.currentTarget.checked){
+      this.chosenDeliveryMethodIds.push({deliveryMethodId: id, information: 'no info'});
+    }
+    else{
+      const index = this.chosenDeliveryMethodIds.map((dm: { deliveryMethodId: any; }) => dm.deliveryMethodId).indexOf(id);
+      if (index > -1){
+        this.chosenDeliveryMethodIds.splice(index, 1);
+      }
+    }
+  }
+
+  onSubmit(){
+    this.submitted = true;
+
+    if (this.chosenPaymentMethodIds.length == 0){
+      this.notifier.showNotification('Please choose at least one payment method', 'ERROR');
+      return;
+    }
+
+    if (this.chosenDeliveryMethodIds.length == 0){
+      this.notifier.showNotification('Please choose at least one delivery method', 'ERROR');
+      return;
+    }
+
+    if (this.form.invalid) return;
+
+    const model = {
+      name: this.name!.value,
+      viberNumber: this.viberNumber!.value,
+      telegramName: this.telegramName!.value,
+      instagramName: this.instagramName!.value,
+      paymentMethods: this.chosenPaymentMethodIds,
+      deliveryMethods: this.chosenDeliveryMethodIds
+    }
+
+    this.httpRequestService.createVendor(model).subscribe(v => {
+      this.userService.userRole = 'VENDOR';
+      this.notifier.showNotification("You've become a vendor", 'SUCCESS');
+      this.router.navigateByUrl('/');
+    }, err => {
+      this.notifier.showNotification(err.error.message, 'ERROR');
+      console.log(err);
+    });
+  }
 }

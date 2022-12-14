@@ -14,6 +14,7 @@ import { Vendor } from '../schema/vendor.model';
 import { UserService } from './user.service';
 import jwt_decode from 'jwt-decode';
 import { Unit } from '../schema/unit.model';
+import { NotifierService } from './notifier.service';
 
 
 @Injectable({
@@ -53,18 +54,8 @@ export class HttpRequestService {
 
   constructor(private http: HttpClient,
     private localStorageService: LocalStorageService,
-    private userService:UserService) {
-      let user = localStorage.getItem('user');
-        if(user){
-          let user1:{token:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none'}));
-          if(this.getDecodedAccessToken(user1.token)){
-            let userId = this.getDecodedAccessToken(user1.token).sub;
-            this.userService.userRole = this.getDecodedAccessToken(user1.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-            this.getUser(userId).subscribe(
-              data => this.userService.user = data);
-          };
-        }
-    }
+    private userService:UserService,
+    private notifier: NotifierService) { }
 
   getCategories():Observable<Category[]>{
     return this.http.get<Category[]>(`${this.URL}/Categories`)
@@ -118,7 +109,11 @@ export class HttpRequestService {
 
 
 
-  getVendor(vendorId:string): Observable<Vendor>{
+  getVendor(userId:string): Observable<Vendor>{
+    return this.http.get<Vendor>(`${this.URL}/users/${userId}/vendor`);
+
+  }
+  getVendorById(vendorId:string): Observable<Vendor>{
     return this.http.get<Vendor>(`${this.URL}/Vendors/${vendorId}`);
 
   }
@@ -151,10 +146,21 @@ export class HttpRequestService {
     });
   }
 
+  createVendor(model: any){
+    let user1:{token:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none'}));
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + user1.token);
+
+    return this.http.post(`${environment.apiUrl}/vendors`, model, {
+      headers: headers
+    });
+  }
+
   checkUser(url: string, value: Object, dialogRef: any) {
     this.post(url, value).pipe(
       tap(token => {
         this.localStorageService.setItemToStorage('user', JSON.stringify(token));
+
         this.userService.isAutorized = true;
         dialogRef.close();
         let user = localStorage.getItem('user');
@@ -163,7 +169,9 @@ export class HttpRequestService {
           console.log(user1.token);
           if(this.getDecodedAccessToken(user1.token)){
             let userId = this.getDecodedAccessToken(user1.token).sub;
-            this.userService.userRole = this.getDecodedAccessToken(user1.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+            //this.userService.userRole = this.getDecodedAccessToken(user1.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+
+            this.userService.getRolesByUserId(userId);
             this.getUser(userId).subscribe(
               data => this.userService.user = data);
           };
@@ -171,14 +179,13 @@ export class HttpRequestService {
         return;
       }),
       catchError(err => {
-        alert(err.error.message)
+        this.notifier.showNotification(err.error.message, 'ERROR');
         return of('');
       })
     ).subscribe()
   }
 
   getVendorProducts(vendorId: string): Observable<Good[]>{
-    console.log('Vendor id: ', vendorId)
     return this.http.get<Good[]>(`${this.URL}/Vendors/${vendorId}/products`);
   }
 

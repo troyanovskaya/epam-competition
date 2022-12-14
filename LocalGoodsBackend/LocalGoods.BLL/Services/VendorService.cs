@@ -66,6 +66,25 @@ namespace LocalGoods.BLL.Services
             return _mapper.Map<VendorModel>(vendor);
         }
 
+        public async Task<VendorModel> GetByUserIdAsync(Guid userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+
+            if (user is null)
+            {
+                throw new UserNotFoundException(userId);
+            }
+
+            var vendor = await _vendorRepository.GetByUserIdAsync(userId);
+
+            if (vendor is null)
+            {
+                throw new VendorNotFoundException();
+            }
+
+            return _mapper.Map<VendorModel>(vendor);
+        }
+
         public async Task<VendorModel> CreateAsync(CreateVendorModel createVendorModel)
         {
             if (string.IsNullOrEmpty(createVendorModel.InstagramName)
@@ -74,8 +93,22 @@ namespace LocalGoods.BLL.Services
             {
                 throw new VendorBadRequestException("The vendor must have at least one contact");
             }
-
+            
             var currentUser = await GetCurrentUser();
+
+            var sameUserVendor = await _vendorRepository.GetByUserIdAsync(currentUser.Id);
+
+            if (sameUserVendor != null)
+            {
+                throw new VendorBadRequestException("You are already a vendor");
+            }
+
+            var sameNameVendor = await _vendorRepository.GetByNameAsync(createVendorModel.Name);
+
+            if (sameNameVendor != null)
+            {
+                throw new VendorBadRequestException("Vendor with this name already exists");
+            }
 
             var vendor = _mapper.Map<Vendor>(createVendorModel);
             vendor.UserId = currentUser.Id;

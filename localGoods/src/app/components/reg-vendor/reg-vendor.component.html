@@ -1,45 +1,70 @@
-<div *ngIf="visibilityService.isVendorRegVisible" (click)="visibilityService.isVendorRegVisible = false" class="black-container">
-  <div class="vendor-reg" (click)="$event.stopPropagation()">
-    <div class="header"> Become a vendor now!</div>
-    <form #Form="ngForm" (ngSubmit)="Show(Form)">
-      <div class="flex-container">
-        <div class="item-container col-1">
-          <label for="company">Company name:</label>
-          <h6 *ngIf="errs.companyEr">Company name is too short, it should be at least 5 symbols</h6>
-          <input ngModel placeholder="company" type="text" name="company">
-          <p>Payment Methods:</p>
-          <h6 *ngIf="errs.paymentEr">Choose at least one payment method</h6>
-          <div *ngFor="let pay of paymentMethods">
-            <input ngModel type="checkbox" id={{pay.name}} name={{pay.name}} value={{pay.name}}>
-            <label for={{pay.name}}> {{pay.name | titlecase}} </label>
-          </div>
-          <p>Delivery Methods:</p>
-          <h6 *ngIf="errs.deliveryEr">Choose at least one delivery method</h6>
-          <div *ngFor="let del of deliveryMethods">
-            <input ngModel type="checkbox" id={{del.name}} name={{del.name}} value={{del.name}}>
-            <label for={{del.name}}> {{del.name | titlecase}} </label>
-          </div>
-        </div>
-        <div class="item-container col-2">
-          <h6 *ngIf="errs.phoneEr">It should be from 11 to 15 numbers length</h6>
-          <h6 *ngIf="phoneDigitsEr">Phone number must contain only digits and +</h6>
-          <label for="phone">Phone number:</label>
-          <input ngModel placeholder="phone" type="text" name="phone">
-          <p>Messengers:</p>
-          <h6 *ngIf="errs.messengerEr">Choose at least one messenger</h6>
-          <div *ngFor="let mes of messengers">
-            <input ngModel type="checkbox" id={{mes}} name={{mes}} value={{mes}}>
-            <label for={{mes}}> {{mes | titlecase}} </label>
-          </div>
-          <p>Social media:</p>
-          <h6 *ngIf="errs.mediaEr">Choose at least one social network</h6>
-          <div *ngFor="let social of media">
-            <input ngModel type="checkbox" id={{social}} name={{social}} value={{social}} ngModel>
-            <label for={{social}}> {{social | titlecase}}</label>
-          </div>
-        </div>
-      </div>
-      <button type="submit"> Create a vendor </button>
-    </form>
-  </div>
+<div class="black-container" *ngIf="visibilityService.isVendorRegVisible" (click)="visibilityService.isVendorRegVisible = false">
+    <div class="vendor-reg" (click)="$event.stopPropagation()">
+        <div class="header"> Become a vendor now!</div>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="flex-container">
+                <div class="item-container col-1">
+                    <div>
+                        <label for="company">Company name: </label>
+                        <input placeholder="Enter company name" type="text" id="company" formControlName="name">
+                        <div class="error" *ngIf="name!.errors && submitted">
+                            <div *ngIf="name!.errors!['required']">
+                                <p>Name is required</p>
+                            </div>
+                            <div *ngIf="!name!.errors!['required']">
+                                <p>Name must be at least 5 characters long</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p>Payment Methods:</p>
+                        <div *ngFor="let payment of allPaymentMethods">
+                            <input type="checkbox" id={{payment.name}} name={{payment.name}} value={{payment.name}} (change)="onPaymentMethodChange($event, payment.id)">
+                            <label for={{payment.name}}> {{payment.name | titlecase}} </label>
+                        </div>
+                    </div>
+                    <div>
+                        <p>Delivery Methods:</p>
+                        <div *ngFor="let delivery of allDeliveryMethods">
+                            <input type="checkbox" id={{delivery.name}} name={{delivery.name}} value={{delivery.name}} (change)="onDeliveryMethodChange($event, delivery.id)">
+                            <label for={{delivery.name}}> {{delivery.name | titlecase}} </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-container col-2">
+                    <div>
+                        <label for="viber">Viber number: </label>
+                        <input id="viber" type="text" formControlName="viberNumber" placeholder="Enter your viber number">
+                        <div class="error" *ngIf="viberNumber!.errors && submitted">
+                            <div *ngIf="viberNumber!.errors!['required']">
+                                <p>Viber number is required</p>
+                            </div>
+                            <div *ngIf="viberNumber!.errors!['pattern']">
+                                <p>Viber number is not valid</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="telegramName">Telegram name: </label>
+                        <input id="telegramName" type="text" formControlName="telegramName" placeholder="Enter your telegram name">
+                        <div class="error" *ngIf="telegramName!.errors && submitted">
+                            <div *ngIf="telegramName!.errors!['required']">
+                                <p>Telegram name is required</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="instagramName">Instagram name: </label>
+                        <input id="instagramName" type="text" formControlName="instagramName" placeholder="Enter your instagram name">
+                        <div class="error" *ngIf="instagramName!.errors && submitted">
+                            <div *ngIf="instagramName!.errors!['required']">
+                                <p>Instagram name is required</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit">Become a vendor</button>
+        </form>
+    </div>
 </div>

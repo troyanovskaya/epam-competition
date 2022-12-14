@@ -1,6 +1,6 @@
 <div class="menu">
     <div class="logo-container" routerLink="/">
-      <div  class="logo"> LOCAL.G<img class="apple" src="assets/apple.png" alt="apple"><img class="apple" src="assets/apple.png" alt="apple">DS </div></div>
+      <div class="logo"> LOCAL. <div>G<img class="apple" src="assets/apple.png" alt="apple"><img class="apple" src="assets/apple.png" alt="apple">DS </div></div></div>
     <div>
       <div class="auth-container">
         <div *ngIf="userService.isAutorized" class="avatar" routerLink="/user/info">
@@ -10,8 +10,10 @@
         <div *ngIf="!userService.isAutorized">|</div>
         <span *ngIf="!userService.isAutorized" class="sign-up" (click)="openSignUpPage()"> Sign up</span>
         <span  routerLink="/" *ngIf="userService.isAutorized" class="sign-out" (click)="signOut()"> Sign out</span>
-        <img routerLink="/basket" class="basket" src="assets/brown-basket.png" alt="basket">
-        <p>{{basketService.total | currency: 'GBP'}}</p>
+        <div class="b-cont"><img routerLink="/basket" class="basket" src="assets/brown-basket.png" alt="basket">
+          <p>{{basketService.total | currency: 'GBP'}}</p>
+        </div>
+
     </div>
     </div>
 </div>

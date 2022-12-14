@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { HttpRequestService } from './http-request.service';
 import { FullUser } from '../schema/fullUser.model';
 import { HttpClient } from '@angular/common/http';
+import { Good } from '../schema/good.model';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,7 @@ export class UserService {
       this.isAutorized = true;
       if(this.getDecodedAccessToken(user1.token)){
         this.userRole = this.getDecodedAccessToken(user1.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+        console.log(this.userRole)
         let userId = this.getDecodedAccessToken(user1.token).sub;
         this.getUser(userId).subscribe(
           data => {this.user = data})

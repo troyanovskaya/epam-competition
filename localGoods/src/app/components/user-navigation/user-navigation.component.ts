@@ -16,7 +16,6 @@ export class UserNavigationComponent implements OnInit {
   }
   openVendorReg(){
     this.visibilityService.isVendorRegVisible = true;
-
   }
 
 }

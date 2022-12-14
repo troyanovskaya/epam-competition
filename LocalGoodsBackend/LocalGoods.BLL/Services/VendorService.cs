@@ -66,6 +66,25 @@ namespace LocalGoods.BLL.Services
             return _mapper.Map<VendorModel>(vendor);
         }
 
+        public async Task<VendorModel> GetByUserIdAsync(Guid userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+
+            if (user is null)
+            {
+                throw new UserNotFoundException(userId);
+            }
+
+            var vendor = await _vendorRepository.GetByUserIdAsync(userId);
+
+            if (vendor is null)
+            {
+                throw new VendorNotFoundException();
+            }
+
+            return _mapper.Map<VendorModel>(vendor);
+        }
+
         public async Task<VendorModel> CreateAsync(CreateVendorModel createVendorModel)
         {
             if (string.IsNullOrEmpty(createVendorModel.InstagramName)

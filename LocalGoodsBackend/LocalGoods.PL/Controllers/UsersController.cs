@@ -7,6 +7,7 @@ using LocalGoods.BLL.Services;
 using LocalGoods.BLL.Services.Interfaces;
 using LocalGoods.PL.Models.UnitType;
 using LocalGoods.PL.Models.User;
+using LocalGoods.PL.Models.Vendor;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,16 +20,19 @@ namespace LocalGoods.PL.Controllers
     {
         private readonly IUserService _userService;
         private readonly IOrderService _orderService;
+        private readonly IVendorService _vendorService;
         private readonly IMapper _mapper;
 
         public UsersController(
             IUserService userService,
             IMapper mapper,
-            IOrderService orderService)
+            IOrderService orderService,
+            IVendorService vendorService)
         {
             _userService = userService;
             _mapper = mapper;
             _orderService = orderService;
+            _vendorService = vendorService;
         }
 
         [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]
@@ -39,8 +43,6 @@ namespace LocalGoods.PL.Controllers
             var users = await _userService.GetAllAsync();
             return Ok(_mapper.Map<IEnumerable<UserResponse>>(users));
         }
-
-
 
         [Authorize(AuthenticationSchemes = "Bearer", Roles = "Buyer, Vendor")]
         [HttpGet("{id}/orders")]
@@ -58,6 +60,15 @@ namespace LocalGoods.PL.Controllers
         {
             var user = await _userService.GetByIdAsync(id);
             return Ok(_mapper.Map<UserResponse>(user));
+        }
+
+        [HttpGet("{id}/vendor")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(VendorResponse))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetVendorByUserId(Guid id)
+        {
+            var vendor = await _vendorService.GetByUserIdAsync(id);
+            return Ok(_mapper.Map<VendorResponse>(vendor));
         }
 
         [HttpGet("{id}/roles")]

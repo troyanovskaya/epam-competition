@@ -1,0 +1,4 @@
+<div class="flex-container">
+  <app-good-item *ngFor="let item of goodService.goods | goodsByKeyword:goodService.keyword" [item]="item"></app-good-item>
+</div>
+

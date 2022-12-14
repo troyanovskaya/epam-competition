@@ -1,0 +1,45 @@
+<div *ngIf="visibilityService.isVendorRegVisible" (click)="visibilityService.isVendorRegVisible = false" class="black-container">
+  <div class="vendor-reg" (click)="$event.stopPropagation()">
+    <div class="header"> Become a vendor now!</div>
+    <form #Form="ngForm" (ngSubmit)="Show(Form)">
+      <div class="flex-container">
+        <div class="item-container col-1">
+          <label for="company">Company name:</label>
+          <h6 *ngIf="errs.companyEr">Company name is too short, it should be at least 5 symbols</h6>
+          <input ngModel placeholder="company" type="text" name="company">
+          <p>Payment Methods:</p>
+          <h6 *ngIf="errs.paymentEr">Choose at least one payment method</h6>
+          <div *ngFor="let pay of paymentMethods">
+            <input ngModel type="checkbox" id={{pay.name}} name={{pay.name}} value={{pay.name}}>
+            <label for={{pay.name}}> {{pay.name | titlecase}} </label>
+          </div>
+          <p>Delivery Methods:</p>
+          <h6 *ngIf="errs.deliveryEr">Choose at least one delivery method</h6>
+          <div *ngFor="let del of deliveryMethods">
+            <input ngModel type="checkbox" id={{del.name}} name={{del.name}} value={{del.name}}>
+            <label for={{del.name}}> {{del.name | titlecase}} </label>
+          </div>
+        </div>
+        <div class="item-container col-2">
+          <h6 *ngIf="errs.phoneEr">It should be from 11 to 15 numbers length</h6>
+          <h6 *ngIf="phoneDigitsEr">Phone number must contain only digits and +</h6>
+          <label for="phone">Phone number:</label>
+          <input ngModel placeholder="phone" type="text" name="phone">
+          <p>Messengers:</p>
+          <h6 *ngIf="errs.messengerEr">Choose at least one messenger</h6>
+          <div *ngFor="let mes of messengers">
+            <input ngModel type="checkbox" id={{mes}} name={{mes}} value={{mes}}>
+            <label for={{mes}}> {{mes | titlecase}} </label>
+          </div>
+          <p>Social media:</p>
+          <h6 *ngIf="errs.mediaEr">Choose at least one social network</h6>
+          <div *ngFor="let social of media">
+            <input ngModel type="checkbox" id={{social}} name={{social}} value={{social}} ngModel>
+            <label for={{social}}> {{social | titlecase}}</label>
+          </div>
+        </div>
+      </div>
+      <button type="submit"> Create a vendor </button>
+    </form>
+  </div>
+</div>

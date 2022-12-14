@@ -1,0 +1,112 @@
+<div class="header-div">
+    <div class="header">Welcome to our shop!</div>
+    <span class="cross" (click)="closeWindow()">&#10060;</span>
+</div>
+
+<form (submit)="createAccount()" [formGroup]="validationForm">
+
+    <div class="side-sections">
+        <div class="side-sections-part">
+
+            <div class="label-input-pair">
+                <label for="name" class="input-option">First Name*
+                    <span class="requirementsError"
+                        *ngIf="!validationForm.controls['firstName'].valid  &&  validationForm.controls['firstName'].value">
+                        please, use only letters
+                    </span>
+                </label>
+                <input type="text" formControlName="firstName" id="name" placeholder="First Name" />
+            </div>
+
+            <div class="label-input-pair">
+                <label for="surname" class="input-option">Last Name*
+                    <span class="requirementsError"
+                        *ngIf="!validationForm.controls['lastName'].valid  && validationForm.controls['lastName'].value">
+                        please, use only letters
+                    </span>
+                </label>
+                <input type="text" formControlName="lastName" id="surname" placeholder="Last Name" />
+            </div>
+
+            <div class="label-input-pair">
+                <label for="cities" class="input-option">City*</label>
+                <select name="cities" formControlName="city" id="cities" (change)="selectCity()">
+                    <option *ngFor="let city of cities">{{city.name}}</option>
+                </select>
+            </div>
+
+            <div class="label-input-pair">
+                <label for="address" class="input-option">Address information*
+                    <span class="requirementsError"
+                        *ngIf="!validationForm.controls['addressInfo'].valid  && validationForm.controls['addressInfo'].value">
+                        should contain minimum 5 characters
+                    </span>
+                </label>
+                <input type="text" formControlName="addressInfo" id="address" placeholder="address information" />
+            </div>
+
+        </div>
+
+        <div class="side-sections-part">
+            <div class="label-input-pair">
+                <label for="email" class="input-option">Email*
+                    <span class="requirementsError"
+                        *ngIf="!validationForm.controls['email'].valid  &&  validationForm.controls['email'].value">
+                        please, write existing email
+                    </span>
+                </label>
+                <input type="email" formControlName="email" id="email" placeholder="email" />
+            </div>
+
+            <div class="label-input-pair">
+                <label for="phone" class="input-option">Phone number*
+                    <span class="requirementsError"
+                        *ngIf="validationForm.controls['phone'].invalid && validationForm.controls['phone'].value">
+                        please, write existing number (length 11-15)
+                    </span>
+                </label>
+                <input type="text" formControlName="phone" id="phone" placeholder="phone number" />
+            </div>
+
+            <div class="label-input-pair password">
+                <label for="password" class="input-option">Password*
+                    <span
+                        [ngClass]="{ requirementsError: validationForm.controls['password'].invalid && !validationForm.controls['password'].pristine,
+                                       passwordRequirements: validationForm.controls['password'].pristine || validationForm.controls['password'].valid  }">should
+                        contain min 8 characters, min 1 upper case letter and 1 number
+                    </span>
+                </label>
+                <input [type]="changetype? 'password' : 'text' " formControlName="password" id="password"
+                    placeholder="password" />
+                <span class="eyeicone"><img
+                        [src]='visible? "../../../assets/eyeicon.png" : "../../../assets/eyeiconSlash.png"'
+                        (click)="viewPassword()"></span>
+            </div>
+
+            <div class="label-input-pair password">
+                <label for="confirmation" class="input-option">Confirm your password*
+                    <span class="requirementsError"
+                        *ngIf="!validationForm.controls['confirmation'].valid && validationForm.controls['confirmation'].dirty 
+                        || validationForm.controls['confirmation'].value !== validationForm.controls['password'].value">
+                        should match with password
+                    </span>
+                </label>
+                <input [type]="changeConfirmType? 'password' : 'text'" formControlName="confirmation" id="confirmation"
+                    placeholder="confirm your password" />
+                <span class="eyeicone"><img
+                        [src]='visibleConfirm? "../../../assets/eyeicon.png" : "../../../assets/eyeiconSlash.png"'
+                        (click)="viewConfirm()"></span>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="button-line">
+        <button type="submit"
+            [disabled]="!(validationForm.valid && (validationForm.value.password === validationForm.value.confirmation))">
+            Create an account
+        </button>
+    </div>
+
+</form>

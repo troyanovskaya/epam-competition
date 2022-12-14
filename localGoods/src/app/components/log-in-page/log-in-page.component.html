@@ -1,0 +1,37 @@
+<div class="header-div">
+    <div class="header">Welcome to our shop!</div>
+    <span class="cross" (click)="closeWindow()">&#10060;</span>
+</div>
+
+<form (submit)="checkUser()" [formGroup]="validationForm">
+    <div class="label-input-pair">
+        <label class="input-option" for="email">Log In
+            <span class="requirementsError"
+                *ngIf="!validationForm.controls['email'].valid  &&  validationForm.controls['email'].value">
+                please, write existing email
+            </span>
+        </label>
+        <input type="email" id="email" formControlName="email" placeholder="enter your email" required />
+    </div>
+
+    <div class="label-input-pair password">
+        <label class="input-option" for="password">password
+            <span
+                [ngClass]="{ requirementsError: validationForm.controls['password'].invalid && !validationForm.controls['password'].pristine,
+                                       passwordRequirements: validationForm.controls['password'].pristine || validationForm.controls['password'].valid  }">should
+                contain min 8 characters, min 1 upper case letter and 1 number
+            </span>
+        </label>
+        <input [type]="changetype? 'password' : 'text' " formControlName="password" id="password"
+            placeholder="password" />
+        <span class="eyeicone"><img [src]='visible? "../../../assets/eyeicon.png" : "../../../assets/eyeiconSlash.png"'
+                (click)="viewPassword()"></span>
+        <a class="forgot-password">Forgot password?</a>
+    </div>
+
+    <div class="confirm-part">
+        <button type="submit">Sign in</button>
+        <span>Don't have an account?</span>
+        <span class="sign-up" (click)="openSignUp()">Create an account</span>
+    </div>
+</form>

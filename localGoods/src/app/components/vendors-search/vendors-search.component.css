@@ -13,6 +13,7 @@ label, .vendors-flex-container, .vendor-item, p{
   border-radius: 10px;
   width:80%;
   margin:50px auto;
+  align-items: center;
   justify-content: center;
 }
 .vendor-item{

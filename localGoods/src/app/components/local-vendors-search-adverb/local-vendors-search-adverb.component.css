@@ -2,14 +2,18 @@
   margin-top: 25px;
   display:flex;
   flex-direction: row;
-
+  flex-wrap: wrap;
+  width:100%;
+  gap: 40px;
   min-height: 350px;
   justify-content: center;
-  gap:50px;
 }
-.flex-container > *{
+app-vendors-adverb, app-vendors-search{
   width:45%;
   border-radius: 10px;
   background-color: #ba6735;
   background-image: url('/assets/wood.jpg');
+}
+app-goods{
+  width:100%;
 }

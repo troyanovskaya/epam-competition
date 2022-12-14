@@ -28,7 +28,7 @@ namespace LocalGoods.PL.Controllers
             _createOrderValidator = createOrderValidator;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OrderModel>))]
         public async Task<ActionResult> GetAll()
@@ -38,7 +38,7 @@ namespace LocalGoods.PL.Controllers
             return Ok(orders);
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OrderModel))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -49,7 +49,7 @@ namespace LocalGoods.PL.Controllers
             return Ok(order);
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("statuses")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OrderStatusModel>))]
         public async Task<ActionResult> GetOrderStatuses()
@@ -59,7 +59,7 @@ namespace LocalGoods.PL.Controllers
             return Ok(orderStatuses);
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

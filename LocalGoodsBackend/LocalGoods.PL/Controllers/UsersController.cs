@@ -31,7 +31,7 @@ namespace LocalGoods.PL.Controllers
             _orderService = orderService;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserResponse>))]
         public async Task<IActionResult> GetAll()

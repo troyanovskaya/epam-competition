@@ -1,45 +1,82 @@
-.menu{
+.menu {
   background-color: #162e50;
-  width:100%;
+  width: 100%;
   color: white;
-  min-height:80px;
-  display:flex;
+  min-height: 80px;
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
 
-.logo{
+.logo {
   border: 2px solid white;
   font-size: 1.3em;
   padding: 5px;
   margin: 20px;
 }
 
-.logo-container{
+.logo-container {
   margin-top: 5px;
 }
 
-.auth-container{
-  display:flex;
+.auth-container {
+  display: flex;
   flex-direction: row;
+  align-items: center;
   padding: 20px;
-
+  gap:10px;
 }
 
-.menu > div{
+.menu>div {
   font-size: 1.2em;
 }
-.auth-container a, .auth-container div{
+
+.auth-container span,
+.auth-container div {
   margin: 5px;
   color: white;
+  cursor: pointer;
 }
 
-.log-in, .sign-up{
+.log-in,
+.sign-up, .sign-out {
   transition: transform .5s;
 }
 
-.log-in:hover, .sign-up:hover{
+.log-in:hover,
+.sign-up:hover,
+.sign-out:hover {
   transform: scale(1.2);
 }
+
+.basket{
+  transition: .5s;
+  width:30px;
+  height:30px;
+}
+.basket:hover{
+  transform: scale(1.1);
+}
+
+.avatar{
+  background-color: cadetblue;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  position:relative;
+}
+
+app-user-info{
+  position:absolute;
+  right:-170px;
+  top:60px;
+}
+
+img.apple{
+  width:20px;
+  height:20px;
+}
+
+
 

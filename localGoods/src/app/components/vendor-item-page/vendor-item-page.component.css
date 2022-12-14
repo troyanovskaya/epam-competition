@@ -1,0 +1,16 @@
+.page{
+    margin: 2%;
+}
+.page-block {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.page-block-item{
+    margin: 1% 2% 1% 0;
+}
+
+h2{
+    color:  #162e50;;
+    font-size: xx-large;
+}

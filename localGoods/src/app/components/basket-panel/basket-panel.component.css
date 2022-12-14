@@ -1,0 +1,68 @@
+.basket-menu-logo{
+  background-color: cadetblue;
+  color:white;
+}
+
+.basket-logo{
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1.1em;
+  background-color: #7382a1;
+  justify-content: space-between;
+  color: white;
+}
+
+.main:hover{
+  color:#162e50;
+}
+.basket-logo > div{
+  padding:20px;
+}
+
+.logo {
+  border: 2px solid white;
+  font-size: 1.3em;
+  padding: 5px;
+  margin: 20px;
+}
+
+.your-basket{
+  padding-bottom: 10px;
+  border-bottom: 1px solid white;
+}
+
+.apple-rabbit{
+  width:60px;
+  height:50px;
+}
+.basket-menu{
+  padding:10px;
+  height: 50px;
+  display:flex;
+  flex-wrap:wrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.basket-menu p{
+  padding:10px;
+  max-width:150px;
+  margin: 5px;
+  border:1px solid white;
+}
+
+.basket-menu p:hover{
+  text-decoration: underline;
+}
+
+.active{
+  text-decoration: underline;
+  background-color: lightblue;
+}
+
+p{
+  cursor: pointer;
+}

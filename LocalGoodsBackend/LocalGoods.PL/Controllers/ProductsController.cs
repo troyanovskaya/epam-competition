@@ -44,7 +44,7 @@ namespace LocalGoods.PL.Controllers
             return Ok(product);
         }
 
-        [Authorize(Roles = "Buyer, Vendor")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Buyer, Vendor")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

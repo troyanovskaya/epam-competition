@@ -251,12 +251,12 @@ namespace LocalGoods.BLL.Services
                 throw new OrderBadRequestException("Vendor can't buy their own products");
             }
 
-            if (!vendor.VendorDeliveryMethods.Select(vdm => vdm.Id).Contains(createOrderModel.DeliveryMethodId))
+            if (!vendor.VendorDeliveryMethods.Select(vdm => vdm.DeliveryMethodId).Contains(createOrderModel.DeliveryMethodId))
             {
                 throw new OrderBadRequestException("Vendor doesn't have this delivery method");
             }
 
-            if (!vendor.VendorPaymentMethods.Select(vpm => vpm.Id).Contains(createOrderModel.PaymentMethodId))
+            if (!vendor.VendorPaymentMethods.Select(vpm => vpm.PaymentMethodId).Contains(createOrderModel.PaymentMethodId))
             {
                 throw new OrderBadRequestException("Vendor doesn't have this payment method");
             }

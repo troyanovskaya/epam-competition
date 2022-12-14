@@ -24,7 +24,7 @@ export class AuthPannelComponent {
     this.dialogRef.open(LogInPageComponent, {
       height: '50%',
       width: '40%',
-      panelClass: 'custom-dialog-container'
+      panelClass: 'custom-dialog-container',
     },
     );
   }

@@ -43,6 +43,7 @@ const appRoutes:Routes = [
 {  path: 'user/history', component: UserHistoryComponent},
 {  path: 'basket', component: BasketPageComponent}
 ]
+
 @NgModule({
     declarations: [
         AppComponent,

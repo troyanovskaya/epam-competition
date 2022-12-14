@@ -1,20 +1,16 @@
 .container {
     text-align: center;
-    margin: 2%;
-}
-
-h1 {
-    color: #162e50;
+    padding: 1%;
 }
 
 .form-control {
-    margin-bottom: 1%;
+    margin-bottom: 3%;
 }
 
 .form-control input {
     font-size: 1.5rem;
     padding: 1%;
-    width: 50vw;
+    width: 40vw;
 }
 
 .submit-btn {

@@ -39,7 +39,7 @@ namespace LocalGoods.BLL.Services
         {
             var subject = "Password Recovery on LocalGoods website";
             var body =
-                $"Hello! Click this link to reset your password on LocalGoods website: {callback} (link to Angular page). " +
+                $"Hello! Click this link to reset your password on LocalGoods website: {callback}. " +
                 "Please ignore this email if it wasn't you.";
             
             var url = _configuration.GetConnectionString("LOGICAL_APP_URL");

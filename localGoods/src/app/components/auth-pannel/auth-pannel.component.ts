@@ -5,6 +5,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { LogInPageComponent } from '../log-in-page/log-in-page.component';
 import { SignUpPageComponent } from '../sign-up-page/sign-up-page.component';
 import { UserService } from 'src/app/services/user.service';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-auth-pannel',
@@ -16,7 +18,7 @@ export class AuthPannelComponent {
   userInfoHidden:boolean = true;
 
   constructor(private dialogRef: MatDialog, public visibility: VisibilityService, public basketService:BasketService,
-    public userService:UserService) { }
+    public userService:UserService, private _location: Location,) { }
 
   openLogInPage() {
     this.dialogRef.open(LogInPageComponent, {

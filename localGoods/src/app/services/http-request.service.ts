@@ -52,7 +52,18 @@ export class HttpRequestService {
 
   constructor(private http: HttpClient,
     private localStorageService: LocalStorageService,
-    private userService:UserService) { }
+    private userService:UserService) {
+      let user = localStorage.getItem('user');
+        if(user){
+          let user1:{token:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none'}));
+          if(this.getDecodedAccessToken(user1.token)){
+            let userId = this.getDecodedAccessToken(user1.token).sub;
+            this.userService.userRole = this.getDecodedAccessToken(user1.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+            this.getUser(userId).subscribe(
+              data => this.userService.user = data);
+          };
+        }
+    }
 
   getCategories():Observable<Category[]>{
     return this.http.get<Category[]>(`${this.URL}/Categories`)
@@ -128,11 +139,21 @@ export class HttpRequestService {
     return this.http.post(`${environment.apiUrl}/auth/resetPassword`, model);
   }
 
+  forgotPassword(model: any){
+    return this.http.post(`${environment.apiUrl}/auth/forgotPassword`, model);
+  }
+
+  sendEmailConfirmationLink(email: string){
+    var parameters = {email: email};
+    return this.http.get(`${environment.apiUrl}/auth/sendEmailConfirmationLink`,{
+      params: parameters
+    });
+  }
+
   checkUser(url: string, value: Object, dialogRef: any) {
     this.post(url, value).pipe(
       tap(token => {
         this.localStorageService.setItemToStorage('user', JSON.stringify(token));
-
         this.userService.isAutorized = true;
         dialogRef.close();
         let user = localStorage.getItem('user');
@@ -156,6 +177,7 @@ export class HttpRequestService {
   }
 
   getVendorProducts(vendorId: string): Observable<Good[]>{
+    console.log('Vendor id: ', vendorId)
     return this.http.get<Good[]>(`${this.URL}/Vendors/${vendorId}/products`);
   }
 }

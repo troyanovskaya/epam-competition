@@ -12,5 +12,6 @@ namespace LocalGoods.DAL.Repositories.Interfaces
         Task<Vendor> GetByUserIdAsync(Guid id);
         Task<Vendor> GetByNameAsync(string name);
         Task<Vendor> GetByProductIdAsync(Guid id);
+        Task<Vendor> GetByUserIdAsync(Guid userId);
     }
 }

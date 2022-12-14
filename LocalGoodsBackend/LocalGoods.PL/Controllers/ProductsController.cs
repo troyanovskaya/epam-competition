@@ -58,7 +58,7 @@ namespace LocalGoods.PL.Controllers
             return CreatedAtAction(nameof(GetById), new { id = createdProduct.Id }, createdProduct);
         }
         
-        [Authorize(Roles = "Vendor")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Vendor")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -68,7 +68,7 @@ namespace LocalGoods.PL.Controllers
             return NoContent();
         }
 
-        [Authorize(Roles = "Vendor")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Vendor")]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

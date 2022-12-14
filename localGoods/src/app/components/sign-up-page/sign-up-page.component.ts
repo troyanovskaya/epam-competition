@@ -8,6 +8,7 @@ import { Observable, catchError, of , tap } from 'rxjs';
 import { City, Country } from '../country.model';
 import { User } from 'src/app/schema/user.model';
 import { SendEmailConfirmationComponent } from '../send-email-confirmation/send-email-confirmation.component';
+import { NotifierService } from 'src/app/services/notifier.service';
 
 @Component({
   selector: 'app-sign-up-page',
@@ -68,7 +69,8 @@ export class SignUpPageComponent {
     private dialogRef: MatDialogRef<SignUpPageComponent>,
     private http: HttpRequestService,
     private localStorageService: LocalStorageService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private notifier: NotifierService) { }
 
   ngOnInit() {
     this.http.getCountries().subscribe((countriesList: Array<Country>) => {
@@ -99,7 +101,7 @@ export class SignUpPageComponent {
         return;
       }),
       catchError(err => {
-        alert(err.error.message)
+        this.notifier.showNotification(err.error.message, 'ERROR');
         return of('');
       })
     ).subscribe()

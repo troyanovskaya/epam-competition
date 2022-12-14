@@ -18,3 +18,9 @@ p{
   border:1px solid white;
   padding:10px;
 }
+@media screen and (max-width: 700px) {
+  div.panel{
+    box-sizing: border-box;
+    width:100%;
+  }
+}

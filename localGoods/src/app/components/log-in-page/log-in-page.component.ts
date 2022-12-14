@@ -5,6 +5,7 @@ import { SignUpPageComponent } from '../sign-up-page/sign-up-page.component';
 import { HttpRequestService } from '../../services/http-request.service';
 import { catchError, of} from 'rxjs';
 import { UserForgotPasswordComponent } from '../user-forgot-password/user-forgot-password.component';
+import { NotifierService } from 'src/app/services/notifier.service';
 
 @Component({
   selector: 'app-log-in-page',

@@ -23,13 +23,23 @@
 .auth-container {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content:center;
   padding: 20px;
   gap:10px;
 }
 
 .menu>div {
   font-size: 1.2em;
+}
+
+.b-cont{
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items:center;
+  gap:10px;
 }
 
 .auth-container span,
@@ -83,6 +93,18 @@ app-user-info{
 img.apple{
   width:20px;
   height:20px;
+}
+
+@media screen and (max-device-width: 700px) {
+  div.flex-container > * {
+    width:100%;
+  }
+  .logo{
+    font-size: 1.2em;
+    padding: 5px;
+    margin: 10px;
+    width:100px;
+  }
 }
 
 

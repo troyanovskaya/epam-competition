@@ -41,7 +41,8 @@ namespace LocalGoods.PL.Controllers
         }
 
 
-        [Authorize(Roles = "Buyer, Vendor")]
+
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Buyer, Vendor")]
         [HttpGet("{id}/orders")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OrderModel>))]
         public async Task<IActionResult> GetUserOrders(Guid id)

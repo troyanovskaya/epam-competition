@@ -1,7 +1,6 @@
 ﻿using LocalGoods.DAL.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using System;
 using LocalGoods.Shared;
 
 namespace LocalGoods.DAL.Configurations
@@ -31,12 +30,12 @@ namespace LocalGoods.DAL.Configurations
                 },
                 new OrderStatus
                 {
-                    Id = new Guid("6f0a355f-c0b1-46a3-a93a-94fad9aa1ed3"),
+                    Id = GlobalValues.PendingOrderStatusId,
                     Name = "Pending"
                 },
                 new OrderStatus
                 {
-                    Id = new Guid("de780f77-888f-44e8-be34-d796f5342b55"),
+                    Id = GlobalValues.PaidOrderStatusId,
                     Name = "Paid"
                 },
                 new OrderStatus
@@ -46,7 +45,7 @@ namespace LocalGoods.DAL.Configurations
                 },
                 new OrderStatus
                 {
-                    Id = new Guid("712572b2-5991-48eb-a882-5b842dcfc5bf"),
+                    Id = GlobalValues.CanceledOrderStatusId,
                     Name = "Canceled"
                 }
             );

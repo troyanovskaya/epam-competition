@@ -1,0 +1,12 @@
+<div class = "order-details-background">
+    <div class="flex-container">
+        <div class="product" routerLink="/product/{{product.id}}">
+          <h3 >{{product.name | titlecase}}</h3>
+          <img class="product-img" src="{{product.poster}}" alt="{{product.name}}">
+        </div>
+        <div class="icons">
+          <div class="price">{{(1-orderDetails.discount/100)*orderDetails.price | currency:'GBP'}}/{{product.unitType.name}} </div>
+          <div class="price">x{{orderDetails.amount}}</div>
+        </div>
+    </div>      
+</div>

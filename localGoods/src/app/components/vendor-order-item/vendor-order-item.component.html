@@ -1,9 +1,16 @@
 <div>
   <div class="order-item">
-    <div><p>Order number: {{order.good.id}}</p></div>
-    <div><p>Adress: {{order.recipient.address}}</p></div>
-    <div><p>Receiver: {{order.recipient.name}} {{order.recipient.surname}}</p></div>
-    <div><p>Contact Information: {{order.recipient.phone}}</p></div>
-    <div><p>Total: {{order.good.price*order.quantity | currency: 'GBP'}}</p></div>
+    <div><p>Order number: <b>{{order.id}}</b></p></div>
+    <div><p>Date: {{order.createdAt | date: 'short'}}</p></div>
+    <div><p>User: {{user.firstName + ' ' + user.lastName + ' \<' + user.email + '\>'}}</p></div>
+    <div><p>PaymentMethod: {{paymentMethod.name}}</p></div>
+    <div><p>DeliveryMethod: {{deliveryMethod.name}}</p></div>
+    <div><p>DeliveryInformation: {{order.deliveryInformation == '' ? 'None' : order.deliveryInformation }}</p></div>
+    <div class="order-details">
+      <app-order-details *ngFor="let orderDetails of order.orderDetails" [orderDetails]="orderDetails"></app-order-details>
+    </div>
+    <div class="order-status"><p>{{orderStatus.name}}</p></div>
+    <div *ngIf="isOrderStatusChangeable()" class="order-status-stage" (onClick)="setOrderStatusToTheNextStage()"><p>Next order stage</p></div>
+    <div *ngIf="isOrderCancelable()" class="order-status-cancel" (onClick)="cancelOrder()"><p>Cancel the order</p></div>
   </div>
 </div>

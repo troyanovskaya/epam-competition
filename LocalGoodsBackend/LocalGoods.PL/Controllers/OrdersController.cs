@@ -42,7 +42,7 @@ namespace LocalGoods.PL.Controllers
         [Authorize(AuthenticationSchemes = "Bearer", Roles = "Buyer, Vendor")]
         [HttpGet("current-user")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OrderModel>))]
-        public async Task<ActionResult> GetAllCurrentUserOrdersByOrderStatusIds([FromBody] OrderRequest orderRequest)
+        public async Task<ActionResult> GetAllCurrentUserOrdersByOrderStatusIds([FromQuery] OrderRequest orderRequest)
         {
             var orders = await _orderService.GetAllCurrentUserOrdersByOrderStatusIdsAsync(orderRequest.OrderStatusIds);
 
@@ -68,6 +68,17 @@ namespace LocalGoods.PL.Controllers
             var orderStatuses = await _orderService.GetAllOrderStatusesAsync();
 
             return Ok(orderStatuses);
+        }
+
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [HttpGet("statuses/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OrderStatusModel))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> GetOrderStatuseByid(Guid id)
+        {
+            var orderStatuse = await _orderService.GetOrderStatuseByidAsync(id);
+
+            return Ok(orderStatuse);
         }
 
         [Authorize(AuthenticationSchemes = "Bearer")]

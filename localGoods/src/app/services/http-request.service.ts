@@ -198,10 +198,6 @@ export class HttpRequestService {
     return this.http.get<Good[]>(`${this.URL}/Vendors/${vendorId}/products`);
   }
 
-  getUnitTypes(): Observable<Unit[]> {
-    return this.http.get<Unit[]>(`${this.URL}/UnitTypes`);
-  }
-
   getCategory():Observable<Category[]>{
     return this.http.get<Category[]>(`${this.URL}/Categories`);
   }

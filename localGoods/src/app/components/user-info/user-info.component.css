@@ -62,4 +62,11 @@ p{
 .profile-menu a{
   color:white;
 }
+@media screen and (max-width: 420px) {
+  .profile{
+    width:100%;
+  }
+}
+
+
 

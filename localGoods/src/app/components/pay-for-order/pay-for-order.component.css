@@ -43,6 +43,7 @@
 .item{
   display:flex;
   flex-direction: row;
+  text-align: center;
   gap:20px;
   justify-content: center;
 }
@@ -126,6 +127,12 @@ input{
 img.chicken{
   width:300px;
   height:200px;
+}
+
+@media screen and (max-width: 700px) {
+  .order{
+    width:100%;
+  }
 }
 
 

@@ -120,6 +120,13 @@ export class HttpRequestService {
     return this.http.get<Vendor>(`${this.URL}/Vendors/${vendorId}`);
 
   }
+  deleteProductById(productId:string) {
+    let user1:{token:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none'}));
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + user1.token);
+    return this.http.delete(`${this.URL}/Products/${productId}`, {headers});
+
+  }
   getProduct(productId:string): Observable<Good>{
     return this.http.get<Good>(`${this.URL}/Products/${productId}`);
   }

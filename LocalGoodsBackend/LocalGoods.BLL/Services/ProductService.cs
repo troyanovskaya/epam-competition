@@ -201,7 +201,7 @@ namespace LocalGoods.BLL.Services
                 throw new AuthException("This is not your product, you can not delete it");
             }
 
-            await _productRepository.DeleteByIdAsync(id);
+            await _productRepository.SoftDeleteAsync(id);
             await _productRepository.SaveChangesAsync();
         }
         

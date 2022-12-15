@@ -24,16 +24,17 @@ export class ProductPageComponent implements OnInit {
 
   ngOnInit() {
     this.httprequestService.getProduct(this.id).subscribe(
-      data => {this.good = data;
-      this.httprequestService.getVendor(this.good.vendorId)
+      data => {
+        this.good = data;
+        console.log(data);
+        this.httprequestService.getVendorById(this.good.vendorId)
     .subscribe( data => this.vendor = data)});
   }
   addToBasket(){
     this.basketService.basket
-    .filter( el => el.good.id === this.good.id) == undefined ?
+    .filter( el => el.good.id === this.good.id)[0] == undefined ?
     this.basketService.basket.push({good:this.good, quantity:1}) :
     this.basketService.basket.filter( el => el.good.id === this.good.id)[0].quantity++;
     this.basketService.onTotalChange();
   }
-
 }

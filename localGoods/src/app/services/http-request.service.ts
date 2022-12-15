@@ -13,7 +13,6 @@ import { PaymentMethod } from '../schema/paymentMethod.model';
 import { Vendor } from '../schema/vendor.model';
 import { UserService } from './user.service';
 import jwt_decode from 'jwt-decode';
-import { Unit } from '../schema/unit.model';
 import { NotifierService } from './notifier.service';
 import { PublishedOrderItem } from '../schema/publishedOrder.model';
 import { UnitType } from '../schema/unitType.model';
@@ -110,6 +109,8 @@ export class HttpRequestService {
       }
       return this.http.get<Good[]>(`${this.URL}/Products?${url}`);
   }
+
+
 
   getVendor(userId:string): Observable<Vendor>{
     return this.http.get<Vendor>(`${this.URL}/users/${userId}/vendor`);
@@ -261,12 +262,8 @@ export class HttpRequestService {
 
     return headers;
   }
-<<<<<<< HEAD
 
   getUnitTypes():Observable<UnitType[]>{
     return this.http.get<UnitType[]>(`${this.URL}/UnitTypes`);
   }
 }
-=======
-}
->>>>>>> c526af5534e9505883166e4f98cad74945a0cbc4

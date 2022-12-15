@@ -22,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="ServiceTests\VendorServiceTests" />
+      <Folder Include="ServiceTests\CountryServiceTests" />
     </ItemGroup>
 
 </Project>

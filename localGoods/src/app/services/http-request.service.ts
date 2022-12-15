@@ -250,4 +250,8 @@ export class HttpRequestService {
 
     return headers;
   }
+
+  getUnitTypes():Observable<UnitType[]>{
+    return this.http.get<UnitType[]>(`${this.URL}/UnitTypes`);
+  }
 }

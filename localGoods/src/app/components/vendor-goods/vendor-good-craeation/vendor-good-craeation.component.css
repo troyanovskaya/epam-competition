@@ -1,0 +1,94 @@
+
+
+.header-div {
+    display: flex;
+    width: inherit;
+    background-color: #162e50;
+    color: white;
+    font-size: 1.2em;
+    line-height: 40px;
+    padding-top: 0;
+    position: relative;
+}
+
+.header {
+    text-align: center;
+    margin: auto;
+    margin-bottom: 0;
+    font-size: larger;
+}
+
+.cross {
+    cursor: pointer;
+    margin-right: 2%;
+}
+
+form {
+    font-size: smaller;
+}
+
+label {
+    font-size: smaller;
+}
+
+.side-sections {
+    display: flex;
+    justify-content: space-around;
+    margin: auto;
+}
+
+.side-sections-part {
+    width: 40%;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.label-input-pair {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.input-option {
+    cursor: pointer;
+}
+
+.button-line {
+    width: 100%;
+    margin-top: 4%;
+    display: flex;
+    justify-content: center
+}
+
+button {
+    width: 50%;
+    padding: 0.8%;
+    border: none;
+    border-radius: 10px;
+    transition: 1s;
+    cursor: pointer;
+}
+
+button:valid {
+    background-color: #d9e6f6;
+}
+
+button:valid:hover {
+    color: white;
+    background-color: #162e50;
+}
+
+input,
+select {
+    padding: 5px;
+    border-radius: 5px;
+    border: 0.5px solid gray;
+    margin-top: 5px;
+}
+
+.requirementsError {
+    font-size: 7px;
+    color: red;
+}

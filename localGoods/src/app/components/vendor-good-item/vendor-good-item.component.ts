@@ -30,7 +30,7 @@ export class VendorGoodItemComponent implements OnInit {
     this.publishedGoodsService.vendorGoods = this.publishedGoodsService.vendorGoods
       .filter(el => el.id !== this.item.id);
     this.httpRequestService.deleteProductById(this.item.id)
-    .subscribe(data => console.log);
+    .subscribe(data => console.log, err => console.log(err));
 
   }
 

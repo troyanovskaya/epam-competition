@@ -35,7 +35,7 @@ namespace LocalGoods.DAL.Repositories
         public async Task SoftDeleteAsync(Guid id)
         {
             var entity = await _dbSet.FirstOrDefaultAsync(p => p.Id == id);
-            _context.Entry(entity).State = EntityState.Deleted;
+            entity.Deleted = true;
         }
     }
 }

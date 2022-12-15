@@ -1,38 +1,23 @@
-.profile-menu{
-  background-color: cadetblue;
-  padding:10px;
-  height: 50px;
+.flex-container{
   display:flex;
-  flex-direction: row;
-  align-items: center;
   justify-content: center;
-}
-.profile-menu > *{
-  padding:10px;
-  width:100px;
-  margin: 5px;
-  border:1px solid white;
-}
-
-.profile-menu a{
-  color:white;
-}
-
-.active-menu{
-  background-color: #7382a1;
-}
-
-.history{
-  display: flex;
-  flex-direction:row;
-  flex-wrap: wrap;
-  padding:20px;
+  align-items: center;
+  flex-direction: row;
   gap:20px;
+  padding:20px;
+  flex-wrap:wrap;
 }
 
-.history-item{
+app-vendor-order-item {
+  width: 70%;
+}
+
+.empty {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  width: 50%;
+  border-radius: 15px;
   background-color: white;
-  border-radius: 10px;
-  padding:10px;
-  width:200px;
+  font-size: 20pt;
+  text-align: center;
 }

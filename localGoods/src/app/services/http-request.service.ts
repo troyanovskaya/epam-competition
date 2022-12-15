@@ -15,6 +15,9 @@ import { UserService } from './user.service';
 import jwt_decode from 'jwt-decode';
 import { Unit } from '../schema/unit.model';
 import { NotifierService } from './notifier.service';
+import { PublishedOrderItem } from '../schema/publishedOrder.model';
+import { UnitType } from '../schema/unitType.model';
+import { OrderStatus } from '../schema/orderStatus.model';
 
 
 @Injectable({
@@ -22,18 +25,19 @@ import { NotifierService } from './notifier.service';
 })
 export class HttpRequestService {
   URL:string = 'https://localgoodsapi.azurewebsites.net/api';
+  NewOrderStatusId: string = '5cd43639-e879-4331-9e3b-019537bb729b';
+  PendingOrderStatusId: string = '6f0a355f-c0b1-46a3-a93a-94fad9aa1ed3';
+  PaidOrderStatusId: string = 'de780f77-888f-44e8-be34-d796f5342b55';
+  CompletedOrderStatusId: string = '17cf0057-aa23-4cdf-96a4-6573c7ae96e6';
+  CanceledOrderStatusId: string = '712572b2-5991-48eb-a882-5b842dcfc5bf';
 
   postVendor(vendor:Vendor){
-    let user1:{token:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none'}));
-    let headers = new HttpHeaders();
-    headers = headers.set('Authorization', 'Bearer ' + user1.token);
+    let headers = this.getHeadersWithToken();
     return this.http.post(`${this.URL}/Vendors`, vendor, {headers:headers});
   }
 
   postOrder(order: OrderItem) {
-    let user1:{token:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none'}));
-    let headers = new HttpHeaders();
-    headers = headers.set('Authorization', 'Bearer ' + user1.token);
+    let headers = this.getHeadersWithToken();
     console.log(headers);
     return this.http.post<OrderItem>(`${this.URL}/Orders`, order, {headers:headers}).subscribe(
       (data) => console.log(data),
@@ -117,6 +121,13 @@ export class HttpRequestService {
     return this.http.get<Vendor>(`${this.URL}/Vendors/${vendorId}`);
 
   }
+  deleteProductById(productId:string) {
+    let user1:{token:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none'}));
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + user1.token);
+    return this.http.delete(`${this.URL}/Products/${productId}`, {headers});
+
+  }
   getProduct(productId:string): Observable<Good>{
     return this.http.get<Good>(`${this.URL}/Products/${productId}`);
   }
@@ -147,9 +158,7 @@ export class HttpRequestService {
   }
 
   createVendor(model: any){
-    let user1:{token:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none'}));
-    let headers = new HttpHeaders();
-    headers = headers.set('Authorization', 'Bearer ' + user1.token);
+    let headers = this.getHeadersWithToken();
 
     return this.http.post(`${environment.apiUrl}/vendors`, model, {
       headers: headers
@@ -196,5 +205,58 @@ export class HttpRequestService {
   getCategory():Observable<Category[]>{
     return this.http.get<Category[]>(`${this.URL}/Categories`);
   }
-}
 
+  getPublishedOrders(vendorId: string): Observable<PublishedOrderItem[]> {
+    return this.http.get<PublishedOrderItem[]>(`${this.URL}/Vendors/${vendorId}/orders`);
+  }
+
+  getVendorByUserId(userId: string): Observable<Vendor> {
+    return this.http.get<Vendor>(`${this.URL}/Users/${userId}/vendor`);
+  }
+
+  getDeliveryMethod(deliveryMethodId: string): Observable<DeliveryMethod>{
+    return this.http.get<DeliveryMethod>(`${this.URL}/DeliveryMethods/${deliveryMethodId}`)
+  }
+
+  getPaymentMethod(paymentMethod: string): Observable<PaymentMethod>{
+    return this.http.get<DeliveryMethod>(`${this.URL}/PaymentMethods/${paymentMethod}`)
+  }
+
+  getUnitType(unitTypeId: string): Observable<UnitType>{
+    return this.http.get<DeliveryMethod>(`${this.URL}/UnitTypes/${unitTypeId}`)
+  }
+
+  getOrderStatus(orderStatusId: string): Observable<OrderStatus>{
+    return this.http.get<DeliveryMethod>(`${this.URL}/Orders/statuses/${orderStatusId}`)
+  }
+
+  getPastOrdersOrders(): Observable<PublishedOrderItem[]> {
+    var parameters = {orderStatusIds: [this.CompletedOrderStatusId, this.CanceledOrderStatusId]};
+    let headers = this.getHeadersWithToken();
+    return this.http.get<PublishedOrderItem[]>(`${this.URL}/Orders/current-user`, {params: parameters, headers: headers});
+  }
+
+  getOpenedOrders(): Observable<PublishedOrderItem[]> {
+    var parameters = {orderStatusIds: [this.NewOrderStatusId, this.PendingOrderStatusId, this.PaidOrderStatusId]};
+    let headers = this.getHeadersWithToken();
+    return this.http.get<PublishedOrderItem[]>(`${this.URL}/Orders/current-user`, {params: parameters, headers: headers});
+  }
+
+  changeOrderStatus(orderId: string): Observable<Object> {
+    let headers = this.getHeadersWithToken();
+    return this.http.put(`${this.URL}/Orders/${orderId}/status`, {headers:headers});
+  }
+
+  cancelOrder(orderId: string): Observable<Object> {
+    let headers = this.getHeadersWithToken();
+    return this.http.put(`${this.URL}/Orders/${orderId}/cancel`, {headers:headers});
+  }
+
+  private getHeadersWithToken(): HttpHeaders {
+    let user1:{token:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none'}));
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + user1.token);
+
+    return headers;
+  }
+}

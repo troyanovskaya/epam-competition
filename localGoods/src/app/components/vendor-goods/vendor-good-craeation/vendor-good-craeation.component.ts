@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Unit } from '../../../schema/unit.model'
+import { UnitType } from '../../../schema/unitType.model'
 import { HttpRequestService } from 'src/app/services/http-request.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Category } from 'src/app/schema/category.model';
@@ -8,6 +8,8 @@ import { catchError, of, tap } from 'rxjs';
 import { LocalStorageService } from 'src/app/local-storage.service';
 import { User } from 'src/app/schema/user.model';
 import { Vendor } from 'src/app/schema/vendor.model';
+import { PublishedGoodsService } from 'src/app/services/published-goods.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-vendor-good-craeation',
@@ -16,29 +18,45 @@ import { Vendor } from 'src/app/schema/vendor.model';
 })
 export class VendorGoodCraeationComponent{
 
-  units: Unit[] = [];
+  units: UnitType[] = [];
   selectedUnitId!:string;
   categories: Category[]=[];
   selectedCategoryId!:string;
-  vendor:Vendor = JSON.parse(localStorage.getItem('ve')!)
+  user!: Object;
+  vendorId!: string;
+  headers!: HttpHeaders;
 
   constructor(
     private http: HttpRequestService, 
+    private httpPost: HttpClient,
+    private getUserService : PublishedGoodsService,
     private dialogRef: MatDialogRef<VendorGoodCraeationComponent>,
-    private localStorageService: LocalStorageService,) { }
+    private localStorageService: LocalStorageService,) { 
+      let user = localStorage.getItem('user');
+      if(user){
+        let user1:{token:string, validTo:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none', validTo:'none'}));
+        this.headers =new HttpHeaders();
+        this.headers = this.headers.set('Authorization', 'Bearer ' + user1.token)
+        if(this.getUserService.getDecodedAccessToken(user1.token)){
+          let userId = this.getUserService.getDecodedAccessToken(user1.token).sub;
+          this.http.getVendor(userId).subscribe((vendor: Vendor) => {
+            this.vendorId = vendor.id;
+            console.log(this.vendorId);
+        })
+      }
+    }
+  }
 
   ngOnInit() {
-    this.http.getUnitTypes().subscribe((unitList: Array<Unit>) => {
+    this.http.getUnitTypes().subscribe((unitList: Array<UnitType>) => {
         this.units=unitList;
         this.selectedUnitId = this.units[0].id;
-        console.log(this.units);
     });
     this.http.getCategories().subscribe((categoryList: Array<Category>) => {
       this.categories=categoryList;
       this.selectedCategoryId = this.categories[0].id;
-      console.log(this.units);
   });
-  }
+  } 
 
   goodForm = new FormGroup({
     name: new FormControl('', [
@@ -75,19 +93,19 @@ export class VendorGoodCraeationComponent{
   })
 
   createGood(){
-    this.splitImageURLs(this.goodForm.value.image!);
-    this.http.post('/Products',{
+    this.httpPost.post('https://localgoodsapi.azurewebsites.net/api/Products',{
         name: this.goodForm.value.name,
         description: this.goodForm.value.description,
         price: this.goodForm.value.price,
-        discount: this.goodForm.value.discount,
-        vendorId: this.vendor.id,
-        unitTypeId: this.selectedUnitId,
-        amount: this.goodForm.value.amount,
         poster: this.goodForm.value.poster,
+        discount: this.goodForm.value.discount,
+        vendorId: this.vendorId,
+        amount: this.goodForm.value.amount,
+        unitTypeId: this.selectedUnitId,
+        categoryIds: [this.selectedCategoryId],
         images: this.splitImageURLs(this.goodForm.value.image!),
-        categoryId: [this.selectedCategoryId]
-    }).pipe(
+    },{headers: this.headers})
+    .pipe(
       tap(token => {
         this.localStorageService.setItemToStorage('product', JSON.stringify(token));
         this.dialogRef.close();
@@ -96,6 +114,7 @@ export class VendorGoodCraeationComponent{
       catchError(err => {
         console.log(err)
         alert(err.error.message)
+        console.log(this.headers)
         return of('');
       })
     ).subscribe()

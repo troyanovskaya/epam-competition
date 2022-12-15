@@ -13,7 +13,6 @@ import { PaymentMethod } from '../schema/paymentMethod.model';
 import { Vendor } from '../schema/vendor.model';
 import { UserService } from './user.service';
 import jwt_decode from 'jwt-decode';
-import { Unit } from '../schema/unit.model';
 import { NotifierService } from './notifier.service';
 import { PublishedOrderItem } from '../schema/publishedOrder.model';
 import { UnitType } from '../schema/unitType.model';
@@ -110,6 +109,8 @@ export class HttpRequestService {
       return this.http.get<Good[]>(`${this.URL}/Products?${url}`);
   }
 
+
+
   getVendor(userId:string): Observable<Vendor>{
     return this.http.get<Vendor>(`${this.URL}/users/${userId}/vendor`);
 
@@ -201,10 +202,6 @@ export class HttpRequestService {
     return this.http.get<Good[]>(`${this.URL}/Vendors/${vendorId}/products`);
   }
 
-  getUnitTypes(): Observable<Unit[]> {
-    return this.http.get<Unit[]>(`${this.URL}/UnitTypes`);
-  }
-
   getCategory():Observable<Category[]>{
     return this.http.get<Category[]>(`${this.URL}/Categories`);
   }
@@ -262,5 +259,9 @@ export class HttpRequestService {
     headers = headers.set('Authorization', 'Bearer ' + user1.token);
 
     return headers;
+  }
+
+  getUnitTypes():Observable<UnitType[]>{
+    return this.http.get<UnitType[]>(`${this.URL}/UnitTypes`);
   }
 }

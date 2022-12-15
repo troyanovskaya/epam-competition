@@ -17,3 +17,20 @@ app-vendors-adverb, app-vendors-search{
 app-goods{
   width:100%;
 }
+
+@media screen and (max-width: 700px) {
+  div.flex-container{
+    box-sizing: border-box;
+    width:100%;
+    gap:20px;
+  }
+  app-vendors-adverb, app-vendors-search{
+    width:90%;
+  }
+}
+
+
+
+
+
+

@@ -176,7 +176,16 @@ export class HttpRequestService {
             let userId = this.getDecodedAccessToken(user1.token).sub;
             //this.userService.userRole = this.getDecodedAccessToken(user1.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
 
-            this.userService.getRolesByUserId(userId);
+            this.userService.getRolesByUserId(userId).subscribe(r => {
+              if (r){
+                if (r.includes('Vendor')){
+                  this.userService.userRole = 'VENDOR';
+                }
+                else{
+                  this.userService.userRole = 'Buyer';
+                }
+              }
+            })
             this.getUser(userId).subscribe(
               data => this.userService.user = data);
           };

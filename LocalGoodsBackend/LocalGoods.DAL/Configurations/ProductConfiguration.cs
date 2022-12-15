@@ -38,9 +38,8 @@ namespace LocalGoods.DAL.Configurations
             builder
                 .HasMany(p => p.OrderDetails)
                 .WithOne(od => od.Product);
-            
-            builder.Property<bool>("IsDeleted");
-            builder.HasQueryFilter(g => !EF.Property<bool>(g, "IsDeleted"));
+
+            builder.HasQueryFilter(p => !p.Deleted);
         }
     }
 }

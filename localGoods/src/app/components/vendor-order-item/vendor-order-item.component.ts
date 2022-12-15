@@ -41,17 +41,18 @@ export class VendorOrderItemComponent implements OnInit {
     this.httpRequestService.getDeliveryMethod(this.order.deliveryMethodId)
       .subscribe(user => this.deliveryMethod = user);
     this.httpRequestService.getOrderStatus(this.order.orderStatusId)
-      .subscribe(user => this.deliveryMethod = user);
+      .subscribe(status => this.orderStatus = status);
   }
 
-  setOrderStatusToTheNextStage(): void {
+  setOrderStatusToTheNextStage() {
     this.httpRequestService.changeOrderStatus(this.order.id)
       .subscribe({error: e => console.log(e)});
   }
 
-  cancelOrder(): void {
+  cancelOrder() {
+    console.log('here')
     this.httpRequestService.cancelOrder(this.order.id)
-      .subscribe({error: e => console.log(e)});
+      .subscribe(o => console.log(o), err => console.log(err));
   }
 
   isOrderStatusChangeable(): boolean {

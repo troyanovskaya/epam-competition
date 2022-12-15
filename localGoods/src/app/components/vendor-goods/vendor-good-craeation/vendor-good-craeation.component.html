@@ -1,7 +1,109 @@
-<form (submit)="createGood()">
-    <input type="file" placeholder="add picture">
-    <input type="text" placeholder="name">
-    <input type="text" placeholder="description">
-    <input type="number" placeholder="price in pound">
-    <button type="submit">Create</button>
+<div class="header-div">
+    <div class="header">Add a product!</div>
+    <span class="cross" (click)="closeWindow()">&#10060;</span>
+</div>
+
+<form [formGroup]="goodForm" (submit)="createGood()">
+
+    <div class="side-sections">
+
+        <div class="side-sections-part">
+
+            <div class="label-input-pair">
+                <label for="image" class="input-option">Add image URLs*
+                    <span class="requirementsError"
+                        *ngIf="!goodForm.controls['image'].valid  &&  goodForm.controls['image'].value">
+                        should contain minimum 5 letters
+                    </span>
+                </label>
+                <input type="text" id="image" placeholder="add picture" formControlName="image">
+            </div>
+
+            <div class="label-input-pair">
+                <label for="name" class="input-option">Good Name*
+                    <span class="requirementsError"
+                        *ngIf="!goodForm.controls['name'].valid  &&  goodForm.controls['name'].value">
+                        please, use only letters
+                    </span>
+                </label>
+                <input id="name" type="text" placeholder="name" formControlName="name">
+            </div>
+
+            <div class="label-input-pair">
+                <label for="description" class="input-option">Good description*
+                    <span class="requirementsError"
+                        *ngIf="!goodForm.controls['description'].valid  &&  goodForm.controls['description'].value">
+                        should contain 5-250 characters
+                    </span>
+                </label>
+                <input id="description" type="text" placeholder="description" formControlName="description">
+            </div>
+
+            <div class="label-input-pair">
+                <label for="price" class="input-option">Price in pound*
+                    <span class="requirementsError"
+                        *ngIf="!goodForm.controls['price'].valid  &&  goodForm.controls['price'].value">
+                        should be positive number
+                    </span>
+                </label>
+                <input id="price" type="number" placeholder="price in pound" formControlName="price">
+            </div>
+
+            <div class="label-input-pair">
+                <label for="discount" class="input-option">Discount*
+                    <span class="requirementsError"
+                        *ngIf="!goodForm.controls['discount'].valid  &&  goodForm.controls['discount'].value">
+                        should be positive number
+                    </span>
+                </label>
+                <input id="discount" type="number" placeholder="discount" formControlName="discount">
+            </div>
+
+        </div>
+
+
+        <div class="side-sections-part">
+
+            <div class="label-input-pair">
+                <label for="units" class="input-option">Unit type*</label>
+                <select name="unitType" formControlName="unit" id="units" (change)="selectUnit()">
+                    <option *ngFor="let unit of units">{{unit.name}}</option>
+                </select>
+            </div>
+
+            <div class="label-input-pair">
+                <label for="amount" class="input-option">Amount of good*
+                    <span class="requirementsError"
+                        *ngIf="!goodForm.controls['amount'].valid  &&  goodForm.controls['amount'].value">
+                        should be positive number
+                    </span>
+                </label>
+                <input id="amount" type="number" placeholder="amount" formControlName="amount">
+            </div>
+
+            <div class="label-input-pair">
+                <label for="poster" class="input-option">Poster*
+                    <span class="requirementsError"
+                        *ngIf="!goodForm.controls['poster'].value && !goodForm.controls['poster'].pristine">
+                        this field is required
+                    </span>
+                </label>
+                <input id="poster" type="text" placeholder="poster" formControlName="poster">
+            </div>
+
+            <div class="label-input-pair">
+                <label for="categories" class="input-option">Category*</label>
+                <select name="category" formControlName="category" id="categories" (change)="selectCategory()">
+                    <option *ngFor="let category of categories">{{category.name}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="button-line">
+        <button type="submit" [disabled]="!goodForm.valid">
+            Create
+        </button>
+    </div>
+
 </form>

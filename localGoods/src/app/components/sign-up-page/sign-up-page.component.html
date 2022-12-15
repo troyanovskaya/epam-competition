@@ -76,8 +76,7 @@
                         contain min 8 characters, min 1 upper case letter and 1 number
                     </span>
                 </label>
-                <input [type]="changetype? 'password' : 'text' " formControlName="password" id="password"
-                    placeholder="password" />
+                <input [type]="changetype? 'password' : 'text' " formControlName="password" id="password" placeholder="password" />
                 <span class="eyeicone"><img
                         [src]='visible? "../../../assets/eyeicon.png" : "../../../assets/eyeiconSlash.png"'
                         (click)="viewPassword()"></span>
@@ -91,8 +90,7 @@
                         should match with password
                     </span>
                 </label>
-                <input [type]="changeConfirmType? 'password' : 'text'" formControlName="confirmation" id="confirmation"
-                    placeholder="confirm your password" />
+                <input [type]="changeConfirmType? 'password' : 'text'" formControlName="confirmation" id="confirmation" placeholder="confirm your password" />
                 <span class="eyeicone"><img
                         [src]='visibleConfirm? "../../../assets/eyeicon.png" : "../../../assets/eyeiconSlash.png"'
                         (click)="viewConfirm()"></span>
@@ -103,13 +101,8 @@
     </div>
 
     <div class="button-line">
-        <button type="submit"
-            [disabled]="!(validationForm.valid && (validationForm.value.password === validationForm.value.confirmation))">
+        <button type="submit" [disabled]="!(validationForm.valid && (validationForm.value.password === validationForm.value.confirmation))">
             Create an account
         </button>
     </div>
-    <div class="confirm-email">
-        <button (click)="onSendEmailConfirmationLink()" class="confirm-email-btn" type="button">Send email confirmation link</button>
-    </div>
-
 </form>

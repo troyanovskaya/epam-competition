@@ -13,6 +13,7 @@ import { PaymentMethod } from '../schema/paymentMethod.model';
 import { Vendor } from '../schema/vendor.model';
 import { UserService } from './user.service';
 import jwt_decode from 'jwt-decode';
+import { Unit } from '../schema/unit.model';
 import { NotifierService } from './notifier.service';
 import { PublishedOrderItem } from '../schema/publishedOrder.model';
 import { UnitType } from '../schema/unitType.model';
@@ -110,8 +111,6 @@ export class HttpRequestService {
       return this.http.get<Good[]>(`${this.URL}/Products?${url}`);
   }
 
-
-
   getVendor(userId:string): Observable<Vendor>{
     return this.http.get<Vendor>(`${this.URL}/users/${userId}/vendor`);
 
@@ -121,10 +120,8 @@ export class HttpRequestService {
 
   }
   deleteProductById(productId:string) {
-    let user1:{token:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none'}));
-    let headers = new HttpHeaders();
-    headers = headers.set('Authorization', 'Bearer ' + user1.token);
-    return this.http.delete(`${this.URL}/Products/${productId}`, {headers});
+    let headers = this.getHeadersWithToken();
+    return this.http.delete(`${this.URL}/Products/${productId}`, {headers: headers});
 
   }
   getProduct(productId:string): Observable<Good>{
@@ -179,7 +176,16 @@ export class HttpRequestService {
             let userId = this.getDecodedAccessToken(user1.token).sub;
             //this.userService.userRole = this.getDecodedAccessToken(user1.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
 
-            this.userService.getRolesByUserId(userId);
+            this.userService.getRolesByUserId(userId).subscribe(r => {
+              if (r){
+                if (r.includes('Vendor')){
+                  this.userService.userRole = 'VENDOR';
+                }
+                else{
+                  this.userService.userRole = 'Buyer';
+                }
+              }
+            })
             this.getUser(userId).subscribe(
               data => this.userService.user = data);
           };
@@ -195,6 +201,14 @@ export class HttpRequestService {
 
   getVendorProducts(vendorId: string): Observable<Good[]>{
     return this.http.get<Good[]>(`${this.URL}/Vendors/${vendorId}/products`);
+  }
+
+  getUnitTypes(): Observable<Unit[]> {
+    return this.http.get<Unit[]>(`${this.URL}/UnitTypes`);
+  }
+
+  getCategory():Observable<Category[]>{
+    return this.http.get<Category[]>(`${this.URL}/Categories`);
   }
 
   getPublishedOrders(vendorId: string): Observable<PublishedOrderItem[]> {
@@ -218,7 +232,8 @@ export class HttpRequestService {
   }
 
   getOrderStatus(orderStatusId: string): Observable<OrderStatus>{
-    return this.http.get<DeliveryMethod>(`${this.URL}/Orders/statuses/${orderStatusId}`)
+    let headers = this.getHeadersWithToken();
+    return this.http.get<DeliveryMethod>(`${this.URL}/Orders/statuses/${orderStatusId}`, {headers: headers})
   }
 
   getPastOrdersOrders(): Observable<PublishedOrderItem[]> {
@@ -235,12 +250,12 @@ export class HttpRequestService {
 
   changeOrderStatus(orderId: string): Observable<Object> {
     let headers = this.getHeadersWithToken();
-    return this.http.put(`${this.URL}/Orders/${orderId}/status`, {headers:headers});
+    return this.http.put(`${this.URL}/Orders/${orderId}/status`, null, {headers:headers});
   }
 
   cancelOrder(orderId: string): Observable<Object> {
     let headers = this.getHeadersWithToken();
-    return this.http.put(`${this.URL}/Orders/${orderId}/cancel`, {headers:headers});
+    return this.http.put(`${this.URL}/Orders/${orderId}/cancel`, null, {headers:headers});
   }
 
   private getHeadersWithToken(): HttpHeaders {

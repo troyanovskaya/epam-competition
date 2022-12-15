@@ -10,5 +10,6 @@ namespace LocalGoods.DAL.Repositories.Interfaces
     {
         Task<IEnumerable<Product>> GetByFilterAsync(ProductFilterModel productFilterModel);
         Task<IEnumerable<Product>> GetAllByIds(IEnumerable<Guid> ids);
+        Task SoftDeleteAsync(Guid id);
     }
 }

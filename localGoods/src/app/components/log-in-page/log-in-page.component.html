@@ -22,8 +22,7 @@
                 contain min 8 characters, min 1 upper case letter and 1 number
             </span>
         </label>
-        <input [type]="changetype? 'password' : 'text' " formControlName="password" id="password"
-            placeholder="password" />
+        <input [type]="changetype? 'password' : 'text' " formControlName="password" id="password" placeholder="password" />
         <span class="eyeicone"><img [src]='visible? "../../../assets/eyeicon.png" : "../../../assets/eyeiconSlash.png"'
                 (click)="viewPassword()"></span>
         <a (click)="onForgotPassword()" class="forgot-password">Forgot password?</a>
@@ -33,5 +32,11 @@
         <button type="submit">Sign in</button>
         <span>Don't have an account?</span>
         <span class="sign-up" (click)="openSignUp()">Create an account</span>
+    </div>
+    <div>
+        <p>If you didn't receive email confirmation link, please click here</p>
+        <div class="confirm-email">
+            <button (click)="onSendEmailConfirmationLink()" class="confirm-email-btn" type="button">Send email confirmation link</button>
+        </div>
     </div>
 </form>

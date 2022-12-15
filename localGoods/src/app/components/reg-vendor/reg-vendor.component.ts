@@ -51,7 +51,6 @@ export class RegVendorComponent implements OnInit {
   createForm(){
     this.form = this.fb.group({
       name: [null, [Validators.required,
-        Validators.pattern('[A-Za-z]{1,32}'),
         Validators.minLength(5)]],
       viberNumber: [null, [Validators.required,
         Validators.pattern("^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$")]],

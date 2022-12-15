@@ -44,6 +44,7 @@ import { NotifierComponent } from './components/notifier/notifier.component';
 import { VendorItemPageComponent } from './components/vendor-item-page/vendor-item-page.component';
 import { SendEmailConfirmationComponent } from './components/send-email-confirmation/send-email-confirmation.component';
 import { UserForgotPasswordComponent } from './components/user-forgot-password/user-forgot-password.component';
+import { VendorGoodCraeationComponent } from './components/vendor-goods/vendor-good-craeation/vendor-good-craeation.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 
 const appRoutes:Routes = [
@@ -94,7 +95,8 @@ const appRoutes:Routes = [
         VendorItemPageComponent,
         SendEmailConfirmationComponent,
         UserForgotPasswordComponent,
-        OrderDetailsComponent,
+        VendorGoodCraeationComponent,
+        OrderDetailsComponent
     ],
     providers: [],
     bootstrap: [AppComponent],

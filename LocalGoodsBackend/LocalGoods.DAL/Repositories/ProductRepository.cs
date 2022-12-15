@@ -31,5 +31,11 @@ namespace LocalGoods.DAL.Repositories
                 .Where(p => ids.Contains(p.Id))
                 .ToListAsync();
         }
+
+        public async Task SoftDeleteAsync(Guid id)
+        {
+            var entity = await _dbSet.FirstOrDefaultAsync(p => p.Id == id);
+            entity.Deleted = true;
+        }
     }
 }

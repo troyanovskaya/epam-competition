@@ -13,6 +13,7 @@ namespace LocalGoods.DAL.Entities
         public double Amount { get; set; }
         public Guid VendorId { get; set; }
         public Guid UnitTypeId { get; set; }
+        public bool Deleted { get; set; }
         
         public virtual Vendor Vendor { get; set; }
         public virtual UnitType UnitType { get; set; }

@@ -109,3 +109,15 @@ input {
     top: 30px;
     right: 10px;
 }
+
+.confirm-email {
+    text-align: center;
+    margin-top: 2%;
+    width: 400px;
+}
+
+.confirm-email button {
+    display: block;
+    text-align: center;
+    width: 200px;
+}

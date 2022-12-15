@@ -6,6 +6,7 @@ import { HttpRequestService } from '../../services/http-request.service';
 import { catchError, of} from 'rxjs';
 import { UserForgotPasswordComponent } from '../user-forgot-password/user-forgot-password.component';
 import { NotifierService } from 'src/app/services/notifier.service';
+import { SendEmailConfirmationComponent } from '../send-email-confirmation/send-email-confirmation.component';
 
 @Component({
   selector: 'app-log-in-page',
@@ -65,5 +66,9 @@ export class LogInPageComponent {
   viewPassword(){
     this.visible=!this.visible;
     this.changetype=!this.changetype;
+  }
+
+  onSendEmailConfirmationLink(){
+    this.dialog.open(SendEmailConfirmationComponent);
   }
 }

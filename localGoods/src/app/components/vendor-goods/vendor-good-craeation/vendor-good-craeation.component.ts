@@ -61,12 +61,12 @@ export class VendorGoodCraeationComponent{
   goodForm = new FormGroup({
     name: new FormControl('', [
       Validators.required,
-      Validators.pattern("^[a-zA-Z\s]*$")
+      Validators.pattern("^[a-zA-Z \s]*$")
     ]),
     description: new FormControl('', [
       Validators.required,
       Validators.minLength(5),
-      Validators.maxLength(250)
+      Validators.maxLength(2000)
     ]),
     price: new FormControl(1, [
       Validators.required,

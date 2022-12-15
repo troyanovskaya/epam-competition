@@ -95,8 +95,8 @@ const appRoutes:Routes = [
         VendorItemPageComponent,
         SendEmailConfirmationComponent,
         UserForgotPasswordComponent,
-        VendorGoodCraeationComponent
-        OrderDetailsComponent,
+        VendorGoodCraeationComponent,
+        OrderDetailsComponent
     ],
     providers: [],
     bootstrap: [AppComponent],

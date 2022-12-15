@@ -27,7 +27,7 @@ namespace LocalGoods.DAL.Contexts
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             AddAuditEntityProperties();
-            HandleProductDelete();
+            //HandleProductDelete();
 
             return base.SaveChangesAsync(cancellationToken);
         }
@@ -52,7 +52,7 @@ namespace LocalGoods.DAL.Contexts
             }
         }
 
-        private void HandleProductDelete()
+        /*private void HandleProductDelete()
         {
             var entitiesToDelete = ChangeTracker.Entries()
                 .Where(e => e.State == EntityState.Deleted);
@@ -67,7 +67,7 @@ namespace LocalGoods.DAL.Contexts
                 entity.State = EntityState.Modified;
                 entity.CurrentValues["IsDeleted"] = true;
             }
-        }
+        }*/
 
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<Country> Countries { get; set; }

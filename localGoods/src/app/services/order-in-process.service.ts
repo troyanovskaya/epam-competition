@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { PublishedOrderItem } from '../schema/publishedOrder.model';
-import { HttpRequestService } from './http-request.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderInProcessService {
-  ordersInProcess: PublishedOrderItem[] = [];
+  currentOrders=[{id:1, adress:'Green street 16B, 13412', vendor: 'Vendor1', total:'643', status:'Waiting for approval'},
+  {id:1, adress:'Green street 16B, 13412', vendor: 'Vendor1', total:'643', status:'Waiting for approval'},
+  {id:1, adress:'Green street 16B, 13412', vendor: 'Vendor1', total:'643', status:'Waiting for approval'},
+  {id:1, adress:'Green street 16B, 13412', vendor: 'Vendor1', total:'643', status:'Waiting for approval'},
+  {id:1, adress:'Green street 16B, 13412', vendor: 'Vendor1', total:'643', status:'Waiting for approval'}]
 
-  constructor(private httpRequestService: HttpRequestService) {
-    this.httpRequestService.getOpenedOrders().subscribe(
-      data => this.ordersInProcess = data);
-  }
+
+  constructor() { }
 }

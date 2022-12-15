@@ -1,12 +1,9 @@
-import { OrderDetails } from "./orderDetails.model";
+import { Good } from "./good.model";
 
 export interface PublishedOrderItem{
-  id: string,
-  createdAt: Date,
-  userId: string,
-  paymentMethodId: string,
-  deliveryMethodId: string,
-  deliveryInformation: string,
-  orderStatusId: string,
-  orderDetails: OrderDetails[]
+  good:Good,
+  quantity:number,
+  status:string,
+  recipient: {name: string, surname: string, phone: string, address:string}
+
 }

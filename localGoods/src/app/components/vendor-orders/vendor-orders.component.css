@@ -1,23 +1,8 @@
 .flex-container{
   display:flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: row;
   gap:20px;
   padding:20px;
   flex-wrap:wrap;
 }
 
-app-vendor-order-item {
-  width: 70%;
-}
-
-.empty {
-  margin-top: 50px;
-  margin-bottom: 50px;
-  width: 50%;
-  border-radius: 15px;
-  background-color: white;
-  font-size: 20pt;
-  text-align: center;
-}

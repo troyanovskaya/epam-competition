@@ -1,15 +1,24 @@
 import { Injectable } from '@angular/core';
-import { PublishedOrderItem } from '../schema/publishedOrder.model';
-import { HttpRequestService } from './http-request.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderHistoryService {
-  pastOrders: PublishedOrderItem[] = [];
+  pastOrders = [{id:1, adress:'Green street 16B, 13412', vendor: 'Vendor1', total:'643', date:'12/11/2022'},
+  {id:1, adress:'Green street 16B, 13412', vendor: 'Vendor1', total:'643', date:'12/11/2022'},
+  {id:1, adress:'Green street 16B, 13412', vendor: 'Vendor1', total:'643', date:'12/11/2022'},
+  {id:1, adress:'Green street 16B, 13412', vendor: 'Vendor1', total:'643', date:'12/11/2022'},
+  {id:1, adress:'Green street 16B, 13412', vendor: 'Vendor1', total:'643', date:'12/11/2022'},
+  {id:1, adress:'Green street 16B, 13412', vendor: 'Vendor1', total:'643', date:'12/11/2022'},
+  {id:1, adress:'Green street 16B, 13412', vendor: 'Vendor1', total:'643', date:'12/11/2022'},
+  {id:1, adress:'Green street 16B, 13412', vendor: 'Vendor1', total:'643', date:'12/11/2022'},
+  {id:1, adress:'Green street 16B, 13412', vendor: 'Vendor1', total:'643', date:'12/11/2022'},
+  {id:1, adress:'Green street 16B, 13412', vendor: 'Vendor1', total:'643', date:'12/11/2022'},
+  {id:1, adress:'Green street 16B, 13412', vendor: 'Vendor1', total:'643', date:'12/11/2022'},
+  {id:1, adress:'Green street 16B, 13412', vendor: 'Vendor1', total:'643', date:'12/11/2022'},
+  {id:1, adress:'Green street 16B, 13412', vendor: 'Vendor1', total:'643', date:'12/11/2022'},
+  {id:1, adress:'Green street 16B, 13412', vendor: 'Vendor1', total:'643', date:'12/11/2022'},
+  {id:1, adress:'Green street 16B, 13412', vendor: 'Vendor1', total:'643', date:'12/11/2022'}]
 
-  constructor(private httpRequestService: HttpRequestService) {
-    this.httpRequestService.getPastOrdersOrders().subscribe(
-      data => this.pastOrders = data);
-  }
+  constructor() { }
 }

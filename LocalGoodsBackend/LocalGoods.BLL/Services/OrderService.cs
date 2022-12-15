@@ -110,18 +110,6 @@ namespace LocalGoods.BLL.Services
             return _mapper.Map<IEnumerable<OrderStatusModel>>(orderStatuses);
         }
 
-        public async Task<OrderStatusModel> GetOrderStatuseByidAsync(Guid orderStatusId)
-        {
-            var orderStatus = await _orderStatusRepository.GetByIdAsync(orderStatusId);
-
-            if (orderStatus is null)
-            {
-                throw new OrderStatusNotFoundException(orderStatusId);
-            }
-
-            return _mapper.Map<OrderStatusModel>(orderStatus);
-        }
-
         public async Task<OrderModel> CreateAsync(CreateOrderModel createOrderModel)
         {
             var currentUserId = await GetCurrentUserId();

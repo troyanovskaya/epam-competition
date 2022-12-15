@@ -1,57 +1,6 @@
 .order-item{
-  margin-top: 50px;
-  margin-bottom: 50px;
   background-color: white;
   border-radius:10px;
   padding:20px;
 }
 
-.order-status {
-  margin-top: 20px;
-  background-color: #162e50;
-  border-radius:10px;
-  padding:5px;
-  text-align: center;
-  font-weight: bold;
-  color: white;
-}
-
-.order-details {
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  gap:20px;
-  padding:20px;
-  flex-wrap:wrap;
-}
-
-.order-status-stage {
-  margin-top: 20px;
-  background-color: #285799;
-  border-radius:10px;
-  padding:5px;
-  text-align: center;
-  font-weight: bold;
-  color: white;
-  cursor: pointer;
-}
-
-.order-status-cancel {
-  margin-top: 20px;
-  background-color: #991212;
-  border-radius:10px;
-  padding:5px;
-  text-align: center;
-  font-weight: bold;
-  color: white;
-  cursor: pointer;
-}
-
-.order-status-stage:hover {
-  background-color: #496da0;
-}
-
-.order-status-cancel:hover {
-  background-color: #bb3c3c;
-}

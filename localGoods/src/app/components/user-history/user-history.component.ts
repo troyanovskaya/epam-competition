@@ -8,7 +8,7 @@ import { OrderHistoryService } from 'src/app/services/order-history.service';
 })
 export class UserHistoryComponent implements OnInit {
 
-  constructor(public orderHistoryService: OrderHistoryService) { }
+  constructor(public historyService:OrderHistoryService) { }
 
   ngOnInit(): void {
   }

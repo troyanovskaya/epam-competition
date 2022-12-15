@@ -8,7 +8,7 @@ import { PublishedOrderService } from 'src/app/services/published-order.service'
 })
 export class VendorOrdersComponent implements OnInit {
 
-  constructor(public publishedOrderService: PublishedOrderService) {}
+  constructor(public publishedOrderService:PublishedOrderService) { }
 
   ngOnInit(): void {
   }

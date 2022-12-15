@@ -1,27 +1,34 @@
 import { Injectable } from '@angular/core';
 import { PublishedOrderItem } from '../schema/publishedOrder.model';
-import { HttpRequestService } from './http-request.service';
-import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PublishedOrderService {
-  vendorOrders:PublishedOrderItem[] = [];
+  orders:PublishedOrderItem[] = [{good:{  id: '1', name: 'carrot', description: 'Sweet fresh carrot that can benefit your health',
+  price: 3, poster: 'assets/carrot.jpg', discount: 0, vendorId: '3',   amount: 66,  unitType: {
+  id: '0', name: 'kg'}, categories: [], images: ['assets/carrot.jpg']}, quantity:2, status: 'On delivery',
+recipient: {name: 'Larsy', surname: 'MacGreen', phone:'0123455378', address:'12 Line'}},
+{good:{  id: '1', name: 'carrot', description: 'Sweet fresh carrot that can benefit your health',
+  price: 3, poster: 'assets/carrot.jpg', discount: 0, vendorId: '3',   amount: 66,  unitType: {
+  id: '0', name: 'kg'}, categories: [], images: ['assets/carrot.jpg']}, quantity:2, status: 'On delivery',
+recipient: {name: 'Larsy', surname: 'MacGreen', phone:'0123455378', address:'12 Line'}},
+{good:{  id: '1', name: 'carrot', description: 'Sweet fresh carrot that can benefit your health',
+  price: 3, poster: 'assets/carrot.jpg', discount: 0, vendorId: '3',   amount: 66,  unitType: {
+  id: '0', name: 'kg'}, categories: [], images: ['assets/carrot.jpg']}, quantity:2, status: 'On delivery',
+recipient: {name: 'Larsy', surname: 'MacGreen', phone:'0123455378', address:'12 Line'}},
+{good:{  id: '1', name: 'carrot', description: 'Sweet fresh carrot that can benefit your health',
+  price: 3, poster: 'assets/carrot.jpg', discount: 0, vendorId: '3',   amount: 66,  unitType: {
+  id: '0', name: 'kg'}, categories: [], images: ['assets/carrot.jpg']}, quantity:2, status: 'On delivery',
+recipient: {name: 'Larsy', surname: 'MacGreen', phone:'0123455378', address:'12 Line'}},
+{good:{  id: '1', name: 'carrot', description: 'Sweet fresh carrot that can benefit your health',
+  price: 3, poster: 'assets/carrot.jpg', discount: 0, vendorId: '3',   amount: 66,  unitType: {
+  id: '0', name: 'kg'}, categories: [], images: ['assets/carrot.jpg']}, quantity:2, status: 'On delivery',
+recipient: {name: 'Larsy', surname: 'MacGreen', phone:'0123455378', address:'12 Line'}},
+{good:{  id: '1', name: 'carrot', description: 'Sweet fresh carrot that can benefit your health',
+  price: 3, poster: 'assets/carrot.jpg', discount: 0, vendorId: '3',   amount: 66,  unitType: {
+  id: '0', name: 'kg'}, categories: [], images: ['assets/carrot.jpg']}, quantity:2, status: 'On delivery',
+recipient: {name: 'Larsy', surname: 'MacGreen', phone:'0123455378', address:'12 Line'}}]
 
-  GetVendorPublishedOrders(vendorId: string){
-    this.httpRequestService.getPublishedOrders(vendorId).subscribe(
-      data => {this.vendorOrders = data;
-      console.log(data)})
-  }
-
-  constructor(private httpRequestService: HttpRequestService, private userService: UserService) {
-    let userId = userService.userId;
-    console.log('userId: ' + userId);
-    httpRequestService.getVendorByUserId(userId)
-      .subscribe(vendor => {
-        let currentVendor = vendor;
-        this.GetVendorPublishedOrders(currentVendor.id);
-      });
-  }
+  constructor() { }
 }

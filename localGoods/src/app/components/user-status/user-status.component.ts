@@ -8,7 +8,7 @@ import { OrderInProcessService } from 'src/app/services/order-in-process.service
 })
 export class UserStatusComponent implements OnInit {
 
-  constructor(public orderInProcessService: OrderInProcessService) { }
+  constructor(public statusService: OrderInProcessService) { }
 
   ngOnInit(): void {
   }

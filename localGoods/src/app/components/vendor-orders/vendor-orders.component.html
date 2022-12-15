@@ -1,5 +1,5 @@
 <app-user-navigation [active]="6"></app-user-navigation>
 
 <div class="flex-container">
-  <app-vendor-order-item *ngFor="let order of publishedOrderService.vendorOrders" [order]="order" [isForVendor]="true"></app-vendor-order-item>
+  <app-vendor-order-item *ngFor="let order of publishedOrderService.orders" [order]="order"></app-vendor-order-item>
 </div>

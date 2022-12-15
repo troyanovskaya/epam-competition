@@ -30,7 +30,6 @@ export class UserService {
 
   constructor(private http: HttpClient) {
     let user = localStorage.getItem('user');
-
     console.log(user == null)
     if(user){
       let user1:{token:string, validTo:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none', validTo:'none'}));
@@ -38,7 +37,6 @@ export class UserService {
       if(this.getDecodedAccessToken(user1.token)){
         //this.userRole = this.getDecodedAccessToken(user1.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
         let userId = this.getDecodedAccessToken(user1.token).sub;
-        this.userId = userId;
 
         this.getRolesByUserId(userId).subscribe(r => {
           if (r){

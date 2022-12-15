@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Good } from 'src/app/schema/good.model';
+import { HttpRequestService } from 'src/app/services/http-request.service';
 import { PublishedGoodsService } from 'src/app/services/published-goods.service';
 
 @Component({
@@ -9,28 +10,32 @@ import { PublishedGoodsService } from 'src/app/services/published-goods.service'
 })
 export class VendorGoodItemComponent implements OnInit {
   @Input() item: Good = {
-    id: '0', 
-    name: '', 
+    id: '0',
+    name: '',
     description: '',
-    price: 0, 
-    poster: '', 
-    discount: 0, 
-    vendorId: '0', 
-    amount: 0, 
+    price: 0,
+    poster: '',
+    discount: 0,
+    vendorId: '0',
+    amount: 0,
     unitType: {
-      id: '0', 
+      id: '0',
       name: ''
-    }, 
-    categories: [], 
+    },
+    categories: [],
     images: []
   };
 
   deleteItem() {
     this.publishedGoodsService.vendorGoods = this.publishedGoodsService.vendorGoods
       .filter(el => el.id !== this.item.id);
+    this.httpRequestService.deleteProductById(this.item.id)
+    .subscribe(data => console.log);
+
   }
 
-  constructor(private publishedGoodsService: PublishedGoodsService) { }
+  constructor(private publishedGoodsService: PublishedGoodsService,
+    private httpRequestService:HttpRequestService) { }
 
   ngOnInit(): void {
   }

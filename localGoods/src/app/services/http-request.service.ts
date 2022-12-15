@@ -33,7 +33,6 @@ export class HttpRequestService {
     let user1:{token:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none'}));
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', 'Bearer ' + user1.token);
-    console.log(headers);
     return this.http.post<OrderItem>(`${this.URL}/Orders`, order, {headers:headers}).subscribe(
       (data) => console.log(data),
       (err) => console.log(err)
@@ -114,6 +113,13 @@ export class HttpRequestService {
   }
   getVendorById(vendorId:string): Observable<Vendor>{
     return this.http.get<Vendor>(`${this.URL}/Vendors/${vendorId}`);
+
+  }
+  deleteProductById(productId:string) {
+    let user1:{token:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none'}));
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Bearer ' + user1.token);
+    return this.http.delete(`${this.URL}/Products/${productId}`, {headers});
 
   }
   getProduct(productId:string): Observable<Good>{

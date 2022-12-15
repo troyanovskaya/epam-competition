@@ -1,0 +1,34 @@
+.container {
+    text-align: center;
+    padding: 1%;
+}
+
+.form-control {
+    margin-bottom: 3%;
+}
+
+.form-control input {
+    font-size: 1.5rem;
+    padding: 1%;
+    width: 40vw;
+}
+
+.submit-btn {
+    padding: 1% 3%;
+    font-size: 1.5rem;
+    font-weight: bold;
+    background-color: #162e50;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+.error {
+    color: rgb(246, 12, 12);
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.error p {
+    margin: 10px 0 0 0;
+}

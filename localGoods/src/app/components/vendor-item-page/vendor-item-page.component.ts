@@ -14,24 +14,23 @@ export class VendorItemPageComponent implements OnInit {
 
   products: Good[] = [];
   vendor!: Vendor;
-  vendorId!: string;
 
   constructor(private http: HttpRequestService,
     private shareDataService: ShareDataService) { }
 
   ngOnInit() {
     this.vendor = this.shareDataService.getVendor();
-    this.vendorId = this.vendor.id;
     this.getProducts()
-    console.log(this.products)
   }
 
   getProducts() {
-    this.http.getVendorProducts(this.vendorId).subscribe((productsList: Good[]) => {
-      productsList.forEach((product) => {
-        this.products.push(product);
+    if (this.vendor) {
+      this.http.getVendorProducts(this.vendor.id).subscribe((productsList: Good[]) => {
+        productsList.forEach((product) => {
+          this.products.push(product);
+        })
       })
-    })
+    }
   }
 
 }

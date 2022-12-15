@@ -26,7 +26,7 @@
             placeholder="password" />
         <span class="eyeicone"><img [src]='visible? "../../../assets/eyeicon.png" : "../../../assets/eyeiconSlash.png"'
                 (click)="viewPassword()"></span>
-        <a class="forgot-password">Forgot password?</a>
+        <a (click)="onForgotPassword()" class="forgot-password">Forgot password?</a>
     </div>
 
     <div class="confirm-part">

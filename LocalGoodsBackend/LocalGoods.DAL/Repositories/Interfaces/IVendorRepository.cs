@@ -10,5 +10,6 @@ namespace LocalGoods.DAL.Repositories.Interfaces
     {
         Task<IEnumerable<Vendor>> GetByFilterAsync(VendorFilterModel vendorFilterModel);
         Task<Vendor> GetByProductIdAsync(Guid id);
+        Task<Vendor> GetByUserIdAsync(Guid userId);
     }
 }

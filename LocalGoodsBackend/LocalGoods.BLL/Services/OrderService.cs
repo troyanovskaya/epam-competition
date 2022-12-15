@@ -259,16 +259,6 @@ namespace LocalGoods.BLL.Services
                 throw new OrderBadRequestException("Vendor can't buy their own products");
             }
 
-            if (!vendor.VendorDeliveryMethods.Select(vdm => vdm.DeliveryMethodId).Contains(createOrderModel.DeliveryMethodId))
-            {
-                throw new OrderBadRequestException("Vendor doesn't have this delivery method");
-            }
-
-            if (!vendor.VendorPaymentMethods.Select(vpm => vpm.PaymentMethodId).Contains(createOrderModel.PaymentMethodId))
-            {
-                throw new OrderBadRequestException("Vendor doesn't have this payment method");
-            }
-
             var vendors = products.Select(p => p.VendorId).Distinct();
 
             if (vendors.Count() > 1)

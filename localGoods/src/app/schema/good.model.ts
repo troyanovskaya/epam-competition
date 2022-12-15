@@ -1,4 +1,5 @@
 import { Category } from "./category.model"
+import { UnitType } from "./unitType.model"
 
 export interface Good{
   id: string,
@@ -9,10 +10,7 @@ export interface Good{
   discount: number,
   vendorId: string,
   amount: number,
-  unitType: {
-    id: string,
-    name: string
-  },
+  unitType: UnitType,
   categories: Category[],
   images: string[]
 }

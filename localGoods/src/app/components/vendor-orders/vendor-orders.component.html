@@ -2,4 +2,5 @@
 
 <div class="flex-container">
   <app-vendor-order-item *ngFor="let order of publishedOrderService.vendorOrders" [order]="order" [isForVendor]="true"></app-vendor-order-item>
+  <div *ngIf="!publishedOrderService.vendorOrders.length" class="empty">You have no order yet!</div>
 </div>

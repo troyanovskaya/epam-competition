@@ -13,7 +13,6 @@ export class GoodsService {
   vendorIds:Set<string> = new Set();
 
   constructor(private httpRequestService: HttpRequestService) {
-    this.httpRequestService.getVendors().subscribe( data => console.log(data))
     this.httpRequestService.getProducts('none', []).subscribe( data => {this.goods = data;
       this.goods.map( el => this.vendorIds.add(el.vendorId));
       this.vendorIds.forEach( el => {

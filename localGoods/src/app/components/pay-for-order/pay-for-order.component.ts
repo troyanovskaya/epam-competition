@@ -42,7 +42,6 @@ export class PayForOrderComponent implements OnInit, DoCheck {
       deliveryInformation: '',
       orderDetails: arr
     }
-    console.log(order);
     this.httpRequestService.postOrder(order);
   }
   vendorIds:string[] = [];

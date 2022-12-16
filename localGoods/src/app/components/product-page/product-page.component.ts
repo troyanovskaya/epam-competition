@@ -26,7 +26,6 @@ export class ProductPageComponent implements OnInit {
     this.httprequestService.getProduct(this.id).subscribe(
       data => {
         this.good = data;
-        console.log(data);
         this.httprequestService.getVendorById(this.good.vendorId)
     .subscribe( data => this.vendor = data)});
   }

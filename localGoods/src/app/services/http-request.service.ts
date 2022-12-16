@@ -37,7 +37,6 @@ export class HttpRequestService {
 
   postOrder(order: OrderItem) {
     let headers = this.getHeadersWithToken();
-    console.log(headers);
     return this.http.post<OrderItem>(`${this.URL}/Orders`, order, {headers:headers}).subscribe(
       (data) => console.log(data),
       (err) => console.log(err)
@@ -171,8 +170,7 @@ export class HttpRequestService {
         dialogRef.close();
         let user = localStorage.getItem('user');
         if(user){
-          let user1:{token:string, validTo:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none', validTo:'none'}));
-          console.log(user1.token);
+          let user1:{token:string, validTo:string} = JSON.parse(localStorage.getItem('user')??JSON.stringify({token:'none', validTo:'none'}));;
           if(this.getDecodedAccessToken(user1.token)){
             let userId = this.getDecodedAccessToken(user1.token).sub;
             //this.userService.userRole = this.getDecodedAccessToken(user1.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
